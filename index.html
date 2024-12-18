@@ -13,11 +13,12 @@
 <body>
   <!-- Header Section -->
   <header id="main-header">
-    <h1>Welcome to Sebastien Ritter's Portfolio</h1>
+    <h1 class="lang fr">Bienvenue sur le portfolio de Sebastien Ritter</h1>
+    <h1 class="lang en" style="display:none;">Welcome to Sebastien Ritter's Portfolio</h1>
   </header>
   
   <!-- Navigation Menu -->
-  <nav class="left-menu">
+  <nav class="top-menu">
     <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About Me</a></li>
@@ -28,30 +29,38 @@
   <!-- Main Content Section -->
   <main id="main">
     <div class="intro-text">
-      <p><strong>This is a portfolio showcasing the work and achievements of Sebastien Ritter.</strong></p>
-      <p>Explore the site to learn more about me!</p>
+      <p class="lang fr"><strong>Ceci est un portfolio présentant le travail et les réalisations de Sebastien Ritter.</strong></p>
+      <p class="lang en" style="display:none;"><strong>This is a portfolio showcasing the work and achievements of Sebastien Ritter.</strong></p>
     </div>
+    
     <figure>
       <img src="rsc/img/me_sokcho.jpeg" alt="Me in Sokcho South Korea">
     </figure>
+    
     <div class="quote-box">
-      <p>"I learned that courage is not the absence of fear, but the triumph over it."</p>
+      <p class="lang fr">"J'ai appris que le courage n'est pas l'absence de peur, mais le triomphe sur celle-ci."</p>
+      <p class="lang en" style="display:none;">"I learned that courage is not the absence of fear, but the triumph over it."</p>
       <footer>- Nelson Mandela</footer>
     </div>
     
-    <h2>My Hobbies</h2>
+    <h2 class="lang fr">Mes Loisirs</h2>
+    <h2 class="lang en" style="display:none;">My Hobbies</h2>
+    
     <!-- Hobbies Table -->
     <table id="hobby">
       <tr>
-        <td id="hobby-chapter-text"><strong>Programming</strong></td>
+        <td id="hobby-chapter-text"><strong class="lang fr">Programmation</strong><strong class="lang en" style="display:none;">Programming</strong></td>
         <td><img src="rsc/img/programming-photo.jpg" alt="Programming random photo"></td>
       </tr>
       <tr>
-        <td id="hobby-chapter-text"><strong>Photography</strong>
+        <td id="hobby-chapter-text"><strong class="lang fr">Photographie</strong><strong class="lang en" style="display:none;">Photography</strong>
           <ul id="hobby-list">
-            <li>Landscape</li>
-            <li>Portrait</li>
-            <li>Travel</li>
+            <li class="lang fr">Paysage</li>
+            <li class="lang en" style="display:none;">Landscape</li>
+            <li class="lang fr">Portrait</li>
+            <li class="lang en" style="display:none;">Portrait</li>
+            <li class="lang fr">Voyage</li>
+            <li class="lang en" style="display:none;">Travel</li>
           </ul>
         </td>
         <td><img src="rsc/img/airplane_mtblanc.jpeg" alt="Airplane through Italy Photography"></td>
@@ -61,8 +70,28 @@
   
   <!-- Footer Section -->
   <footer class="copyright">
-    &copy; 2024 - Sebastien Ritter - All rights reserved.
-  </footer>
-</body>
-
-</html>
+    <sn>
+        <!-- Linkedin -->
+          <a href="https://www.linkedin.com/in/sébastien-ritter-3b2160154" target="_blank" class="lang fr">
+            <img src="rsc/icons/linkedin.png" alt="LinkedIn" style="width: 50px; height: 50px;">
+          </a>
+          <a href="https://www.linkedin.com/in/sébastien-ritter-3b2160154" target="_blank" class="lang en" style="display:none;">
+            <img src="rsc/icons/linkedin.png" alt="LinkedIn" style="width: 50px; height: 50px;">
+          </a>
+        <!-- GitHub -->
+          <a href="https://github.com/rittersport67" target="_blank" class="lang fr">
+            <img src="rsc/icons/github.png" alt="GitHub" style="width: 50px; height: 50px;">
+          </a>
+          <a href="https://github.com/rittersport67" target="_blank" class="lang en" style="display:none;">
+            <img src="rsc/icons/github.png" alt="GitHub" style="width: 50px; height: 50px;">
+          </a>
+      </sn>
+      <ol>
+        <div>
+          <span class="lang fr">&copy;   2024 - Sebastien Ritter - Tous droits réservés.</span>
+          <span class="lang en" style="display:none;">&copy; 2024 - Sebastien Ritter - All rights reserved.</span>
+        </div>
+      </ol>
+    </footer>
+  </body>  
+  </html>

@@ -9,6 +9,13 @@
   src: url(/rsc/fonts/RobotoSlab-Bold.ttf);
 }
 
+/* Rule for small screen */
+@media (max-width: 768px) {
+  #main-header {
+    height: 100px; 
+  }
+}
+
 /* Global Styles */
 html, body {
   height: 100%;
@@ -86,6 +93,7 @@ nav ul li a:hover {
 /* Main Content Section */
 main {
   font-style: italic;
+  text-align: center;
 }
 
 /* Intro text */
@@ -103,21 +111,16 @@ main {
 
 /* Image Styles */
 img {
-  width: 40%;
+  width: 70%;
   height: auto;
   margin: 2em 0;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Table Styles */
-#hobby {
-  margin: auto 7em;
-  border-collapse: collapse;
-  width: 80%;
-  text-align: center;
-  font-family: "RobotoSlab-Light", sans-serif;
-  font-size: 25px;
+figure>img
+{
+  width: 30%;
 }
 
 h2  {
@@ -127,17 +130,41 @@ h2  {
   text-align: center;
   text-shadow: #555;
   text-transform: uppercase;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
-#hobby-chapter-text {
-  padding: 5%;
+/* Table Styles */
+/* Styles pour le tableau */
+#hobby {
+  margin: 2em auto;
+  border-style: none;
+  width: 100%;
+  max-width: 900px;
+  background-color: #f9f9f9;
+  text-align: center;
+  font-size: 16px;
+  overflow: hidden;
+  box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.1);
 }
+
+#hobby td {
+  padding: 1em;
+  border: 1px solid #ddd;
+}
+
 #hobby img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5%;
-  box-shadow: 50px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#hobby ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#hobby ul li {
+  list-style-type:square;
+  margin: 10px 10px;
 }
 
 /* Quote Box */
@@ -154,17 +181,18 @@ h2  {
   text-align: center;
 }
 
-.quote-box footer {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #555;
-}
-
 /* Footer */
 .copyright {
   margin-top: 2em;
   font-size: 12px;
   color: #555;
-  text-align: center;
   line-height: 1.5;
+}
+
+footer ul li a img {
+  transition: transform 0.2s ease-in-out;
+}
+
+footer ul li a:hover img {
+  transform: scale(1.2); /* Agrandit légèrement l'icône au survol */
 }
