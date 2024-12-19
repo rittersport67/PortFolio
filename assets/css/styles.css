@@ -1,12 +1,12 @@
 /* Fonts */
 @font-face {
   font-family: "RobotoSlab-Light";
-  src: url(/rsc/fonts/RobotoSlab-Light.ttf);
+  src: url(../fonts/RobotoSlab-Light.ttf);
 }
 
 @font-face {
   font-family: "RobotoSlab-Bold";
-  src: url(/rsc/fonts/RobotoSlab-Bold.ttf);
+  src: url(../fonts/RobotoSlab-Bold.ttf);
 }
 
 /* Rule for small screen */
@@ -34,7 +34,7 @@ html, body {
   position: relative;
   width: 100vw;
   height: 150px;
-  background: url('rsc/img/214234.jpg') no-repeat center center;
+  background: url('../img/214234.jpg') no-repeat center center;
   background-size: cover;
   display: flex;
   justify-content: center;
