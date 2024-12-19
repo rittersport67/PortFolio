@@ -134,7 +134,6 @@ h2  {
 }
 
 /* Table Styles */
-/* Styles pour le tableau */
 #hobby {
   margin: 2em auto;
   border-style: none;
@@ -189,10 +188,10 @@ h2  {
   line-height: 1.5;
 }
 
-footer ul li a img {
+footer sn a img {
   transition: transform 0.2s ease-in-out;
 }
 
-footer ul li a:hover img {
+footer sn a:hover img {
   transform: scale(1.2); /* Agrandit légèrement l'icône au survol */
 }
