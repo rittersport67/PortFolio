@@ -210,13 +210,13 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
 }
-input, textarea, button {
+input[type=text],input[type=email],input[type=tel], textarea, button, select {
   width: 95%;
   margin-bottom: 15px;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 button {
   background-color: #090909;
