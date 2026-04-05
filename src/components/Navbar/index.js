@@ -53,7 +53,7 @@ const NavLogo = styled.img`
 `;
 
 const LyokoSymbol = styled.img`
-  height: 36px;
+  height: 46px;
   width: auto;
   filter: invert(1) brightness(0.85);
   transition: filter 0.3s ease;
@@ -200,8 +200,8 @@ const Navbar = () => {
             onMouseEnter={() => setUlrichVisible(true)}
             onMouseLeave={() => setUlrichVisible(false)}
           >
-            <NavLogo src={logo} />
             <LyokoSymbol src={lyokoSymbol} alt="Code Lyoko" />
+            <NavLogo src={logo} />
           </LogoArea>
           <Span />
           <MobileIcon>
