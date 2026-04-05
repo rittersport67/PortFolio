@@ -7,6 +7,7 @@ import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Education from './components/Education';
 import Photography from './components/Photography';
+import Skidbladnir from './components/Skidbladnir';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const Body = styled.div`
@@ -63,6 +64,7 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <Router>
         <Navbar />
+        <Skidbladnir />
         <Body>
           <Hero />
           <ProWrapper>

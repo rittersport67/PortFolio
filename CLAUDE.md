@@ -72,6 +72,16 @@ Each section will be styled to evoke a specific Code Lyoko territory. Agreed map
 
 Territory styles are applied via section-level wrappers (not via `ThemeProvider` — keep the global dark theme intact). Use CSS background gradients, border accents, and subtle texture overlays (repeating geometric patterns) to evoke each territory without breaking the existing component internals.
 
+### Skidbladnir — scroll parallax
+
+`src/components/Skidbladnir/index.js` — fixed-position element that flies diagonally across the page (bottom-right → top-left) as the user scrolls, using `useScroll` + `useTransform` from framer-motion.
+
+- **Asset**: `src/img/skidbladnir.png` — transparent background PNG. Do not modify the image.
+- Teal `drop-shadow` glow to match the site palette
+- Fades in after scroll starts, fades out near the end
+- `pointer-events: none` so it never blocks clicks
+- Rendered outside `<Body>` in `App.js`, directly inside `<Router>`, so it overlays everything including the navbar
+
 ### Easter egg — Ulrich (Code Lyoko)
 
 Hovering the navbar logo area triggers a subtle floating Ulrich animation:
