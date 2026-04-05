@@ -1,6 +1,7 @@
 export const Bio = {
   exp: '5 years',
   name: 'Sébastien RITTER',
+  surname:'seb-rtr.jpeg',
   roles: ['Software Developper', 'Full Stack Developper', 'Photographer', 'DJ'],
   description: [
     'I am a Software Engineer with over 5 years of experience specializing in embedded systems, where I have designed and implemented innovative software solutions across diverse industrial sectors.',

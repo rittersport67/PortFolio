@@ -16,8 +16,7 @@ const SkidWrapper = styled(motion.div)`
   width: 260px;
 
   @media (max-width: 768px) {
-    width: 160px;
-    right: 2vw;
+    display: none;
   }
 `;
 
