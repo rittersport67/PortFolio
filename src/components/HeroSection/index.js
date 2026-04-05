@@ -1,8 +1,8 @@
-import React from "react";
-import styled from 'styled-components'
-import { Bio } from "../../data/contants.js"
-import TypeWriter from "typewriter-effect"
-import HeroImg from "../../img/hero-pp.png";
+import React from 'react';
+import styled from 'styled-components';
+import { Bio } from '../../data/contants.js';
+import TypeWriter from 'typewriter-effect';
+import HeroImg from '../../img/hero-pp.jpg';
 
 const HeroContainer = styled.div`
   background: ${({ theme }) => theme.card_light};
@@ -165,10 +165,10 @@ const ResumeButton = styled.a`
     font-size: 20px;
     font-weight: 600;
     transition: all 0.2s ease-in-out !important;
-    background: hsla(271, 100%, 50%, 1);
-    background: linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    background: -moz-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    background: -webkit-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
+    background: ${({ theme }) => theme.primary};
+    background: linear-gradient(225deg, hsla(174, 100%, 50%, 1) 0%, rgb(53, 68, 66) 100%);
+    background: -moz-linear-gradient(225deg, hsla(174, 100%, 50%, 1) 0%, rgb(53, 68, 66) 100%);
+    background: -webkit-linear-gradient(225deg, hsla(174, 100%, 50%, 1) 0%, rgb(53, 68, 66) 100%) 100%);
     box-shadow:  20px 20px 60px #1F2634,
     -20px -20px 60px #1F2634;
     &:hover {
@@ -193,7 +193,7 @@ const Img = styled.img`
   max-height: 400px;
   border-radius: 50%;
   border: 2px solid ${({ theme }) => theme.primary};
-  
+
   @media (max-width: 958px) {
     max-width: 400px;
     height: 100%;
@@ -212,42 +212,49 @@ const Img = styled.img`
   }
 `;
 
-
 const Hero = () => {
   return (
     <div id="about">
       <HeroContainer>
-        <HeroBg>
-        </HeroBg>
+        <HeroBg></HeroBg>
         <HeroInnerContainer>
           <HeroLeftContainer>
-            <Title>Hi, I am <br/> {Bio.name} </Title>
-            <TextLoop> I am a 
-            <Span>
-              <TypeWriter 
-              options={{
-                strings: Bio.roles,
-                autoStart: true,
-                loop: true,
-                delay:100, 
-              }}
-              />
-            </Span>
+            <Title>
+              Hi, I am <br /> {Bio.name}{' '}
+            </Title>
+            <TextLoop>
+              {' '}
+              I am a
+              <Span>
+                <TypeWriter
+                  options={{
+                    strings: Bio.roles,
+                    autoStart: true,
+                    loop: true,
+                    delay: 100
+                  }}
+                />
+              </Span>
             </TextLoop>
             <SubTitle>
-            {Bio.description.map((sentence, index) => (
-            <p key={index}>{sentence}<br/></p>
-            ))}
+              {Bio.description.map((sentence, index) => (
+                <p key={index}>
+                  {sentence}
+                  <br />
+                </p>
+              ))}
             </SubTitle>
-            <ResumeButton href={Bio.resume} target='display'>Check Resume</ResumeButton>
-    </HeroLeftContainer>
-    <HeroRightContainer>
-        <Img src={HeroImg} alt="hero-image"/>
-    </HeroRightContainer>
-    </HeroInnerContainer>
-    </HeroContainer>
+            <ResumeButton href={Bio.resume} target="display">
+              Check Resume
+            </ResumeButton>
+          </HeroLeftContainer>
+          <HeroRightContainer>
+            <Img src={HeroImg} alt="hero-image" />
+          </HeroRightContainer>
+        </HeroInnerContainer>
+      </HeroContainer>
     </div>
-  )
-}
+  );
+};
 
 export default Hero;

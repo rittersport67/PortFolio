@@ -56,10 +56,6 @@ const Card = styled.div`
         width: 300px;
     }
 
-    &:hover ${Document}{
-        display: flex;
-    }
-
     &:hover ${Span}{
         overflow: visible;
         -webkit-line-clamp: unset;
