@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import styled, { ThemeProvider, useTheme } from 'styled-components';
 import { darkTheme } from '../../utils/Themes';
-//import {DiCssdeck} from "react-icons/di";
 import logo from '../../../src/img/logo.png';
+import lyokoSymbol from '../../../src/img/lyoko-symbol.png';
 import { FaBars } from 'react-icons/fa';
 import { Link as LinkR } from 'react-router-dom';
+
+const UlrichEasterEgg = React.lazy(() => import('./UlrichEasterEgg'));
 
 const Nav = styled.div`
 background-color : ${({ theme }) => theme.card_light};
@@ -30,17 +32,33 @@ const NavContainer = styled.div`
   max-width: 1200px;
 `;
 
+const LogoArea = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+`;
+
 const NavLogo = styled.img`
   width: 200px;
-  heigh: auto;
+  height: auto;
   padding: 0 6px;
   display: flex;
   justify-self: flex-start;
-  cursor: pointer;
   text-decoration: none;
   align-items: center;
   @media screen and (max-width: 600px) {
     padding: 0 0px;
+  }
+`;
+
+const LyokoSymbol = styled.img`
+  height: 36px;
+  width: auto;
+  filter: invert(1) brightness(0.85);
+  transition: filter 0.3s ease;
+  ${LogoArea}:hover & {
+    filter: invert(62%) sepia(80%) saturate(400%) hue-rotate(130deg) brightness(1.1);
   }
 `;
 
@@ -172,12 +190,19 @@ const MobileMenuItems = styled.ul`
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
+  const [ulrichVisible, setUlrichVisible] = React.useState(false);
   const theme = useTheme();
   return (
     <Nav>
       <NavContainer>
         <ThemeProvider theme={darkTheme}>
-          <NavLogo src={logo} />
+          <LogoArea
+            onMouseEnter={() => setUlrichVisible(true)}
+            onMouseLeave={() => setUlrichVisible(false)}
+          >
+            <NavLogo src={logo} />
+            <LyokoSymbol src={lyokoSymbol} alt="Code Lyoko" />
+          </LogoArea>
           <Span />
           <MobileIcon>
             <FaBars
@@ -192,6 +217,7 @@ const Navbar = () => {
             <NavLink href="#experience">Experience</NavLink>
             <NavLink href="#projects">Projects</NavLink>
             <NavLink href="#education">Education</NavLink>
+            <NavLink href="#photography">Photography</NavLink>
           </NavItems>
           <ButtonContainer>
             <GitHubButton>Github Profile</GitHubButton>
@@ -200,46 +226,12 @@ const Navbar = () => {
       </NavContainer>
       {open && (
         <MobileMenu open={open}>
-          <MobileMenuLink
-            href="#about"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            About
-          </MobileMenuLink>
-          <MobileMenuLink
-            href="#skills"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            Skills
-          </MobileMenuLink>
-          <MobileMenuLink
-            href="#experience"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            Experience
-          </MobileMenuLink>
-          <MobileMenuLink
-            href="#projects"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            Projects
-          </MobileMenuLink>
-          <MobileMenuLink
-            href="#education"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            Education
-          </MobileMenuLink>
+          <MobileMenuLink href="#about" onClick={() => setOpen(!open)}>About</MobileMenuLink>
+          <MobileMenuLink href="#skills" onClick={() => setOpen(!open)}>Skills</MobileMenuLink>
+          <MobileMenuLink href="#experience" onClick={() => setOpen(!open)}>Experience</MobileMenuLink>
+          <MobileMenuLink href="#projects" onClick={() => setOpen(!open)}>Projects</MobileMenuLink>
+          <MobileMenuLink href="#education" onClick={() => setOpen(!open)}>Education</MobileMenuLink>
+          <MobileMenuLink href="#photography" onClick={() => setOpen(!open)}>Photography</MobileMenuLink>
           <GitHubButton
             style={{
               padding: '10px 16px',
@@ -254,6 +246,9 @@ const Navbar = () => {
           </GitHubButton>
         </MobileMenu>
       )}
+      <Suspense fallback={null}>
+        <UlrichEasterEgg visible={ulrichVisible} />
+      </Suspense>
     </Nav>
   );
 };

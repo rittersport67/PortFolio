@@ -6,6 +6,7 @@ import Hero from './components/HeroSection';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Education from './components/Education';
+import Photography from './components/Photography';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const Body = styled.div`
@@ -14,7 +15,7 @@ const Body = styled.div`
   overflow-x: hidden;
 `;
 
-const Wrapper = styled.div`
+const ProWrapper = styled.div`
   background: linear-gradient(
       38.73deg,
       rgba(204, 0, 187, 0.15) 0%,
@@ -29,6 +30,34 @@ const Wrapper = styled.div`
   clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 98%, 0 100%);
 `;
 
+const SectionDivider = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 70px 30px 50px;
+  max-width: 1100px;
+  margin: 0 auto;
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: ${({ theme }) => theme.primary}44;
+  }
+`;
+
+const DividerLabel = styled.span`
+  color: ${({ theme }) => theme.primary};
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+`;
+
+const PersonalWrapper = styled.div`
+  width: 100%;
+`;
+
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
@@ -36,11 +65,17 @@ function App() {
         <Navbar />
         <Body>
           <Hero />
-          <Wrapper>
+          <ProWrapper>
             <Skills />
             <Experience />
             <Education />
-          </Wrapper>
+          </ProWrapper>
+          <SectionDivider>
+            <DividerLabel>Personal</DividerLabel>
+          </SectionDivider>
+          <PersonalWrapper>
+            <Photography />
+          </PersonalWrapper>
         </Body>
       </Router>
     </ThemeProvider>

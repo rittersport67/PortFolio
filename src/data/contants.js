@@ -198,6 +198,10 @@ export const experiences = [
   }
 ];
 
+export const photography = [
+  // Add entries as: { id, title, image (external URL), category }
+];
+
 export const education = [
   {
     id: 0,
