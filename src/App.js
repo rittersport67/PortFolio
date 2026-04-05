@@ -8,6 +8,7 @@ import Experience from './components/Experience';
 import Education from './components/Education';
 import Photography from './components/Photography';
 import Skidbladnir from './components/Skidbladnir';
+import DigitalSea from './components/DigitalSea';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const Body = styled.div`
@@ -78,6 +79,7 @@ function App() {
           <PersonalWrapper>
             <Photography />
           </PersonalWrapper>
+          <DigitalSea />
         </Body>
       </Router>
     </ThemeProvider>

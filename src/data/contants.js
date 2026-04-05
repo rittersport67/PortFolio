@@ -182,7 +182,7 @@ export const experiences = [
   },
   {
     id: 3,
-    img: 'https://d2q79iu7y748jz.cloudfront.net/s/_squarelogo/256x256/cdb18a1c6321463b805fb5b8800a8907',
+    img: require('../img/logo-company/fsg.jpeg'),
     role: 'R&D Intern',
     company: 'FSG Fernsteuergeraete',
     date: 'August 2019',
@@ -190,7 +190,7 @@ export const experiences = [
   },
   {
     id: 4,
-    img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Bruker-logo.jpg/800px-Bruker-logo.jpg',
+    img: require('../img/logo-company/bruker.png'),
     role: 'R&D Intern',
     company: 'Bruker Biospin',
     date: 'Apr 2018 - Jun 2018',

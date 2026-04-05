@@ -10,7 +10,7 @@ import SkidImg from '../../img/skidbladnir.png';
 
 const SkidWrapper = styled(motion.div)`
   position: fixed;
-  right: 6vw;
+  right: 0px;
   z-index: 5;
   pointer-events: none;
   width: 260px;
@@ -26,7 +26,7 @@ const SkidImage = styled.img`
   height: auto;
   display: block;
   filter: drop-shadow(0 0 12px rgba(13, 182, 164, 0.45))
-          drop-shadow(0 0 28px rgba(13, 182, 164, 0.18));
+    drop-shadow(0 0 28px rgba(13, 182, 164, 0.18));
 `;
 
 const Skidbladnir = () => {
