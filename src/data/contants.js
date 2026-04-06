@@ -1,7 +1,7 @@
 export const Bio = {
   exp: '5 years',
   name: 'Sébastien RITTER',
-  surname:'seb-rtr.jpeg',
+  surname: 'seb-rtr.jpeg',
   roles: ['Software Developper', 'Full Stack Developper', 'Photographer', 'DJ'],
   description: [
     'I am a Software Engineer with over 5 years of experience specializing in embedded systems, where I have designed and implemented innovative software solutions across diverse industrial sectors.',
@@ -200,7 +200,20 @@ export const experiences = [
 ];
 
 export const photography = [
-  // Add entries as: { id, title, image (external URL), category }
+  {
+    id: 1,
+    title: 'Tokyo — Ueno',
+    before: '/img/photography/tokyo_before.jpg',
+    after: '/img/photography/tokyo_after.png',
+    category: 'street'
+  },
+  {
+    id: 2,
+    title: 'Kyoto — Yasaka',
+    before: '/img/photography/kyoto_before.jpg',
+    after: '/img/photography/kyoto_after.png',
+    category: 'street'
+  }
 ];
 
 export const education = [

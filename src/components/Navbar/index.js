@@ -107,7 +107,6 @@ const Cursor = styled.span`
 const LyokoSymbol = styled.img`
   height: 32px;
   width: auto;
-  filter: invert(1) brightness(0.55) grayscale(0.3);
   transition: filter 0.3s ease;
   ${LogoArea}:hover & {
     filter: invert(62%) sepia(80%) saturate(400%) hue-rotate(130deg) brightness(1.3);

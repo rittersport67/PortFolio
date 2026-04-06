@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { photography } from '../../data/contants';
+import BeforeAfterCard from './BeforeAfterCard';
 
 const Container = styled.div`
   display: flex;
@@ -42,6 +43,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+  align-items: start;
   @media (max-width: 960px) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -54,7 +56,7 @@ const PhotoCard = styled.div`
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
   background: ${({ theme }) => theme.card};
   cursor: pointer;
   &:hover img {
@@ -75,7 +77,7 @@ const Photo = styled.img`
 const Overlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.3s ease;
   display: flex;
@@ -119,15 +121,24 @@ const Photography = () => (
         <Empty>Coming soon — photos will appear here.</Empty>
       ) : (
         <Grid>
-          {photography.map((photo) => (
-            <PhotoCard key={photo.id}>
-              <Photo src={photo.image} alt={photo.title} />
-              <CategoryBadge>{photo.category}</CategoryBadge>
-              <Overlay>
-                <PhotoTitle>{photo.title}</PhotoTitle>
-              </Overlay>
-            </PhotoCard>
-          ))}
+          {photography.map((photo) =>
+            photo.before ? (
+              <BeforeAfterCard
+                key={photo.id}
+                before={photo.before}
+                after={photo.after}
+                title={photo.title}
+              />
+            ) : (
+              <PhotoCard key={photo.id}>
+                <Photo src={photo.image} alt={photo.title} />
+                <CategoryBadge>{photo.category}</CategoryBadge>
+                <Overlay>
+                  <PhotoTitle>{photo.title}</PhotoTitle>
+                </Overlay>
+              </PhotoCard>
+            )
+          )}
         </Grid>
       )}
     </Wrapper>
