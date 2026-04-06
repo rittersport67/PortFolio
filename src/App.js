@@ -6,7 +6,6 @@ import Hero from './components/HeroSection';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
-import Education from './components/Education';
 import Photography from './components/Photography';
 import Skidbladnir from './components/Skidbladnir';
 import DigitalSea from './components/DigitalSea';
@@ -20,7 +19,8 @@ const Body = styled.div`
 `;
 
 const ProWrapper = styled.div`
-  background: linear-gradient(
+  background:
+    linear-gradient(
       38.73deg,
       rgba(204, 0, 187, 0.15) 0%,
       rgba(201, 32, 184, 0) 50%
@@ -50,7 +50,6 @@ function App() {
             <Skills />
             <Experience />
             <Projects />
-            <Education />
           </ProWrapper>
           <PersonalWrapper>
             <Photography />
