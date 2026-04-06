@@ -1,7 +1,5 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { Bio } from '../../data/contants';
-import { FaGithub, FaLinkedin, FaSoundcloud } from 'react-icons/fa';
 
 const waveScroll = keyframes`
   0%   { background-position: 0 0,   60px 10px, 130px 20px; }
@@ -91,22 +89,6 @@ const SeaTitle = styled.p`
   margin: 0;
 `;
 
-const SocialRow = styled.div`
-  display: flex;
-  gap: 24px;
-  align-items: center;
-`;
-
-const SocialLink = styled.a`
-  color: rgba(100, 170, 255, 0.55);
-  font-size: 22px;
-  transition: color 0.25s ease, transform 0.25s ease;
-  &:hover {
-    color: #5aafff;
-    transform: translateY(-3px);
-  }
-`;
-
 const Copyright = styled.p`
   font-size: 12px;
   color: rgba(100, 150, 255, 0.35);
@@ -121,17 +103,6 @@ const DigitalSea = () => (
     <DepthGlow />
     <Content>
       <SeaTitle>Digital Sea</SeaTitle>
-      <SocialRow>
-        <SocialLink href={Bio.github} target="_blank" rel="noreferrer" aria-label="GitHub">
-          <FaGithub />
-        </SocialLink>
-        <SocialLink href={Bio.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
-          <FaLinkedin />
-        </SocialLink>
-        <SocialLink href="https://soundcloud.com" target="_blank" rel="noreferrer" aria-label="SoundCloud">
-          <FaSoundcloud />
-        </SocialLink>
-      </SocialRow>
       <Copyright>© {new Date().getFullYear()} Sébastien RITTER</Copyright>
     </Content>
   </Sea>

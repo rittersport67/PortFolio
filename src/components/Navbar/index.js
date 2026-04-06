@@ -3,7 +3,7 @@ import styled, { keyframes, ThemeProvider } from 'styled-components';
 import { darkTheme } from '../../utils/Themes';
 import { Bio } from '../../data/contants';
 import lyokoSymbol from '../../../src/img/lyoko-symbol.png';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link as LinkR } from 'react-router-dom';
 
 const UlrichEasterEgg = React.lazy(() => import('./UlrichEasterEgg'));
@@ -388,11 +388,20 @@ const Navbar = () => {
               <StatusSegment dur="3.4s" delay="1.2s" opacity={0.4} />
             </StatusGroup>
             <GitHubButton
-              href="https://github.com"
+              href={Bio.github}
               target="_blank"
               rel="noreferrer"
             >
+              <FaGithub style={{ marginRight: 6, fontSize: 13 }} />
               Github
+            </GitHubButton>
+            <GitHubButton
+              href={Bio.linkedin}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaLinkedin style={{ marginRight: 6, fontSize: 13 }} />
+              LinkedIn
             </GitHubButton>
           </ButtonContainer>
 
@@ -416,12 +425,20 @@ const Navbar = () => {
           <MobileMenuLink href="#photography" onClick={() => setOpen(false)}>Photography</MobileMenuLink>
           <MobileMenuLink
             as="a"
-            href="https://github.com"
+            href={Bio.github}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Github
+          </MobileMenuLink>
+          <MobileMenuLink
+            as="a"
+            href={Bio.linkedin}
             target="_blank"
             rel="noreferrer"
             style={{ borderBottom: 'none' }}
           >
-            Github
+            LinkedIn
           </MobileMenuLink>
         </MobileMenuItems>
       </MobileMenu>
