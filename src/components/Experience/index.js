@@ -23,6 +23,7 @@ const Container = styled.div`
     z-index: 1;
     align-items: center;
     padding: 40px 0px 80px 0px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(90, 191, 78, 0.08) 0%, transparent 65%);
     @media (max-width: 960px) {
         padding: 0px;
     }
@@ -43,12 +44,51 @@ const Wrapper = styled.div`
     }
 `;
 
+/* ── Secteur 2 / Forêt ───────────────────────────────────────────── */
+const FOREST = '#5abf4e';
+
+const TerritoryTag = styled.div`
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: ${FOREST};
+    opacity: 0.7;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    &::before,
+    &::after {
+        content: '';
+        height: 1px;
+        width: 36px;
+        background: ${FOREST};
+        opacity: 0.5;
+    }
+`;
+
 const Title = styled.div`
     font-size: 42px;
     text-align: center;
     font-weight: 600;
-    margin-top: 20px;
     color: ${({ theme }) => theme.text_primary};
+    position: relative;
+
+    &::after {
+        content: '';
+        display: block;
+        margin: 6px auto 0;
+        width: 36px;
+        height: 2px;
+        background: ${FOREST};
+        box-shadow: 0 0 8px ${FOREST};
+        border-radius: 1px;
+    }
+
     @media (max-width: 768px) {
         margin-top: 12px;
         font-size: 32px;
@@ -59,7 +99,7 @@ const Desc = styled.div`
     font-size: 18px;
     text-align: center;
     max-width: 600px;
-    color: ${({ theme }) => theme.text_secondary};
+    color: rgba(177, 178, 179, 0.85);
     @media (max-width: 768px) {
         margin-top: 12px;
         font-size: 16px;
@@ -101,8 +141,9 @@ const DotInner = styled.div`
 
 const Experience = () => {
   return (
-    <Container>
+    <Container id="experience">
       <Wrapper>
+        <TerritoryTag>◈ Secteur 2 — Forêt</TerritoryTag>
         <Title>Experiences</Title>
         <Desc>Here are an extract of my experiences.</Desc>
         <TimelineSection>

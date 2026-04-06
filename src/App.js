@@ -5,10 +5,12 @@ import Navbar from './components/Navbar';
 import Hero from './components/HeroSection';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
+import Projects from './components/Projects';
 import Education from './components/Education';
 import Photography from './components/Photography';
 import Skidbladnir from './components/Skidbladnir';
 import DigitalSea from './components/DigitalSea';
+import LyokoMapOverlay from './components/LyokoMapOverlay';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const Body = styled.div`
@@ -32,30 +34,6 @@ const ProWrapper = styled.div`
   clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 98%, 0 100%);
 `;
 
-const SectionDivider = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 70px 30px 50px;
-  max-width: 1100px;
-  margin: 0 auto;
-  &::before,
-  &::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: ${({ theme }) => theme.primary}44;
-  }
-`;
-
-const DividerLabel = styled.span`
-  color: ${({ theme }) => theme.primary};
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-`;
-
 const PersonalWrapper = styled.div`
   width: 100%;
 `;
@@ -65,17 +43,15 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <Router>
         <Navbar />
-        <Skidbladnir />
+        <LyokoMapOverlay />
         <Body>
           <Hero />
           <ProWrapper>
             <Skills />
             <Experience />
+            <Projects />
             <Education />
           </ProWrapper>
-          <SectionDivider>
-            <DividerLabel>Personal</DividerLabel>
-          </SectionDivider>
           <PersonalWrapper>
             <Photography />
           </PersonalWrapper>

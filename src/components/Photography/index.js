@@ -8,6 +8,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 60px 30px 80px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232, 150, 10, 0.08) 0%, transparent 65%);
   @media (max-width: 960px) {
     padding: 40px 16px 60px;
   }
@@ -18,12 +19,51 @@ const Wrapper = styled.div`
   max-width: 1100px;
 `;
 
+/* ── Secteur 4 / Désert ──────────────────────────────────────────── */
+const DESERT = '#e8960a';
+
+const TerritoryTag = styled.div`
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: ${DESERT};
+  opacity: 0.7;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &::before,
+  &::after {
+    content: '';
+    height: 1px;
+    width: 36px;
+    background: ${DESERT};
+    opacity: 0.5;
+  }
+`;
+
 const Title = styled.div`
   font-size: 42px;
   font-weight: 600;
   text-align: center;
   color: ${({ theme }) => theme.text_primary};
-  margin-bottom: 8px;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    margin: 6px auto 0;
+    width: 36px;
+    height: 2px;
+    background: ${DESERT};
+    box-shadow: 0 0 8px ${DESERT};
+    border-radius: 1px;
+  }
+
   @media (max-width: 768px) {
     font-size: 32px;
   }
@@ -32,7 +72,7 @@ const Title = styled.div`
 const Desc = styled.div`
   font-size: 18px;
   text-align: center;
-  color: ${({ theme }) => theme.text_secondary};
+  color: rgba(177, 178, 179, 0.85);
   margin-bottom: 48px;
   @media (max-width: 768px) {
     font-size: 16px;
@@ -115,6 +155,7 @@ const Empty = styled.div`
 const Photography = () => (
   <Container id="photography">
     <Wrapper>
+      <TerritoryTag>◈ Secteur 4 — Désert</TerritoryTag>
       <Title>Photography</Title>
       <Desc>A selection of edits I am proud of.</Desc>
       {photography.length === 0 ? (

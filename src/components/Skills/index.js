@@ -9,6 +9,7 @@ const Container = styled.div`
   position: relative;
   z-index: 1;
   align-items: center;
+  background: radial-gradient(ellipse at 50% 0%, rgba(75, 167, 209, 0.09) 0%, transparent 65%);
 `
 
 const Wrapper = styled.div`
@@ -25,12 +26,51 @@ const Wrapper = styled.div`
   }
 `
 
+/* ── Secteur 1 / Banquise ────────────────────────────────────────── */
+const ICE = '#4BA7D1';
+
+const TerritoryTag = styled.div`
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: ${ICE};
+  opacity: 0.7;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &::before,
+  &::after {
+    content: '';
+    height: 1px;
+    width: 36px;
+    background: ${ICE};
+    opacity: 0.5;
+  }
+`;
+
 export const Title = styled.div`
   font-size: 42px;
   text-align: center;
   font-weight: 600;
-  margin-top: 20px;
   color: ${({ theme }) => theme.text_primary};
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    margin: 6px auto 0;
+    width: 36px;
+    height: 2px;
+    background: ${ICE};
+    box-shadow: 0 0 8px ${ICE};
+    border-radius: 1px;
+  }
+
   @media (max-width: 768px) {
     margin-top: 12px;
     font-size: 32px;
@@ -41,7 +81,7 @@ export const Desc = styled.div`
   font-size: 18px;
   text-align: center;
   max-width: 600px;
-  color: ${({ theme }) => theme.text_secondary};
+  color: rgba(177, 178, 179, 0.85);
   @media (max-width: 768px) {
     font-size: 16px;
   }
@@ -215,6 +255,7 @@ const SkillLabel = styled.span`
 const Skills = () => {
   return <Container id="skills">
     <Wrapper>
+      <TerritoryTag>◈ Secteur 1 — Banquise</TerritoryTag>
       <Title>Skills</Title>
       <Desc>
         Here are some of my skills which I have been working on for the past {Bio.exp}.
