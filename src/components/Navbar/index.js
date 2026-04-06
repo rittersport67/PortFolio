@@ -46,7 +46,7 @@ const Nav = styled.div`
   border-bottom: 2px solid rgba(0, 212, 255, 0.45);
   box-shadow: 0 2px 24px rgba(0, 212, 255, 0.12), 0 0 2px rgba(0, 212, 255, 0.2);
 
-  @media screen and (max-width: 960px) {
+  @media screen and (max-width: 768px) {
     transition: 0.8s all ease;
   }
 `;
@@ -124,7 +124,7 @@ const NavItems = styled.ul`
   margin: 0;
   list-style: none;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1100px) {
     display: none;
   }
 `;
@@ -236,7 +236,7 @@ const GitHubButton = styled.a`
 /* ─── mobile ────────────────────────────────────────────────────── */
 const MobileIcon = styled.div`
   display: none;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1100px) {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -246,13 +246,15 @@ const MobileIcon = styled.div`
     color: rgba(0, 212, 255, 0.8);
     border-left: 1px solid rgba(0, 212, 255, 0.2);
     z-index: 200;
+  }
+  @media screen and (max-width: 768px) {
     grid-column: 3;
   }
 `;
 
 const DrawerOverlay = styled.div`
   display: none;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1100px) {
     display: block;
     position: fixed;
     inset: 0;
@@ -267,7 +269,7 @@ const DrawerOverlay = styled.div`
 
 const MobileMenu = styled.div`
   display: none;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1100px) {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -356,14 +358,18 @@ const MobileMenuLink = styled.a`
   }
 `;
 
-/* inutilisé mais gardé pour compatibilité router-dom */
-const MobileMenuLinkR = styled(LinkR)`display: none;`;
-
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [ulrichVisible, setUlrichVisible] = React.useState(false);
   const [xanaVisible, setXanaVisible] = React.useState(false);
 
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1100) setOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <Nav>
