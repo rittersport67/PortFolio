@@ -2,7 +2,6 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
-import UlrichImg from '../../img/ulrich.png';
 
 const Overlay = styled(motion.div)`
   position: fixed;
@@ -16,7 +15,8 @@ const UlrichImage = styled(motion.img)`
   height: 180px;
   width: auto;
   display: block;
-  filter: drop-shadow(0 0 8px #0DB6A4) drop-shadow(0 0 20px rgba(13, 182, 164, 0.4));
+  filter: ${({ glowcolor }) =>
+    `drop-shadow(0 0 8px ${glowcolor}) drop-shadow(0 0 20px ${glowcolor}66)`};
 `;
 
 const ScanLines = styled.div`
@@ -31,7 +31,7 @@ const ScanLines = styled.div`
   );
 `;
 
-const UlrichEasterEgg = ({ visible }) =>
+const UlrichEasterEgg = ({ visible, src, glowColor = '#0DB6A4' }) =>
   createPortal(
     <AnimatePresence>
       {visible && (
@@ -42,8 +42,9 @@ const UlrichEasterEgg = ({ visible }) =>
           transition={{ type: 'spring', stiffness: 220, damping: 22 }}
         >
           <UlrichImage
-            src={UlrichImg}
+            src={src}
             alt="Ulrich Stern"
+            glowcolor={glowColor}
             animate={{ y: [0, -5, 0] }}
             transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
           />

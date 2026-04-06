@@ -3,6 +3,8 @@ import styled, { keyframes, ThemeProvider } from 'styled-components';
 import { darkTheme } from '../../utils/Themes';
 import { Bio } from '../../data/contants';
 import lyokoSymbol from '../../../src/img/lyoko-symbol.png';
+import UlrichImg from '../../img/ulrich.png';
+import UlrichXanaImg from '../../img/ulrich-xana.png';
 import { FaBars, FaTimes, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link as LinkR } from 'react-router-dom';
 
@@ -107,9 +109,10 @@ const Cursor = styled.span`
 const LyokoSymbol = styled.img`
   height: 32px;
   width: auto;
+  cursor: pointer;
   transition: filter 0.3s ease;
-  ${LogoArea}:hover & {
-    filter: invert(62%) sepia(80%) saturate(400%) hue-rotate(130deg) brightness(1.3);
+  &:hover {
+    filter: invert(15%) sepia(90%) saturate(700%) hue-rotate(340deg) brightness(1.2);
   }
 `;
 
@@ -359,18 +362,24 @@ const MobileMenuLinkR = styled(LinkR)`display: none;`;
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [ulrichVisible, setUlrichVisible] = React.useState(false);
+  const [xanaVisible, setXanaVisible] = React.useState(false);
 
 
   return (
     <Nav>
       <NavContainer>
         <ThemeProvider theme={darkTheme}>
-          <LogoArea
-            onMouseEnter={() => setUlrichVisible(true)}
-            onMouseLeave={() => setUlrichVisible(false)}
-          >
-            <LyokoSymbol src={lyokoSymbol} alt="Code Lyoko" />
-            <LogoText>{Bio.surname}<Cursor /></LogoText>
+          <LogoArea>
+            <LyokoSymbol
+              src={lyokoSymbol}
+              alt="Code Lyoko"
+              onMouseEnter={() => setXanaVisible(true)}
+              onMouseLeave={() => setXanaVisible(false)}
+            />
+            <LogoText
+              onMouseEnter={() => setUlrichVisible(true)}
+              onMouseLeave={() => setUlrichVisible(false)}
+            >{Bio.surname}<Cursor /></LogoText>
           </LogoArea>
 
           <NavItems>
@@ -444,7 +453,8 @@ const Navbar = () => {
       </MobileMenu>
 
       <Suspense fallback={null}>
-        <UlrichEasterEgg visible={ulrichVisible} />
+        <UlrichEasterEgg visible={ulrichVisible} src={UlrichImg} glowColor="#0DB6A4" />
+        <UlrichEasterEgg visible={xanaVisible} src={UlrichXanaImg} glowColor="#cc1111" />
       </Suspense>
     </Nav>
   );
