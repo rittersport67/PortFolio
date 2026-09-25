@@ -60,7 +60,7 @@ Write descriptions that explain **why / what for**, not a restatement of the nam
 ## 4. Rules
 
 - **Comments only.** Never change code, imports, formatting, or logic. The diff must contain only added/modified comment lines.
-- Write docs in the language already used by the comments in the repo (default: English).
+- Always write docs and comments in **English**, even if existing comments or the conversation are in another language. JSDoc tags stay as-is.
 - Keep headers under ~8 lines and function docs proportional to complexity.
 - For JS/TS projects, after editing run the linter/build check if cheap (`npx eslint <files>` or the project's lint script) to confirm nothing broke; for Python run `python -m py_compile <files>`.
 

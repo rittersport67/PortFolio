@@ -1,7 +1,7 @@
 /**
  * @file src/setupTests.js
- * Chargé par Jest avant chaque suite : matchers jest-dom et polyfills jsdom
- * (matchMedia, IntersectionObserver, canvas) dont dépendent les composants.
+ * Loaded by Jest before each suite: jest-dom matchers plus the jsdom polyfills
+ * (matchMedia, IntersectionObserver, canvas) the components depend on.
  */
 
 // jest-dom adds custom jest matchers for asserting on DOM nodes.

@@ -1,7 +1,7 @@
 /**
  * @file src/components/Photography/BeforeAfterCard.js
- * Carte de comparaison avant/après avec un séparateur à glisser (souris et tactile),
- * utilisée par la section Photography.
+ * Before/after comparison card with a draggable divider (mouse and touch),
+ * used by the Photography section.
  * @component
  */
 import React, { useRef, useState, useEffect, useCallback } from 'react';
@@ -114,15 +114,15 @@ const TitleText = styled.span`
 `;
 
 /**
- * L'image « after » est rognée par `clip-path` selon `pos` (0–1, borné à 0.04–0.96).
- * Le drag souris est suivi sur `window` pour continuer hors de la carte.
- * À la première apparition (25 % visible), un balayage automatique montre le principe ;
- * toute interaction l'interrompt.
+ * The "after" image is clipped with `clip-path` according to `pos` (0–1, clamped to
+ * 0.04–0.96). Mouse drags are tracked on `window` so they keep working outside the card.
+ * On first appearance (25% visible) an automatic sweep demonstrates the effect; any
+ * interaction cancels it.
  * @component
  * @param {Object} props
- * @param {string} props.before - URL de l'image originale.
- * @param {string} props.after - URL de l'image retouchée.
- * @param {string} props.title - Titre affiché en bas de la carte.
+ * @param {string} props.before - URL of the original image.
+ * @param {string} props.after - URL of the edited image.
+ * @param {string} props.title - Title shown at the bottom of the card.
  * @returns {JSX.Element}
  */
 const BeforeAfterCard = ({ before, after, title }) => {

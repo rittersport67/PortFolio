@@ -1,13 +1,14 @@
 /**
  * @file src/components/HeroSection/index.js
- * Section d'accueil #about (Secteur 5 / Carthage) : nom, titre, rôles, présentation,
- * contact et photo, sur un fond de pluie de données hex (canvas) discrète.
+ * #about landing section (Sector 5 / Carthage): name, title, roles, intro, contact
+ * and photo, over a subtle hex data-rain background (canvas).
  * @component
  */
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Bio } from '../../data/content';
 import HeroImg from '../../img/hero-pp.jpg';
+import LyokoCardImg from '../../img/hero-lyokocard.png';
 import { CARTHAGE } from '../../utils/palette';
 
 const SectorTag = styled.div`
@@ -264,26 +265,76 @@ const SecondaryLink = styled.a`
   }
 `;
 
-const Img = styled.img`
-  display: block;
+/* Real photo on the front, Lyoko card on the back: "virtualization" on hover,
+   on keyboard focus, or on tap for touch screens. */
+const FlipCard = styled.button`
   width: 380px;
   height: 380px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  perspective: 1200px;
   border-radius: 50%;
-  object-fit: cover;
-  object-position: center top;
-  border: 2px solid rgba(0, 212, 255, 0.6);
+
+  &:focus-visible {
+    outline: 2px solid ${CARTHAGE};
+    outline-offset: 6px;
+  }
 
   @media (max-width: 960px) { width: 340px; height: 340px; }
   @media (max-width: 640px) { width: 260px; height: 260px; }
 `;
 
-/* ─── DataRain — pluie de données hex ───────────────────────────── */
+// data-allow-motion: the flip keeps its rotation under prefers-reduced-motion (see App.css).
+const FlipInner = styled.div.attrs({ 'data-allow-motion': true })`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media (hover: hover) {
+    ${FlipCard}:hover & { transform: rotateY(180deg); }
+  }
+  ${FlipCard}:focus-visible & { transform: rotateY(180deg); }
+
+  @media (hover: none) {
+    transform: ${({ $flipped }) => ($flipped ? 'rotateY(180deg)' : 'none')};
+  }
+`;
+
+const Img = styled.img`
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 2px solid rgba(0, 212, 255, 0.6);
+  backface-visibility: hidden;
+`;
+
+const CardImg = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+`;
+
+/* ─── DataRain — hex data rain ───────────────────────────────────── */
 const CHARS = '0123456789ABCDEF';
 
 /**
- * Colonnes de caractères hex façon Matrix, dessinées sur un canvas à ~8 fps, atténuées
- * côté texte. Figée (une seule image) avec prefers-reduced-motion. Le canvas se recalcule au resize ; la boucle et l'écouteur
- * sont retirés au démontage. Ne fait rien si le contexte 2D est indisponible (jsdom).
+ * Matrix-style columns of hex characters drawn on a canvas at ~8 fps, dimmed on the
+ * text side. Frozen to a single frame under prefers-reduced-motion. The canvas is
+ * rebuilt on resize; the loop and listener are removed on unmount. Does nothing when
+ * the 2D context is unavailable (jsdom).
  * @component
  * @returns {JSX.Element}
  */
@@ -365,45 +416,58 @@ const DataRain = () => {
 };
 
 /**
- * Tous les textes et liens viennent de `Bio` : name, roles, description, email,
- * linkedin et location.
+ * All text and links come from `Bio`: name, roles, description, email, linkedin
+ * and location.
  * @component
  * @returns {JSX.Element}
  */
-const Hero = () => (
-  <div id="about">
-    <HeroContainer>
-      <DataRain />
+const Hero = () => {
+  const [flipped, setFlipped] = useState(false);
 
-      <HeroInnerContainer>
-        <HeroLeftContainer>
-          <SectorTag>Sector 5 — Carthage</SectorTag>
-          <Name>{Bio.name}</Name>
-          <Headline>{Bio.title} · {Bio.location}</Headline>
-          <Roles>{Bio.roles.join(' · ')}</Roles>
-          <SubTitle>
-            {Bio.description.map((sentence, index) => (
-              <p key={index}>{sentence}</p>
-            ))}
-          </SubTitle>
-          <ContactBlock>
-            <ContactTitle>Open to new missions, any sector.</ContactTitle>
-            <CtaButton href={`mailto:${Bio.email}`}>Transfer · Scanner · Virtualization</CtaButton>
-            <CtaHint href={`mailto:${Bio.email}`}>Channel open: {Bio.email}</CtaHint>
-            <SecondaryRow>
-              <SecondaryLink href={Bio.linkedin} target="_blank" rel="noreferrer">
-                LinkedIn
-              </SecondaryLink>
-            </SecondaryRow>
-          </ContactBlock>
-        </HeroLeftContainer>
+  return (
+    <div id="about">
+      <HeroContainer>
+        <DataRain />
 
-        <HeroRightContainer>
-          <Img src={HeroImg} alt={Bio.name} />
-        </HeroRightContainer>
-      </HeroInnerContainer>
-    </HeroContainer>
-  </div>
-);
+        <HeroInnerContainer>
+          <HeroLeftContainer>
+            <SectorTag>Sector 5 — Carthage</SectorTag>
+            <Name>{Bio.name}</Name>
+            <Headline>{Bio.title} · {Bio.location}</Headline>
+            <Roles>{Bio.roles.join(' · ')}</Roles>
+            <SubTitle>
+              {Bio.description.map((sentence, index) => (
+                <p key={index}>{sentence}</p>
+              ))}
+            </SubTitle>
+            <ContactBlock>
+              <ContactTitle>Open to new missions, any sector.</ContactTitle>
+              <CtaButton href={`mailto:${Bio.email}`}>Transfer · Scanner · Virtualization</CtaButton>
+              <CtaHint href={`mailto:${Bio.email}`}>Channel open: {Bio.email}</CtaHint>
+              <SecondaryRow>
+                <SecondaryLink href={Bio.linkedin} target="_blank" rel="noreferrer">
+                  LinkedIn
+                </SecondaryLink>
+              </SecondaryRow>
+            </ContactBlock>
+          </HeroLeftContainer>
+
+          <HeroRightContainer>
+            <FlipCard
+              type="button"
+              aria-label="Show my Lyoko card"
+              onClick={() => setFlipped((f) => !f)}
+            >
+              <FlipInner $flipped={flipped}>
+                <Img src={HeroImg} alt={Bio.name} />
+                <CardImg src={LyokoCardImg} alt={`${Bio.name} as a Code Lyoko character card`} />
+              </FlipInner>
+            </FlipCard>
+          </HeroRightContainer>
+        </HeroInnerContainer>
+      </HeroContainer>
+    </div>
+  );
+};
 
 export default Hero;

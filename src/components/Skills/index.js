@@ -1,7 +1,7 @@
 /**
  * @file src/components/Skills/index.js
- * Section Skills (territoire Banquise) : une carte par catégorie de `skills[]`,
- * chaque compétence en tuile icône + libellé.
+ * Skills section (Ice territory): one card per `skills[]` category, each skill as an
+ * icon + label tile.
  * @component
  */
 import React from "react";
@@ -198,8 +198,8 @@ const SkillLabel = styled.span`
 `
 
 /**
- * L'icône est optionnelle : sans `image`, seul le libellé s'affiche.
- * La durée d'expérience vient de `Bio.exp`.
+ * The icon is optional: without `image`, only the label is shown.
+ * The years of experience come from `Bio.exp`.
  * @component
  * @returns {JSX.Element}
  */

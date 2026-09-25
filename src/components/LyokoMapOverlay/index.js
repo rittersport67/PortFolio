@@ -1,7 +1,7 @@
 /**
  * @file src/components/LyokoMapOverlay/index.js
- * Carte de Lyoko fixée sur le bord droit : elle pivote pour pointer le territoire
- * de la section en cours. Masquée sur le Hero et sous 960px.
+ * Lyoko map pinned to the right edge: it rotates to point at the territory of the
+ * current section. Hidden on the Hero and below 960px.
  * @component
  */
 import React, { useState, useEffect } from 'react';
@@ -35,14 +35,14 @@ const MapImg = styled.img.attrs({ 'data-allow-motion': true })`
 `;
 
 /*
-  Sections dans l'ordre de scroll.
-  show: false → overlay caché sur cette section.
-  Rotations clockwise continues pour que le territoire
-  pointe vers la gauche (vers le contenu) :
-    Banquise (Ouest) →   0°
-    Forêt    (Est)   → 180°
-    Montagne (Nord)  → 270°
-    Désert   (Sud)   → 450°
+  Sections in scroll order.
+  show: false → overlay hidden on that section.
+  Continuous clockwise rotations so the territory
+  points left (towards the content):
+    Ice      (West)  →   0°
+    Forest   (East)  → 180°
+    Mountain (North) → 270°
+    Desert   (South) → 450°
 */
 const SECTIONS = [
   { id: 'about',       rotation: 0,   show: false },
@@ -53,9 +53,9 @@ const SECTIONS = [
 ];
 
 /**
- * Au scroll, retient la dernière section de `SECTIONS` dont le haut a passé le
- * milieu de l'écran, puis applique sa rotation et sa visibilité.
- * Les ids doivent correspondre à ceux des sections.
+ * On scroll, picks the last `SECTIONS` entry whose top has passed the middle of the
+ * viewport, then applies its rotation and visibility.
+ * The ids must match the section ids.
  * @component
  * @returns {JSX.Element}
  */
@@ -67,8 +67,8 @@ const LyokoMapOverlay = () => {
     const update = () => {
       const mid = window.innerHeight / 2;
 
-      // Parcourt les sections du bas vers le haut
-      // → prend la dernière dont le top est au-dessus du milieu écran
+      // Walk the sections from bottom to top
+      // → take the last one whose top is above the middle of the viewport
       for (let i = SECTIONS.length - 1; i >= 0; i--) {
         const el = document.getElementById(SECTIONS[i].id);
         if (!el) continue;
@@ -78,12 +78,12 @@ const LyokoMapOverlay = () => {
           return;
         }
       }
-      // Avant toute section visible
+      // Before any section is visible
       setOpacity(0);
     };
 
     window.addEventListener('scroll', update, { passive: true });
-    update(); // état initial
+    update(); // initial state
 
     return () => window.removeEventListener('scroll', update);
   }, []);

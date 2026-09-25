@@ -1,7 +1,7 @@
 /**
  * @file src/components/Experience/index.js
- * Section Experience & Education (territoire Forêt) : expériences et formations
- * sur une seule timeline MUI Lab (@mui/lab), du plus récent au plus ancien.
+ * Experience & Education section (Forest territory): jobs and degrees on a single
+ * MUI Lab (@mui/lab) timeline, newest first.
  * @component
  */
 import React, { useEffect, useState } from 'react';
@@ -138,7 +138,7 @@ const DotInner = styled.div`
     background: ${FOREST};
 `
 
-/* Point carré pour les jalons de formation, afin de les distinguer sur le rail */
+/* Square dot for degree milestones, to tell them apart on the rail */
 const DotOuterEdu = styled(DotOuter)`
     border-radius: 3px;
     border-color: ${ICE};
@@ -175,12 +175,12 @@ const LegendItem = styled.span`
     }
 `
 
-/* La timeline est à deux colonnes (formation à gauche, expérience à droite) à
-   partir de 960px. En dessous, tout retombe dans une seule colonne à droite du
-   rail — MUI ne sait pas le faire en CSS seul, d'où le matchMedia. */
+/* The timeline has two columns (degrees on the left, jobs on the right) from
+   960px up. Below that, everything falls back to a single column right of the
+   rail — MUI can't do this in CSS alone, hence the matchMedia. */
 /**
- * Suit la media query `(min-width: 960px)` et se met à jour au redimensionnement.
- * @returns {boolean} true si la fenêtre fait au moins 960px de large.
+ * Tracks the `(min-width: 960px)` media query and updates on resize.
+ * @returns {boolean} true when the window is at least 960px wide.
  */
 const useTwoColumns = () => {
   const [twoColumns, setTwoColumns] = useState(
@@ -200,7 +200,7 @@ const useTwoColumns = () => {
   return twoColumns;
 };
 
-/* Expériences et formations sur un seul rail, du plus récent au plus ancien */
+/* Jobs and degrees on a single rail, newest first */
 const timeline = [
   ...experiences.map((item) => ({ ...item, kind: 'work' })),
   ...education.map((item) => ({
@@ -212,8 +212,8 @@ const timeline = [
 ].sort((a, b) => b.start.localeCompare(a.start));
 
 /**
- * Sur deux colonnes, la formation est à gauche du rail et l'expérience à droite ;
- * sur une colonne, tout est à droite. Les jalons de formation ont un point carré bleu.
+ * On two columns, degrees sit left of the rail and jobs on the right; on one column
+ * everything is on the right. Degree milestones get a blue square dot.
  * @component
  * @returns {JSX.Element}
  */
@@ -231,11 +231,11 @@ const Experience = () => {
           <LegendItem square>Kadic Academy</LegendItem>
         </Legend>
         <TimelineSection>
-          {/* On neutralise le ::before de MUI : chaque ligne rend elle-même ses
-              deux colonnes, sinon le rail se décale d'une ligne à l'autre. */}
+          {/* Disable MUI's ::before: each row renders its own two columns,
+              otherwise the rail shifts from one row to the next. */}
           <Timeline
             sx={{
-              /* sans cela le Timeline se rétracte à la largeur de son contenu */
+              /* without this the Timeline shrinks to the width of its content */
               width: '100%',
               padding: 0,
               '& .MuiTimelineItem-root::before': { display: 'none' },
@@ -247,16 +247,16 @@ const Experience = () => {
 
               return (
                 <TimelineItem key={`${entry.kind}-${entry.id}`}>
-                  {/* Sur deux colonnes, la formation passe à gauche du rail.
-                      La colonne reste rendue même vide pour garder le rail droit. */}
+                  {/* On two columns, degrees move to the left of the rail.
+                      The column is rendered even when empty to keep the rail straight. */}
                   {twoColumns && (
                     <TimelineOppositeContent
                       sx={{
                         flex: 1,
                         py: '12px',
                         px: 2,
-                        /* MUI aligne à droite par défaut : les deux colonnes
-                           doivent se lire de la même façon */
+                        /* MUI right-aligns by default: both columns
+                           should read the same way */
                         textAlign: 'left',
                         display: 'flex',
                         justifyContent: 'flex-end',

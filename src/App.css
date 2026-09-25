@@ -19,9 +19,9 @@ body{
   font-family: 'Montserrat', sans-serif;
 }
 
-/* Le tiroir mobile fermé est parqué en translateX(100%) hors écran. Il est
-   rendu hors du <Body> (qui masque déjà son propre débordement), donc sans ce
-   clip il élargit le document et rogne toute la page sur mobile. */
+/* The closed mobile drawer is parked off-screen at translateX(100%). It is
+   rendered outside <Body> (which already hides its own overflow), so without
+   this clip it widens the document and crops the whole page on mobile. */
 html,
 body{
   overflow-x: hidden;

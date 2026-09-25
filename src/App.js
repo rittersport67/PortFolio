@@ -1,8 +1,8 @@
 /**
  * @file src/App.js
- * Racine du portfolio : page unique en scroll, navigation par ancres (#about, #skills…).
- * Enchaîne Hero, le bloc PRO (Skills, Experience, Projects) et le bloc PERSO
- * (Photography), puis le footer DigitalSea. Seul `darkTheme` est appliqué.
+ * Portfolio root: a single scrolling page navigated by anchors (#about, #skills…).
+ * Renders Hero, Skills, Experience, Projects and Photography, then the DigitalSea
+ * footer. Only `darkTheme` is applied.
  * @module App
  */
 import './App.css';
@@ -24,9 +24,9 @@ const Body = styled.div`
 `;
 
 /**
- * Composant racine : fournit le thème styled-components et monte les overlays
- * fixes (Navbar, LyokoMapOverlay) hors de `Body` pour qu'ils passent au-dessus
- * du `clip-path` du bloc PRO.
+ * Root component: provides the styled-components theme and mounts Navbar and
+ * LyokoMapOverlay outside `Body`, whose `overflow-x: hidden` would break the
+ * Navbar's `position: sticky`.
  * @component
  * @returns {JSX.Element}
  */

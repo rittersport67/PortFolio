@@ -1,6 +1,6 @@
 /**
  * @file src/utils/palette.js
- * Couleurs d'accent des territoires Code Lyoko, importées directement par chaque section.
+ * Code Lyoko territory accent colors, imported directly by each section.
  * @module palette
  */
 

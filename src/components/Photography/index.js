@@ -1,7 +1,7 @@
 /**
  * @file src/components/Photography/index.js
- * Section Photography (territoire Désert, bloc PERSO) : grille 3/2/1 colonnes
- * alimentée par `photography[]` de content.js.
+ * Photography section (Desert territory): 3/2/1-column grid fed by `photography[]`
+ * from content.js.
  * @component
  */
 import React from 'react';
@@ -169,8 +169,8 @@ const Empty = styled.div`
 `;
 
 /**
- * Une entrée avec `before` s'affiche en BeforeAfterCard, sinon en carte simple
- * avec badge de catégorie et titre au survol. Affiche un message si la liste est vide.
+ * An entry with `before` renders as a BeforeAfterCard, otherwise as a plain card with
+ * a category badge and a title on hover. Shows a placeholder when the list is empty.
  * @component
  * @returns {JSX.Element}
  */

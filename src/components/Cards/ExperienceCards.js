@@ -1,14 +1,14 @@
 /**
  * @file src/components/Cards/ExperienceCards.js
- * Carte d'une entrée de la timeline Experience : poste ou formation.
- * La teinte vient de la prop transitoire `$edu` (Forêt pour un poste, Banquise pour une formation).
+ * Card for one Experience timeline entry: a job or a degree.
+ * The tint comes from the transient `$edu` prop (Forest for a job, Ice for a degree).
  * @component
  */
 import React from 'react';
 import styled from 'styled-components';
 import { FOREST, ICE } from '../../utils/palette';
 
-/* Les cartes de formation reprennent la même structure, seule la teinte change */
+/* Degree cards share the same structure; only the tint changes */
 const accent = ({ $edu }) => ($edu ? ICE : FOREST);
 const accentRgb = ({ $edu }) => ($edu ? '75, 167, 209' : '90, 191, 78');
 
@@ -91,7 +91,7 @@ const Body = styled.div`
     gap: 1px;
 `
 
-/* Société et dates côte à côte : la carte reste basse et large */
+/* Company and dates side by side: keeps the card short and wide */
 const Meta = styled.div`
     display: flex;
     align-items: baseline;
@@ -216,19 +216,19 @@ const Document = styled.img`
 `
 
 /**
- * Logo, liste de compétences et lien de document ne s'affichent que s'ils sont renseignés.
+ * The logo, skill list and document link render only when provided.
  * @component
  * @param {Object} props
- * @param {Object} props.experience - Entrée normalisée par Experience : une formation
- *   a déjà `degree` → `role` et `school` → `company`.
- * @param {'work'|'education'} props.experience.kind - Choisit la teinte de la carte.
+ * @param {Object} props.experience - Entry normalized by Experience: a degree already
+ *   has `degree` → `role` and `school` → `company`.
+ * @param {'work'|'education'} props.experience.kind - Picks the card tint.
  * @param {string} props.experience.role
  * @param {string} props.experience.company
- * @param {string} props.experience.date - Période affichée telle quelle.
+ * @param {string} props.experience.date - Period, displayed as is.
  * @param {string} props.experience.desc
- * @param {string} [props.experience.img] - URL du logo.
+ * @param {string} [props.experience.img] - Logo URL.
  * @param {string[]} [props.experience.skills]
- * @param {string} [props.experience.doc] - URL d'un document joint.
+ * @param {string} [props.experience.doc] - URL of an attached document.
  * @returns {JSX.Element}
  */
 const ExperienceCards = ({ experience }) => {

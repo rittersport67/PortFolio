@@ -49,17 +49,17 @@ The `Experience` section uses **MUI Lab Timeline** (`@mui/lab`) to render `Exper
 `App.js` renders, in order:
 1. `Navbar` — sticky, collapses to a drawer on small screens
 2. `LyokoMapOverlay` — fixed Lyoko map that rotates toward the current section's territory
-3. `HeroSection` (`#about`) — name, title, static roles, short bio, contact CTA, photo; faint hex data-rain canvas
+3. `HeroSection` (`#about`) — name, title, static roles, short bio, contact CTA, photo that flips to `src/img/hero-lyokocard.png` ("virtualization") on hover / focus / tap; faint hex data-rain canvas
 4. `Skills`, `Experience`, `Projects`, `Photography` (with `BeforeAfterCard`)
 5. `DigitalSea` — static footer
 
 ### Visual restraint
 
 The site was deliberately stripped of generic "AI cyber-HUD" styling. Keep it that way:
-- Motion budget: Skidbladnir, the Ulrich/XANA easter egg, the rotating Lyoko map, the faint hero data rain, the navbar cursor blink. Do not add looping/pulsing animations.
+- Motion budget: Skidbladnir, the Ulrich/XANA easter egg, the rotating Lyoko map, the faint hero data rain, the hero photo → Lyoko card flip, the navbar cursor blink. Do not add looping/pulsing animations.
 - Glows (`box-shadow` / `drop-shadow`) only on `:hover`, except the Lyoko "objects" (Skidbladnir, Ulrich).
 - No corner brackets, no `◈` / `▸` decorative glyphs.
-- `prefers-reduced-motion` disables all CSS animation (`App.css`); the data-rain canvas paints a single frozen frame. Elements marked `data-allow-motion` (the navbar cursor, the Lyoko map rotation) are exempt.
+- `prefers-reduced-motion` disables all CSS animation (`App.css`); the data-rain canvas paints a single frozen frame. Elements marked `data-allow-motion` (the navbar cursor, the Lyoko map rotation, the hero card flip) are exempt.
 
 ### Code Lyoko territory design system
 

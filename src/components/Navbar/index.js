@@ -1,8 +1,8 @@
 /**
  * @file src/components/Navbar/index.js
- * Barre de navigation sticky : logo, ancres vers les sections, liens GitHub / LinkedIn.
- * Sous 1100px, un bouton hamburger ouvre un menu latéral.
- * Porte aussi les easter eggs Ulrich / XANA au survol du logo.
+ * Sticky navigation bar: logo, section anchors, GitHub / LinkedIn links.
+ * Below 1100px a hamburger button opens a side drawer.
+ * Also hosts the Ulrich / XANA easter eggs shown when hovering the logo.
  * @component
  */
 import React, { Suspense } from 'react';
@@ -30,7 +30,7 @@ const Nav = styled.div`
   position: sticky;
   top: 0;
   z-index: 100;
-  /* nécessaire pour que MobileMenu position:absolute se cale dessus */
+  /* required so the absolutely positioned MobileMenu anchors to it */
   isolation: isolate;
 
   background:
@@ -318,9 +318,9 @@ const MobileMenuLink = styled.a`
 `;
 
 /**
- * Survoler le symbole Lyoko fait apparaître Ulrich-XANA (lueur rouge), survoler le
- * pseudo fait apparaître Ulrich (lueur teal). Le menu mobile se ferme au clic sur un
- * lien ou sur le fond, et automatiquement quand la fenêtre dépasse 1100px.
+ * Hovering the Lyoko symbol shows Ulrich-XANA (red glow); hovering the handle shows
+ * Ulrich (teal glow). The mobile drawer closes on a link or backdrop click, and
+ * automatically once the window grows past 1100px.
  * @component
  * @returns {JSX.Element}
  */

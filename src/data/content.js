@@ -1,12 +1,12 @@
 /**
  * @file src/data/content.js
- * Source unique du contenu du portfolio : pour modifier le site, on édite ce fichier.
- * `experiences` et `education` partagent le champ `start` (AAAA-MM), qui sert à
- * les trier ensemble sur la timeline.
+ * Single source of truth for the portfolio content: edit this file to change the site.
+ * `experiences` and `education` share the `start` field (YYYY-MM), used to sort them
+ * together on the timeline.
  * @module content
  */
 
-/** Identité et contact : nom, rôles, paragraphes du Hero, liens. */
+/** Identity and contact: name, roles, Hero paragraphs, links. */
 export const Bio = {
   exp: '7 years',
   name: 'Sébastien RITTER',
@@ -25,7 +25,7 @@ export const Bio = {
   location: 'Strasbourg, France'
 };
 
-/** Catégories de compétences : `{ title, skills: [{ name, image? }] }`. */
+/** Skill categories: `{ title, skills: [{ name, image? }] }`. */
 export const skills = [
   {
     title: 'Frontend',
@@ -257,7 +257,7 @@ export const skills = [
   }
 ];
 
-/** Postes : `{ id, img?, role, company, date, start, desc, skills?, doc? }`. */
+/** Jobs: `{ id, img?, role, company, date, start, desc, skills?, doc? }`. */
 export const experiences = [
   {
     id: 0,
@@ -341,8 +341,8 @@ export const experiences = [
 ];
 
 /**
- * Photos : `{ id, title, category }` plus soit `before` + `after` (carte avant/après),
- * soit `image` (carte simple).
+ * Photos: `{ id, title, category }` plus either `before` + `after` (before/after card)
+ * or `image` (plain card).
  */
 export const photography = [
   {
@@ -361,7 +361,7 @@ export const photography = [
   }
 ];
 
-/** Formations : `{ id, img?, school, date, start, degree, desc }`. */
+/** Degrees: `{ id, img?, school, date, start, degree, desc }`. */
 export const education = [
   {
     id: 0,
@@ -384,8 +384,8 @@ export const education = [
 ];
 
 /**
- * Projets perso : `{ id, title, date, description, image, tags, category, github?, webapp? }`.
- * `description` est injectée en HTML brut (dangerouslySetInnerHTML).
+ * Personal projects: `{ id, title, date, description, image, tags, category, github?, webapp? }`.
+ * `description` is injected as raw HTML (dangerouslySetInnerHTML).
  */
 export const projects = [
   {

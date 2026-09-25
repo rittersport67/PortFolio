@@ -1,7 +1,7 @@
 /**
  * @file src/components/Projects/index.js
- * Section Personal Project (territoire Montagne) : grille de cartes projet
- * filtrables par catégorie, alimentée par `projects[]` de content.js.
+ * Personal Project section (Mountain territory): grid of project cards filterable
+ * by category, fed by `projects[]` from content.js.
  * @component
  */
 import React, { useState } from 'react';
@@ -247,12 +247,12 @@ const LinkBtn = styled.a`
   }
 `;
 
-/* Filtres calculés une fois au chargement : 'all' puis chaque catégorie distincte */
+/* Filters computed once at load: 'all' followed by each distinct category */
 const CATEGORIES = ['all', ...Array.from(new Set(projects.map((p) => p.category)))];
 
 /**
- * Affiche au plus 5 tags par carte, et les liens GitHub / Live seulement s'ils existent.
- * `description` est rendue en HTML : elle ne doit venir que de content.js.
+ * Shows at most 5 tags per card, and the GitHub / Live links only when they exist.
+ * `description` is rendered as HTML, so it must only come from content.js.
  * @component
  * @returns {JSX.Element}
  */

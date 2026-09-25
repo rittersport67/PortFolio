@@ -1,7 +1,7 @@
 /**
  * @file src/components/Navbar/UlrichEasterEgg.js
- * Easter egg de la Navbar : personnage flottant avec lueur et scan-lines.
- * Chargé en lazy par Navbar et rendu par portail dans `document.body`.
+ * Navbar easter egg: floating character with a glow and scan lines.
+ * Lazy-loaded by Navbar and portaled into `document.body`.
  * @component
  */
 import React from 'react';
@@ -38,13 +38,13 @@ const ScanLines = styled.div`
 `;
 
 /**
- * Apparaît en ressort sous le logo quand `visible` passe à true, flotte en boucle,
- * puis ressort par `AnimatePresence`. Ne capte jamais les clics.
+ * Springs in under the logo when `visible` turns true, floats in a loop, then
+ * springs out through `AnimatePresence`. Never captures clicks.
  * @component
  * @param {Object} props
- * @param {boolean} props.visible - Affiche ou masque le personnage.
- * @param {string} props.src - Image PNG détourée (Ulrich ou Ulrich-XANA).
- * @param {string} [props.glowColor='#0DB6A4'] - Couleur hex du drop-shadow.
+ * @param {boolean} props.visible - Shows or hides the character.
+ * @param {string} props.src - Transparent PNG (Ulrich or Ulrich-XANA).
+ * @param {string} [props.glowColor='#0DB6A4'] - Hex color of the drop-shadow.
  * @returns {React.ReactPortal}
  */
 const UlrichEasterEgg = ({ visible, src, glowColor = '#0DB6A4' }) =>

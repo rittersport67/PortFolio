@@ -1,6 +1,6 @@
 /**
  * @file src/App.test.js
- * Test de fumée : l'application complète se rend et affiche le nom de `Bio`.
+ * Smoke test: the full app renders and shows the name from `Bio`.
  */
 import { render, screen } from '@testing-library/react';
 import App from './App';

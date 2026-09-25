@@ -1,6 +1,7 @@
 /**
  * @file src/components/DigitalSea/index.js
- * Footer « Mer Numérique » : vagues et grille statiques en CSS pur, avec le copyright.
+ * "Digital Sea" footer: static pure-CSS waves and grid, back-to-top link, copyright
+ * and fan-tribute disclaimer.
  * @component
  */
 import React from 'react';
@@ -134,7 +135,7 @@ const Disclaimer = styled.p`
 `;
 
 /**
- * Dernier élément de la page. L'année du copyright est calculée au rendu.
+ * Last element of the page. The copyright year is computed at render time.
  * @component
  * @returns {JSX.Element}
  */

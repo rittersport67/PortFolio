@@ -1,12 +1,12 @@
 /**
  * @file src/utils/Themes.js
- * Thèmes styled-components, lus via `${({ theme }) => theme.<clé>}`.
- * Seul `darkTheme` est branché dans App.js ; `lightTheme` n'a pas les clés
- * `card_light`, `white` et `black`.
+ * styled-components themes, read via `${({ theme }) => theme.<key>}`.
+ * Only `darkTheme` is wired in App.js; `lightTheme` lacks the `card_light`,
+ * `white` and `black` keys.
  * @module Themes
  */
 
-/** Thème actif du site (fond #1C1C27, accent teal #0DB6A4). */
+/** Active site theme (#1C1C27 background, #0DB6A4 teal accent). */
 export const darkTheme = {
   bg:"#1C1C27",
   bgLight: "#1C1E27",
@@ -20,7 +20,7 @@ export const darkTheme = {
   black:"#000000",
 }
 
-/** Thème clair, non utilisé pour l'instant. */
+/** Light theme, currently unused. */
 export const lightTheme = {
   bg:"#FFFFFF",
   bgLight: "#f0f0f0",

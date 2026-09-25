@@ -1,12 +1,12 @@
 /**
  * @file src/reportWebVitals.js
- * Boilerplate CRA : collecte les Web Vitals, `web-vitals` n'est chargé qu'à la demande.
+ * CRA boilerplate: collects Web Vitals, loading `web-vitals` only on demand.
  */
 
 /**
- * Transmet les métriques CLS, FID, FCP, LCP et TTFB au callback fourni.
- * Ne fait rien si aucun callback n'est passé (cas actuel dans index.js).
- * @param {Function} [onPerfEntry] - Reçoit chaque métrique, ex. `console.log`.
+ * Sends the CLS, FID, FCP, LCP and TTFB metrics to the given callback.
+ * Does nothing when no callback is passed (the current case in index.js).
+ * @param {Function} [onPerfEntry] - Receives each metric, e.g. `console.log`.
  * @returns {void}
  */
 const reportWebVitals = onPerfEntry => {
