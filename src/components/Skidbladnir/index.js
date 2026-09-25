@@ -1,3 +1,9 @@
+/**
+ * @file src/components/Skidbladnir/index.js
+ * Vaisseau Skidbladnir en position fixe, animé en parallaxe au scroll (framer-motion).
+ * Masqué sous 768px. Non importé dans App.js pour l'instant.
+ * @component
+ */
 import React from 'react';
 import styled from 'styled-components';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -28,6 +34,13 @@ const SkidImage = styled.img`
     drop-shadow(0 0 28px rgba(13, 182, 164, 0.18));
 `;
 
+/**
+ * Descend de 8vh à 82vh en s'inclinant jusqu'à 8° sur toute la hauteur de la page,
+ * avec fondu d'entrée et de sortie. Les valeurs passent par `style` (MotionValues),
+ * sans re-render React.
+ * @component
+ * @returns {JSX.Element}
+ */
 const Skidbladnir = () => {
   const { scrollYProgress } = useScroll();
 

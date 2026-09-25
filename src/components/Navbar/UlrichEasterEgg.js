@@ -1,3 +1,9 @@
+/**
+ * @file src/components/Navbar/UlrichEasterEgg.js
+ * Easter egg de la Navbar : personnage flottant avec lueur et scan-lines.
+ * Chargé en lazy par Navbar et rendu par portail dans `document.body`.
+ * @component
+ */
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -31,6 +37,16 @@ const ScanLines = styled.div`
   );
 `;
 
+/**
+ * Apparaît en ressort sous le logo quand `visible` passe à true, flotte en boucle,
+ * puis ressort par `AnimatePresence`. Ne capte jamais les clics.
+ * @component
+ * @param {Object} props
+ * @param {boolean} props.visible - Affiche ou masque le personnage.
+ * @param {string} props.src - Image PNG détourée (Ulrich ou Ulrich-XANA).
+ * @param {string} [props.glowColor='#0DB6A4'] - Couleur hex du drop-shadow.
+ * @returns {React.ReactPortal}
+ */
 const UlrichEasterEgg = ({ visible, src, glowColor = '#0DB6A4' }) =>
   createPortal(
     <AnimatePresence>

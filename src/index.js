@@ -1,3 +1,7 @@
+/**
+ * @file src/index.js
+ * Point d'entrée CRA : monte <App /> dans #root en StrictMode (React 18 createRoot).
+ */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

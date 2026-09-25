@@ -1,15 +1,11 @@
+/**
+ * @file src/components/DigitalSea/index.js
+ * Footer « Mer Numérique » : vagues et grille statiques en CSS pur, avec le copyright.
+ * @component
+ */
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
-
-const waveScroll = keyframes`
-  0%   { background-position: 0 0,   60px 10px, 130px 20px; }
-  100% { background-position: 200px 0, 260px 10px, 330px 20px; }
-`;
-
-const hexPulse = keyframes`
-  0%, 100% { opacity: 0.04; }
-  50%       { opacity: 0.09; }
-`;
+import styled from 'styled-components';
+import { CARTHAGE } from '../../utils/palette';
 
 const Sea = styled.footer`
   width: 100%;
@@ -27,7 +23,6 @@ const Sea = styled.footer`
 const Waves = styled.div`
   position: absolute;
   inset: 0;
-  animation: ${waveScroll} 8s linear infinite;
   background-image:
     repeating-linear-gradient(
       -12deg,
@@ -49,7 +44,7 @@ const Waves = styled.div`
 const HexGrid = styled.div`
   position: absolute;
   inset: 0;
-  animation: ${hexPulse} 4s ease-in-out infinite;
+  opacity: 0.06;
   background-image:
     linear-gradient(rgba(10, 74, 255, 1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(10, 74, 255, 1) 1px, transparent 1px);
@@ -89,13 +84,60 @@ const SeaTitle = styled.p`
   margin: 0;
 `;
 
-const Copyright = styled.p`
+const BackToTop = styled.a`
+  font-family: 'Courier New', monospace;
   font-size: 12px;
-  color: rgba(100, 150, 255, 0.35);
-  margin: 0;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(0, 212, 255, 0.75);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  border-radius: 2px;
+  padding: 8px 18px;
+  transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    color: #fff;
+    border-color: rgba(0, 212, 255, 0.8);
+    box-shadow: 0 0 14px rgba(0, 212, 255, 0.35);
+  }
 `;
 
+const Copyright = styled.p`
+  font-size: 12px;
+  color: rgba(150, 190, 255, 0.7);
+  margin: 0;
+  letter-spacing: 1px;
+
+  strong {
+    color: ${CARTHAGE};
+    font-weight: 700;
+  }
+`;
+
+const Disclaimer = styled.p`
+  max-width: 520px;
+  padding: 0 16px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(150, 190, 255, 0.7);
+  margin: 0;
+  letter-spacing: 0.5px;
+
+  em {
+    color: ${CARTHAGE};
+    font-style: normal;
+    font-weight: 700;
+  }
+`;
+
+/**
+ * Dernier élément de la page. L'année du copyright est calculée au rendu.
+ * @component
+ * @returns {JSX.Element}
+ */
 const DigitalSea = () => (
   <Sea>
     <Waves />
@@ -103,7 +145,12 @@ const DigitalSea = () => (
     <DepthGlow />
     <Content>
       <SeaTitle>Digital Sea</SeaTitle>
-      <Copyright>© {new Date().getFullYear()} Sébastien RITTER</Copyright>
+      <BackToTop href="#about">▴ Return to the past</BackToTop>
+      <Copyright>© {new Date().getFullYear()} <strong>Sébastien RITTER</strong></Copyright>
+      <Disclaimer>
+        Fan-made tribute to <em>Code Lyoko</em>. Not affiliated with or endorsed by its rights
+        holders. Characters and artwork © their respective owners.
+      </Disclaimer>
     </Content>
   </Sea>
 );

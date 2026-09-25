@@ -19,6 +19,14 @@ body{
   font-family: 'Montserrat', sans-serif;
 }
 
+/* Le tiroir mobile fermé est parqué en translateX(100%) hors écran. Il est
+   rendu hors du <Body> (qui masque déjà son propre débordement), donc sans ce
+   clip il élargit le document et rogne toute la page sur mobile. */
+html,
+body{
+  overflow-x: hidden;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 4px;
@@ -40,3 +48,12 @@ body{
   ::-webkit-scrollbar-thumb:hover {
     background: #626970;
   }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *:not([data-allow-motion]),
+  *:not([data-allow-motion])::before,
+  *:not([data-allow-motion])::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

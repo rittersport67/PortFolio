@@ -1,23 +1,31 @@
+/**
+ * @file src/data/content.js
+ * Source unique du contenu du portfolio : pour modifier le site, on édite ce fichier.
+ * `experiences` et `education` partagent le champ `start` (AAAA-MM), qui sert à
+ * les trier ensemble sur la timeline.
+ * @module content
+ */
+
+/** Identité et contact : nom, rôles, paragraphes du Hero, liens. */
 export const Bio = {
-  exp: '5 years',
+  exp: '7 years',
   name: 'Sébastien RITTER',
   surname: 'seb-rtr.jpeg',
-  roles: ['Software Developper', 'Full Stack Developper', 'Photographer', 'DJ'],
+  title: '.NET & AI Software Engineer',
+  roles: ['Embedded systems', 'AI & MCP tooling', 'Photographer', 'DJ'],
   description: [
-    'I am a Software Engineer with over 5 years of experience specializing in embedded systems, where I have designed and implemented innovative software solutions across diverse industrial sectors.',
-    'I focus on creating efficient, robust, and scalable systems that deliver tangible results.',
-    'Beyond my technical expertise, I bring a multifaceted perspective as a Full Stack Developer, while also pursuing photography and DJing during my free time.',
-    'Through traveling, I have developed a deep appreciation for adaptability and diverse perspectives, which enrich both my professional and personal life.'
+    'Software engineer with 7+ years across embedded systems for the automotive and industrial sectors, and .NET back-ends for conversational AI.',
+    'Off the clock I build MCP servers and LLM tooling, shoot street photography and play electronic music.'
   ],
+  email: 'sebastienritter67580@gmail.com',
   github: 'https://github.com/rittersport67',
   resume:
     'https://drive.google.com/file/d/1ffZrcMcn8UatXGIaautbbqpV7ADNaETA/view?usp=sharing',
-  linkedin: 'https://www.linkedin.com/in/rishav-chanda-b89a791b3/',
-  twitter: 'https://twitter.com/RishavChanda',
-  insta: 'https://www.instagram.com/rishav_chanda/',
-  facebook: 'https://www.facebook.com/rishav.chanda.165/'
+  linkedin: 'https://www.linkedin.com/in/sebastien-r-3b2160154/',
+  location: 'Strasbourg, France'
 };
 
+/** Catégories de compétences : `{ title, skills: [{ name, image? }] }`. */
 export const skills = [
   {
     title: 'Frontend',
@@ -33,18 +41,26 @@ export const skills = [
           'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K'
       },
       {
+        name: 'Next.js',
+        image: 'https://cdn.simpleicons.org/nextdotjs/FFFFFF'
+      },
+      {
+        name: 'Tailwind CSS',
+        image: 'https://cdn.simpleicons.org/tailwindcss/06B6D4'
+      },
+      {
         name: 'HTML',
         image: 'https://www.w3.org/html/logo/badge/html5-badge-h-solo.png'
       },
       {
         name: 'CSS',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1452px-CSS3_logo_and_wordmark.svg.png'
+          'https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg'
       },
       {
         name: 'JavaScript',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/800px-JavaScript-logo.png'
+          'https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg'
       }
     ]
   },
@@ -54,6 +70,11 @@ export const skills = [
       {
         name: 'C#',
         image: 'https://cdn.worldvectorlogo.com/logos/c--4.svg'
+      },
+      {
+        name: '.NET',
+        image:
+          'https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg'
       },
       {
         name: 'MySQL',
@@ -95,6 +116,71 @@ export const skills = [
       {
         name: 'GCC',
         image: 'https://icon.icepanel.io/Technology/svg/GCC.svg'
+      },
+      {
+        name: 'Modbus / CANopen',
+        image: 'https://api.iconify.design/mdi/connection.svg?color=%237B4EA8'
+      },
+      {
+        name: 'AUTOSAR BSW',
+        image: 'https://api.iconify.design/mdi/car-cog.svg?color=%237B4EA8'
+      },
+      {
+        name: 'HIL / SIL',
+        image: 'https://api.iconify.design/mdi/flask-outline.svg?color=%237B4EA8'
+      }
+    ]
+  },
+  {
+    title: 'AI & Automation',
+    skills: [
+      {
+        name: 'MCP',
+        image: 'https://cdn.simpleicons.org/anthropic/CC785C'
+      },
+      {
+        name: 'LangGraph',
+        image: 'https://cdn.simpleicons.org/langchain/1C3C3C'
+      },
+      {
+        name: 'TypeScript',
+        image:
+          'https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg'
+      },
+      {
+        name: 'Electron',
+        image:
+          'https://raw.githubusercontent.com/devicons/devicon/master/icons/electron/electron-original.svg'
+      },
+      {
+        name: 'GitHub Actions',
+        image: 'https://cdn.simpleicons.org/githubactions/2088FF'
+      },
+      {
+        name: 'REST APIs',
+        image:
+          'https://raw.githubusercontent.com/devicons/devicon/master/icons/postman/postman-original.svg'
+      },
+      {
+        name: 'GitHub Copilot',
+        image: 'https://cdn.simpleicons.org/githubcopilot/00D4FF'
+      },
+      {
+        name: 'RAG / NLP',
+        image: 'https://api.iconify.design/mdi/text-box-search-outline.svg?color=%2300D4FF'
+      }
+    ]
+  },
+  {
+    title: 'Cloud Computing',
+    skills: [
+      {
+        name: 'Kubernetes',
+        image: 'https://cdn.simpleicons.org/kubernetes/326CE5'
+      },
+      {
+        name: 'OpenShift',
+        image: 'https://cdn.simpleicons.org/redhatopenshift/EE0000'
       }
     ]
   },
@@ -104,7 +190,7 @@ export const skills = [
       {
         name: 'VS Code',
         image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/512px-Visual_Studio_Code_1.35_icon.svg.png?20210804221519'
+          'https://raw.githubusercontent.com/devicons/devicon/master/icons/vscode/vscode-original.svg'
       },
       {
         name: 'Visual Studio',
@@ -127,8 +213,11 @@ export const skills = [
     skills: [
       {
         name: 'Git',
-        image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1200px-Git_icon.svg.png'
+        image: 'https://cdn.simpleicons.org/git/F05032'
+      },
+      {
+        name: 'GitLab',
+        image: 'https://cdn.simpleicons.org/gitlab/FC6D26'
       },
       {
         name: 'Tortoise SVN',
@@ -139,9 +228,21 @@ export const skills = [
         image: 'https://icon.icepanel.io/Technology/svg/Jira.svg'
       },
       {
+        name: 'Vitest',
+        image: 'https://cdn.simpleicons.org/vitest/6E9F18'
+      },
+      {
         name: 'DOORS',
         image:
           'https://www.opshub.com/wp-content/uploads/2018/02/IBM-RATIONAL-DOORS.png'
+      },
+      {
+        name: 'Agile / Scrum',
+        image: 'https://api.iconify.design/mdi/autorenew.svg?color=%2300A3E0'
+      },
+      {
+        name: 'UX Design',
+        image: 'https://cdn.simpleicons.org/figma/F24E1E'
       },
       {
         name: 'Photoshop',
@@ -156,293 +257,194 @@ export const skills = [
   }
 ];
 
+/** Postes : `{ id, img?, role, company, date, start, desc, skills?, doc? }`. */
 export const experiences = [
   {
     id: 0,
-    img: 'https://img.batiweb.com/repo-images/article/37452/BDR.jpg',
-    role: 'Embedded Software Developper',
-    company: 'BDR THERMEA GROUP - contracted by CAPGEMINI',
-    date: 'Jul 2023 - Present',
-    desc: 'Design, develop and implement software solutions in C for the heat pump regulation process, redesign of legacy code, tooling improvement'
+    img: 'https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg',
+    role: '.NET Software Developer',
+    company: 'IBM',
+    date: 'Jul 2025 - Present',
+    start: '2025-07',
+    desc: 'Cognitive project for a French bank (Euro Information): back-end development in .NET on a proprietary framework for chatbots and IVRs, integrating NLP and AI components. V-cycle process with Agile ceremonies, GitLab for source control, and close collaboration with technical and business teams.',
+    skills: ['C#', '.NET', 'NLP', 'Conversational AI', 'GitLab', 'Agile']
   },
   {
     id: 1,
-    img: 'https://images.seeklogo.com/logo-png/2/1/bosch-logo-png_seeklogo-21517.png?v=1958567578828505240',
-    role: 'Automotive Software Engineer',
-    company: 'RB BOSCH GMBH - contracted by CAPGEMINI',
-    date: 'Mar 2022 - Jul 2023',
-    desc: 'Develop embedded software for the latest driver assistance computers and autonomous driving for high-tech vehicles for a german car manufacturer'
+    img: 'https://img.batiweb.com/repo-images/article/37452/BDR.jpg',
+    role: 'Software Engineer',
+    company: 'BDR THERMEA GROUP - contracted by CAPGEMINI',
+    date: 'Aug 2023 - Jun 2025',
+    start: '2023-08',
+    desc: 'Designed and implemented software to optimise the performance, management and maintenance of heat pump systems. Worked with industrial communication protocols (Modbus, CANopen) and thermal control standards, alongside the lab test and deployment teams. Led the refactoring of the algorithm managing the additional producer on the main software board.',
+    skills: [
+      'C',
+      'Embedded C',
+      'Modbus',
+      'CANopen',
+      'Refactoring',
+      'Design patterns'
+    ]
   },
   {
     id: 2,
-    img: 'https://media.licdn.com/dms/image/v2/C560BAQG3lyTi3B8qQQ/company-logo_200_200/company-logo_200_200/0/1630647286440/liebherr_logo?e=2147483647&v=beta&t=9G8_gWxS09bZ9fihd5M2k_6feTkmLafmKSwUbRwK7j0',
-    role: 'Validation Engineer',
-    company: 'Liebherr Mining Equipment',
-    date: 'Sept 2018 - Mar 2022',
-    desc: 'Carry out a software and hardware overhaul of an old cab test bench designed for excavator cabin end of line test chain.'
+    img: 'https://images.seeklogo.com/logo-png/2/1/bosch-logo-png_seeklogo-21517.png?v=1958567578828505240',
+    role: 'Embedded Software Developer',
+    company: 'BOSCH - contracted by CAPGEMINI ENGINEERING',
+    date: 'Mar 2022 - Jul 2023',
+    start: '2022-03',
+    desc: 'Embedded software for driver assistance and autonomous driving computers, on customer projects for an integrated brake control system. Developed BSW functionalities (diagnostic system, system control) and planned and ran validation campaigns on Hardware-in-the-Loop and Software-in-the-Loop benches.',
+    skills: [
+      'Embedded C',
+      'AUTOSAR BSW',
+      'Diagnostics',
+      'HIL / SIL',
+      'Automotive'
+    ]
   },
   {
     id: 3,
-    img: require('../img/logo-company/fsg.jpeg'),
-    role: 'R&D Intern',
-    company: 'FSG Fernsteuergeraete',
-    date: 'August 2019',
-    desc: 'Develop a test routine software for a split ring electrical equipement'
+    img: 'https://media.licdn.com/dms/image/v2/C560BAQG3lyTi3B8qQQ/company-logo_200_200/company-logo_200_200/0/1630647286440/liebherr_logo?e=2147483647&v=beta&t=9G8_gWxS09bZ9fihd5M2k_6feTkmLafmKSwUbRwK7j0',
+    role: 'Engineering Apprentice → Validation Engineer',
+    company: 'Liebherr Mining Equipment',
+    date: 'Sep 2018 - Feb 2022',
+    start: '2018-09',
+    desc: 'Three and a half years on the production test benches for mining excavator cabins — first as an engineering apprentice alongside my degree, then hired as a validation engineer. Excavators ship as sub-assemblies, each validated individually on a dedicated bench. I handled the software and hardware monitoring of those benches, carried out a full overhaul of a legacy LabVIEW cabin bench, and integrated the previous-generation cabin tests into a new bench for the production launch of the R9600 excavator.',
+    skills: [
+      'LabVIEW',
+      'TestStand',
+      'Test benches',
+      'Hardware validation',
+      'Industrial IT'
+    ]
   },
   {
     id: 4,
+    img: require('../img/logo-company/fsg.jpeg'),
+    role: 'Intern',
+    company: 'FSG Fernsteuergeraete',
+    date: 'Aug 2021',
+    start: '2021-08',
+    desc: 'FSG assembles and wires slip rings for crane alternators. Continuity testing of the electrical assemblies was previously done by hand with an ohmmeter and needed two people. I designed the software side of an automated test instrument and wrote its voltage measurement routines.',
+    skills: ['Test automation', 'Electrical measurement', 'Instrumentation']
+  },
+  {
+    id: 5,
     img: require('../img/logo-company/bruker.png'),
-    role: 'R&D Intern',
-    company: 'Bruker Biospin',
+    role: 'Intern',
+    company: 'Bruker BioSpin',
     date: 'Apr 2018 - Jun 2018',
-    desc: 'Update a testbench dedicated for electronical RF card board validation for a mass spectrometer'
+    start: '2018-04',
+    desc: 'Studied an electronic test bench and migrated its test cases to a TestStand environment, for the validation of RF electronic boards.',
+    skills: ['NI TestStand', 'RF electronics', 'Test migration']
   }
 ];
 
+/**
+ * Photos : `{ id, title, category }` plus soit `before` + `after` (carte avant/après),
+ * soit `image` (carte simple).
+ */
 export const photography = [
   {
     id: 1,
     title: 'Tokyo — Ueno',
-    before: '/img/photography/tokyo_before.jpg',
-    after: '/img/photography/tokyo_after.png',
+    before: require('../img/photography/tokyo_before.jpg'),
+    after: require('../img/photography/tokyo_after.png'),
     category: 'street'
   },
   {
     id: 2,
     title: 'Kyoto — Yasaka',
-    before: '/img/photography/kyoto_before.jpg',
-    after: '/img/photography/kyoto_after.png',
+    before: require('../img/photography/kyoto_before.jpg'),
+    after: require('../img/photography/kyoto_after.png'),
     category: 'street'
   }
 ];
 
+/** Formations : `{ id, img?, school, date, start, degree, desc }`. */
 export const education = [
   {
     id: 0,
-    img: 'https://firebasestorage.googleapis.com/v0/b/flexi-coding.appspot.com/o/Kiit.jpeg?alt=media&token=3839d520-c59d-4341-ad8f-0980c98de4dd',
-    school: 'Kalinga Institute of Industrial Technology, Bhubaneswar',
-    date: 'Oct 2021 - Sep 2025',
-    grade: '8.71 CGPA',
-    desc: "I am currently pursuing a Bachelor's degree in Computer Science and Engineering at Kalinga Institute of Industrial Technology, Bhubaneswar. I have completed 4 semesters and have a CGPA of 8.71. I have taken courses in Data Structures, Algorithms, Object-Oriented Programming, Database Management Systems, Operating Systems, and Computer Networks, among others. I am also a member of the Google Developers Student Club (GDSC) at KIIT, where I am learning and working on exciting projects with a team of talented developers.",
-    degree: 'Bachelor of Technology - BTech, Computer Science and Engineering'
+    img: 'https://www.telecom-physique.fr/fileadmin/templates/projects/telecom-physique/images/logo.png',
+    school: 'Télécom Physique Strasbourg',
+    date: '2018 - 2021',
+    start: '2018-09',
+    degree:
+      'Ingénieur (apprenticeship) — Electrical, Electronic and Industrial Computer Engineering',
+    desc: 'Three-year engineering degree completed as an apprentice, alternating between the school and Liebherr Mining Equipment.'
   },
   {
     id: 1,
-    img: 'https://firebasestorage.googleapis.com/v0/b/flexi-coding.appspot.com/o/methodist.png?alt=media&token=018a1b18-e2dd-4f34-8855-cff1b6b69fd3',
-    school: 'Methodist School, Dankuni',
-    date: 'Apr 2019 - Apr 2025',
-    grade: '88.2%',
-    desc: 'I completed my class 12 high school education at Methodist School, Dankuni, where I studied Science with Computer Science.',
-    degree: 'ISC(XII), Science with Computer'
-  },
-  {
-    id: 2,
-    img: 'https://firebasestorage.googleapis.com/v0/b/flexi-coding.appspot.com/o/methodist.png?alt=media&token=018a1b18-e2dd-4f34-8855-cff1b6b69fd3',
-    school: 'Methodist School, Dankuni',
-    date: 'Apr 2017 - Apr 2019',
-    grade: '92.3%',
-    desc: 'I completed my class 10 education at Methodist School, Dankuni, where I studied Science with Computer Application.',
-    degree: 'ICSC(X), Science with Computer'
+    school: 'IUT de Haguenau',
+    date: '2016 - 2018',
+    start: '2016-09',
+    degree: 'DUT Génie Électrique et Informatique Industrielle (GEII)',
+    desc: 'Two-year technical degree in electrical engineering, electronics and industrial computing.'
   }
 ];
 
+/**
+ * Projets perso : `{ id, title, date, description, image, tags, category, github?, webapp? }`.
+ * `description` est injectée en HTML brut (dangerouslySetInnerHTML).
+ */
 export const projects = [
   {
-    id: 9,
-    title: 'Trackify',
-    date: 'Jun 2023 - Jul 2023',
-    description:
-      "Trackify is a web application designed to streamline task management and enhance productivity in the workplace. It provides a user-friendly interface for employers to keep track of their employees' daily work activities and empowers employees to log their tasks efficiently. <br />.Admin Credentials: # Email: testadmin@gmail.com #Password- 123@testadmin, Employee Credentials:	#Email: testemployee@gmail.com	#Password- 123@Testemployee",
-    image:
-      'https://user-images.githubusercontent.com/64485885/255202416-e1f89b04-2788-45b0-abc2-9dec616669e2.png',
-    tags: [
-      'Docker',
-      'AWS',
-      'DuckDNS',
-      'Eslint',
-      'Husky',
-      'CI/CD',
-      'React Js',
-      'MongoDb',
-      'Node Js',
-      'Express Js',
-      'Redux'
-    ],
-    category: 'web app',
-    github: 'https://github.com/rishavchanda/Trackify',
-    webapp: 'https://trackify.duckdns.org'
-  },
-  {
     id: 0,
-    title: 'Podstream',
-    date: 'Apr 2023 - May 2023',
+    title: 'Spotify Playlist Sorter',
+    date: 'Mar 2026 - Aug 2026',
     description:
-      'Developed a full-stack web application that allows users to search for, play, and pause their favorite podcasts on demand and create podcasts. Implemented user authentication using Google Auth and Jwt Auth, made responsive user interface with React JS that provides users with a seamless experience across all devices. Practiced agile methodologies to optimize team efficiency and communication.',
+      "Automated pipeline that files my Spotify liked tracks into genre playlists, running hourly on GitHub Actions with zero manual intervention. Tracks are tagged from the Last.fm API (with remix and feat. detection so the remixer's genre wins), matched against keyword rules, and anything ambiguous is classified by an LLM on Groq. Each run is incremental \u2014 a committed state.json checkpoint means only new likes are processed.",
     image:
-      'https://user-images.githubusercontent.com/64485885/234602896-a1bd8bcc-b72b-4821-83d6-8ad885bf435e.png',
-    tags: ['React Js', 'MongoDb', 'Node Js', 'Express Js', 'Redux'],
-    category: 'web app',
-    github: 'https://github.com/rishavchanda/Podstream',
-    webapp: 'https://podstream.netlify.app/',
-    member: [
-      {
-        name: 'Rishav Chanda',
-        img: 'https://avatars.githubusercontent.com/u/64485885?v=4',
-        linkedin: 'https://www.linkedin.com/in/rishav-chanda-b89a791b3/',
-        github: 'https://github.com/rishavchanda/'
-      },
-      {
-        name: 'Upasana Chaudhuri',
-        img: 'https://avatars.githubusercontent.com/u/100614635?v=4',
-        linkedin: 'https://www.linkedin.com/in/upasana-chaudhuri-2a2bb5231/',
-        github: 'https://github.com/upasana0710'
-      }
-    ]
+      'https://opengraph.githubassets.com/1/rittersport67/Spotify-playlist-sorter',
+    tags: [
+      'Python',
+      'Groq LLM',
+      'Spotify API',
+      'Last.fm API',
+      'GitHub Actions'
+    ],
+    category: 'automation',
+    github: 'https://github.com/rittersport67/Spotify-playlist-sorter'
   },
   {
     id: 1,
-    title: 'Vexa',
-    date: 'Oct 2022 - Present',
+    title: 'Riot Dashboard',
+    date: 'Feb 2026 - Jun 2026',
     description:
-      'Designed and developed the Vexa project, a project management app that helps users and teams stay organized and on track. Implemented key features such as task tracking, team collaboration, and time tracking to improve productivity and project outcomes and also invite team/project members. The plan is to add a community of users where they can find developers and other team members and chat system implementation.',
-    image:
-      'https://user-images.githubusercontent.com/64485885/234916413-96296f13-fe4b-4cc4-b215-e72bd7c27928.png',
+      'A League of Legends behaviour analysis dashboard: search a player, then read their rank, champion mastery and recent games, with dedicated rendering for Classic 5v5 and Arena matches. A built-in AI chat answers questions about the player in natural language \u2014 a LangGraph agent drives an in-app MCP server that wraps the Riot Games API, and the UI shows the graph trace behind each answer. Built on Next.js 16 and React 19 in TypeScript, on a DDD layered architecture (domain / infrastructure / services / components) with Vitest unit tests and GitHub Actions CI. Not affiliated with or endorsed by Riot Games.',
+    image: 'https://opengraph.githubassets.com/1/rittersport67/riot-dashboard',
     tags: [
-      'React Js',
-      'MongoDb',
-      'Node Js',
-      'Express Js',
-      'Redux',
-      'NodeMailer'
+      'TypeScript',
+      'Next.js',
+      'React',
+      'LangGraph',
+      'MCP',
+      'Riot Games API',
+      'Tailwind CSS'
     ],
     category: 'web app',
-    github: 'https://github.com/rishavchanda/Project-Management-App',
-    webapp: 'https://vexa-app.netlify.app/'
+    github: 'https://github.com/rittersport67/riot-dashboard'
   },
   {
     id: 2,
-    title: 'Brain Tumor Detection',
-    date: 'Jan 2023 - Mar 2023',
+    title: 'MCP Inspector',
+    date: 'May 2026',
     description:
-      "Preprocessed and augmented the dataset to improve model accuracy, trained the model, created API using model and Python, and used React web app for the project's front end. Achievements: Achieved an accuracy of 99.2% to accurately detect brain tumors from medical images.",
-    image:
-      'https://github.com/rishavchanda/Brain-Tumor-Detection/raw/main/Readme_resource/Image2.png',
-    tags: ['Python', 'Keras', 'TensorFlow', 'VGG16', 'Pickle', 'React'],
-    category: 'machine learning',
-    github: 'https://github.com/rishavchanda/Brain-Tumor-Detection',
-    webapp: 'https://brain-tumor.netlify.app/',
-    member: [
-      {
-        name: 'Rishav Chanda',
-        img: 'https://avatars.githubusercontent.com/u/64485885?v=4',
-        linkedin: 'https://www.linkedin.com/in/rishav-chanda-b89a791b3/',
-        github: 'https://github.com/rishavchanda/'
-      },
-      {
-        name: 'Upasana Chaudhuri',
-        img: 'https://avatars.githubusercontent.com/u/100614635?v=4',
-        linkedin: 'https://www.linkedin.com/in/upasana-chaudhuri-2a2bb5231/',
-        github: 'https://github.com/upasana0710'
-      }
-    ]
+      'A desktop GUI for exploring and debugging Model Context Protocol servers. Connect to any MCP server, browse its tools and resources, and invoke them through forms generated automatically from their JSON schemas. Built as an Electron app on React 19 and TypeScript, packaged for macOS, Windows and Linux.',
+    image: 'https://opengraph.githubassets.com/1/rittersport67/mcp-inspector',
+    tags: ['TypeScript', 'React', 'Electron', 'MCP SDK', 'Tailwind CSS'],
+    category: 'developer tooling',
+    github: 'https://github.com/rittersport67/mcp-inspector'
   },
   {
     id: 3,
-    title: 'Buckoid',
-    date: 'Dec 2021 - Apr 2022',
+    title: 'MCP LoL Esports',
+    date: 'Mar 2026 - May 2026',
     description:
-      'App Is Currently In Playstore 100+ Downloads. This Project proposes an “Expense Tracking App”. Keep track of your personal expenses and compare them to your monthly income with the budget planner. It has Google Drive Cloud API for Backup of User Room Database. Made with Kotlin in MVVM Architecture & Live Data.',
-    image:
-      'https://camo.githubusercontent.com/fbf405040ae86b5d4a40f24e4ac034982cb8c0e2d850560ba64527997b258be8/68747470733a2f2f666972656261736573746f726167652e676f6f676c65617069732e636f6d2f76302f622f6c6f67696e2d65613565322e61707073706f742e636f6d2f6f2f4255434b4f49442532302831292e706e673f616c743d6d6564696126746f6b656e3d32653735376235372d323964372d346263612d613562322d653164346538313432373435',
-    tags: ['Kotlin', 'MVVM', 'Room Database', 'Google Drive Cloud API'],
-    category: 'android app',
-    github: 'https://github.com/rishavchanda/Buckoid-Android-App',
-    webapp: 'https://play.google.com/store/apps/details?id=com.rishav.buckoid'
-  },
-  {
-    id: 10,
-    title: 'Job Finding App',
-    date: 'Jun 2023 - Jul 2023',
-    description:
-      'A Job Finding App made with React Native, Axios. Users can search for any job coming from API and apply there.',
-    image:
-      'https://user-images.githubusercontent.com/64485885/255237090-cf798a2c-1b41-4bb7-b904-b5353a1f08e8.png',
-    tags: ['React Native', 'JavaScript', 'Axios'],
-    category: 'android app',
-    github: 'https://github.com/rishavchanda/Job-finder-App',
-    webapp: 'https://github.com/rishavchanda/Job-finder-App'
-  },
-  {
-    id: 4,
-    title: 'Whatsapp Clone',
-    date: 'Jul 2021',
-    description:
-      'A WhatsApp clone made with React JS, Firebase, and Material UI. It has Phone Authentication, Real-time Database. It has a chat room where users can chat with each other. It has a sidebar where users can see all the chat rooms and can create a new chat room. It has a login page where users can log in with their Google account.',
-    image:
-      'https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-rishav.appspot.com/o/Screenshot%20(151).png?alt=media&token=48391593-1ef0-4a8c-a92a-eb82bdf38e89',
-    tags: ['React Js', 'Firebase', 'Firestore', 'Node JS'],
-    category: 'web app',
-    github: 'https://github.com/rishavchanda/Whatsapp-Clone-React-Js',
-    webapp: 'https://whatsapp-clone-rishav.web.app'
-  },
-  {
-    id: 5,
-    title: 'Todo Web App',
-    date: 'Jun 2021',
-    description:
-      ' A Todo Web App made with React JS, Redux, and Material UI. It has a login page where users can log in with their Google account. It has a sidebar where users can see all the tasks and can create a new task. It has a calendar where users can see all the tasks on a particular date. It has a search bar where users can search for a particular task.',
-    image:
-      'https://camo.githubusercontent.com/a328255ad96f861f57d25096d28018ab2656c689a1456b0d145764009bed2d1a/68747470733a2f2f666972656261736573746f726167652e676f6f676c65617069732e636f6d2f76302f622f746f646f2d6170702d63386331392e61707073706f742e636f6d2f6f2f53637265656e73686f74253230283938292e706e673f616c743d6d6564696126746f6b656e3d33643335646366322d626666322d343730382d393031632d343232383866383332386633',
-    tags: ['React Js', 'Local Storage', 'AWS Auth', 'Node JS'],
-    category: 'web app',
-    github: 'https://github.com/rishavchanda/Todo-Web-App',
-    webapp: 'https://rishav-react-todo.netlify.app/'
-  },
-  {
-    id: 6,
-    title: 'Breaking Bad',
-    date: 'Jun 2021',
-    description:
-      'A simple react app that shows the characters of the famous TV series Breaking Bad. It uses the Breaking Bad API to fetch the data. It also has a search bar to search for a particular character.',
-    image:
-      'https://camo.githubusercontent.com/cd07010cbeb90cb1b43a5d6162784326aef02210ef7d41a0f9ae043b3e392378/68747470733a2f2f666972656261736573746f726167652e676f6f676c65617069732e636f6d2f76302f622f746f646f2d6170702d63386331392e61707073706f742e636f6d2f6f2f53637265656e73686f7425323028313534292e706e673f616c743d6d6564696126746f6b656e3d65613439383630632d303435362d343333342d616435372d336239346663303333363263',
-    tags: ['React Js', 'API', 'Axios', 'Node JS'],
-    category: 'web app',
-    github: 'https://github.com/rishavchanda/Breaking-Bad',
-    webapp: 'https://breaking-bad-webapp.netlify.app'
-  },
-  {
-    id: 7,
-    title: 'Quiz App',
-    date: 'Dec 2020 - Jan 2021',
-    description:
-      'A android quiz app made with Java and Firebase. It has a login page where users can log in with their Google account. It has a sidebar where users can see all the quiz categories and can create a new quiz. It has a leaderboard where users can see the top 10 scorers. It has a search bar where users can search for a particular quiz.',
-    image:
-      'https://github-production-user-asset-6210df.s3.amazonaws.com/64485885/239726262-c1b061d1-d9d0-42ef-9f1c-0412d14bc4f6.gif',
-    tags: ['Java', 'Android Studio', 'Firebase', 'Google Auth'],
-    category: 'android app',
-    github: 'https://github.com/rishavchanda/Quiz-Earn',
-    webapp: 'https://github.com/rishavchanda/Quiz-Earn'
-  },
-  {
-    id: 8,
-    title: 'Face Recognition',
-    date: 'Jan 2021',
-    description:
-      'A Face recognition python app made with OpenCV. It uses face_recognition library to detect faces. It uses the webcam to detect faces. It also has a search bar to search for a particular face.',
-    image:
-      'https://camo.githubusercontent.com/a8b3e1ebf26d4c95f75bc6671189a3590eb67eb8332d7c7452492990e731efb9/68747470733a2f2f77617265686f7573652d63616d6f2e696e67726573732e636d68312e707366686f737465642e6f72672f356137383335396561323762643261633232336437656662306639303831306437373930383436312f363837343734373037333361326632663633366336663735363432653637363937343638373536323735373336353732363336663665373436353665373432653633366636643266363137333733363537343733326633383339333633363339333232663332333433343333333033333339333832663333333636363330363533333636333032643331333336333632326433313331363533373264333833323335333832643334363433303633333936333635333136353334333133393265363736393636',
-    tags: ['Python', 'Keras', 'TensorFlow', 'VGG16', 'Pickle', 'React'],
-    category: 'machine learning',
-    github: 'https://github.com/rishavchanda/Face-Recodnition-AI-with-Python',
-    webapp: 'https://github.com/rishavchanda/Face-Recodnition-AI-with-Python'
+      'An MCP server that plugs LLMs into the Riot Games API, so an AI assistant can answer natural-language questions about League of Legends: player summaries, ranked stats, champion mastery, recent match history and live esports data. Not affiliated with or endorsed by Riot Games.',
+    image: 'https://opengraph.githubassets.com/1/rittersport67/mcp-lolesport',
+    tags: ['Python', 'MCP', 'Riot Games API', 'LLM tooling'],
+    category: 'developer tooling',
+    github: 'https://github.com/rittersport67/mcp-lolesport'
   }
-];
-
-export const TimeLineData = [
-  { year: 2017, text: 'Started my journey' },
-  { year: 2018, text: 'Worked as a freelance developer' },
-  { year: 2019, text: 'Founded JavaScript Mastery' },
-  { year: 2020, text: 'Shared my projects with the world' },
-  { year: 2021, text: 'Started my own platform' }
 ];

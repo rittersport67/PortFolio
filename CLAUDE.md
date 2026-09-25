@@ -19,18 +19,22 @@ This is a single-page React portfolio site bootstrapped with Create React App. I
 
 ### Data layer
 
-All portfolio content lives in **`src/data/contants.js`** (note the typo — `contants`, not `constants`). This is the single source of truth for:
+All portfolio content lives in **`src/data/content.js`**. This is the single source of truth for:
 - `Bio` — name, roles, description paragraphs, resume URL, social links
 - `skills` — array of skill categories, each with a `skills[]` of `{ name, image }`
-- `experiences` — array of `{ role, company, date, desc, skills[], img, doc? }`
-- `education` — array of education entries
-- `photography` — array of `{ id, title, image, category }` — `image` is an external URL, not bundled
+- `experiences` and `education` — rendered together on the Experience timeline
+- `projects` — personal projects
+- `photography` — before/after photo pairs, `require`d from `src/img/photography/`
+
+All local images live in `src/img/` and are imported (never referenced from `public/`).
 
 To update portfolio content, edit only this file.
 
 ### Theming
 
-`src/utils/Themes.js` exports `darkTheme` and `lightTheme`. Only `darkTheme` is currently applied (in `App.js` via `ThemeProvider` from `styled-components`). All styled components access theme values via `${({ theme }) => theme.<key>}`.
+`src/utils/Themes.js` exports `darkTheme` and `lightTheme`. Only `darkTheme` is applied (in `App.js` via `ThemeProvider` from `styled-components`). Styled components access theme values via `${({ theme }) => theme.<key>}`.
+
+Territory accent colors live in `src/utils/palette.js` (`CARTHAGE`, `ICE`, `FOREST`, `MOUNTAIN`, `DESERT`). Import them from there instead of hard-coding hex values.
 
 ### Component structure
 
@@ -38,39 +42,36 @@ Components are under `src/components/<ComponentName>/index.js`. Each component f
 1. Define all styled-components at the top
 2. Export a single default React component at the bottom
 
-The `Experience` section uses **MUI Lab Timeline** (`@mui/lab`) to render `ExperienceCards`. Skills and Education sections use their own layout.
+The `Experience` section uses **MUI Lab Timeline** (`@mui/lab`) to render `ExperienceCards` (experiences and education on one rail).
 
-`ImageSlider` exists in `src/components/ImageSlider/` but is not currently imported in `App.js`.
+### Section layout
 
-### Section layout — PRO / PERSO split
+`App.js` renders, in order:
+1. `Navbar` — sticky, collapses to a drawer on small screens
+2. `LyokoMapOverlay` — fixed Lyoko map that rotates toward the current section's territory
+3. `HeroSection` (`#about`) — name, title, static roles, short bio, contact CTA, photo; faint hex data-rain canvas
+4. `Skills`, `Experience`, `Projects`, `Photography` (with `BeforeAfterCard`)
+5. `DigitalSea` — static footer
 
-`App.js` renders sections in two visually distinct blocks:
+### Visual restraint
 
-**PRO block** (`ProWrapper` — gradient + diagonal `clip-path`):
-1. `Navbar` — sticky, collapses to hamburger at ≤768px
-2. `HeroSection` — photo + typewriter role animation (`typewriter-effect`)
-3. `Skills`
-4. `Experience` — MUI Timeline with `ExperienceCards`
-5. `Education`
+The site was deliberately stripped of generic "AI cyber-HUD" styling. Keep it that way:
+- Motion budget: Skidbladnir, the Ulrich/XANA easter egg, the rotating Lyoko map, the faint hero data rain, the navbar cursor blink. Do not add looping/pulsing animations.
+- Glows (`box-shadow` / `drop-shadow`) only on `:hover`, except the Lyoko "objects" (Skidbladnir, Ulrich).
+- No corner brackets, no `◈` / `▸` decorative glyphs.
+- `prefers-reduced-motion` disables all CSS animation (`App.css`); the data-rain canvas paints a single frozen frame. Elements marked `data-allow-motion` (the navbar cursor, the Lyoko map rotation) are exempt.
 
-A `SectionDivider` with the label "Personal" separates the two blocks.
+### Code Lyoko territory design system
 
-**PERSO block** (`PersonalWrapper`):
-6. `Photography` — responsive 3-column image grid fed by `photography[]` from `contants.js`
-
-### Code Lyoko territory design system (planned)
-
-Each section will be styled to evoke a specific Code Lyoko territory. Agreed mapping:
-
-| Section | Territory | Key colors |
+| Section | Territory | Accent |
 |---|---|---|
-| HeroSection | Sector 5 / Carthage | Deep blue `#001AFF`, cyan, hexagonal patterns |
-| Skills | Forest | Green `#3B8C2A`, dark green bg |
-| Experience | Mountain | Purple `#7B4EA8`, grey-purple bg |
-| Education | Ice (Banquise) | Cyan `#4BA7D1`, cold blue-white |
-| Photography | Desert | Amber/orange `#D4870A`, warm dark bg |
+| HeroSection | Sector 5 / Carthage | `CARTHAGE` `#00d4ff` |
+| Skills | Ice (Banquise) | `ICE` `#4ba7d1` |
+| Experience | Forest (education items use `ICE`) | `FOREST` `#5abf4e` |
+| Projects | Mountain | `MOUNTAIN` `#9b70c8` |
+| Photography | Desert | `DESERT` `#e8960a` |
 
-Territory styles are applied via section-level wrappers (not via `ThemeProvider` — keep the global dark theme intact). Use CSS background gradients, border accents, and subtle texture overlays (repeating geometric patterns) to evoke each territory without breaking the existing component internals.
+Territory styles are applied via section-level styling (not via `ThemeProvider` — keep the global dark theme intact).
 
 ### Skidbladnir — scroll parallax
 
@@ -80,7 +81,7 @@ Territory styles are applied via section-level wrappers (not via `ThemeProvider`
 - Teal `drop-shadow` glow to match the site palette
 - Fades in after scroll starts, fades out near the end
 - `pointer-events: none` so it never blocks clicks
-- Rendered outside `<Body>` in `App.js`, directly inside `<Router>`, so it overlays everything including the navbar
+- Currently **not imported** in `App.js`; to enable, import it and render it outside `<Body>` so it overlays everything including the navbar
 
 ### Easter egg — Ulrich (Code Lyoko)
 

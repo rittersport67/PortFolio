@@ -1,59 +1,36 @@
+/**
+ * @file src/components/Cards/ExperienceCards.js
+ * Carte d'une entrée de la timeline Experience : poste ou formation.
+ * La teinte vient de la prop transitoire `$edu` (Forêt pour un poste, Banquise pour une formation).
+ * @component
+ */
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import { FOREST, ICE } from '../../utils/palette';
 
-const scanline = keyframes`
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(400%); }
-`;
+/* Les cartes de formation reprennent la même structure, seule la teinte change */
+const accent = ({ $edu }) => ($edu ? ICE : FOREST);
+const accentRgb = ({ $edu }) => ($edu ? '75, 167, 209' : '90, 191, 78');
 
 const Card = styled.div`
     position: relative;
-    width: 650px;
+    --accent: ${accent};
+    --accent-rgb: ${accentRgb};
+    width: 100%;
+    max-width: 650px;
     background: rgba(0, 8, 24, 0.88);
-    border: 1px solid rgba(0, 212, 255, 0.35);
+    border: 1px solid rgba(var(--accent-rgb), 0.35);
     border-radius: 4px;
-    padding: 16px 20px;
+    padding: 12px 18px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
     overflow: hidden;
 
-    /* ligne de scan animée — subtile */
-    &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 30%;
-        background: linear-gradient(
-            to bottom,
-            transparent,
-            rgba(0, 212, 255, 0.03),
-            transparent
-        );
-        animation: ${scanline} 6s linear infinite;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    /* coin supérieur droit */
-    &::after {
-        content: '';
-        position: absolute;
-        top: -2px;
-        right: -2px;
-        width: 16px;
-        height: 16px;
-        border-top: 2px solid #00d4ff;
-        border-right: 2px solid #00d4ff;
-        pointer-events: none;
-    }
-
     &:hover {
-        border-color: rgba(0, 212, 255, 0.7);
-        box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), inset 0 0 20px rgba(0, 212, 255, 0.03);
+        border-color: rgba(var(--accent-rgb), 0.7);
+        box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.2), inset 0 0 20px rgba(var(--accent-rgb), 0.03);
     }
 
     &:hover ${/* sc-selector trick — utilise le data-attr */ 'span[data-clamp]'} {
@@ -62,22 +39,9 @@ const Card = styled.div`
     }
 
     @media only screen and (max-width: 768px) {
-        padding: 12px 14px;
-        gap: 8px;
-        width: 300px;
+        padding: 10px 14px;
+        gap: 6px;
     }
-`
-
-const CornerBL = styled.span`
-    position: absolute;
-    bottom: -2px;
-    left: -2px;
-    width: 16px;
-    height: 16px;
-    border-bottom: 2px solid #00d4ff;
-    border-left: 2px solid #00d4ff;
-    pointer-events: none;
-    z-index: 1;
 `
 
 const Top = styled.div`
@@ -85,47 +49,54 @@ const Top = styled.div`
     z-index: 1;
     width: 100%;
     display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(0, 212, 255, 0.15);
+    gap: 12px;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
 `
 
 const ImageWrapper = styled.div`
     flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-    border: 1px solid rgba(0, 212, 255, 0.4);
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(var(--accent-rgb), 0.4);
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 8px rgba(0, 212, 255, 0.2);
     @media only screen and (max-width: 768px) {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
     }
 `
 
 const Image = styled.img`
-    max-width: 44px;
-    max-height: 44px;
+    max-width: 34px;
+    max-height: 34px;
     width: auto;
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.5));
     @media only screen and (max-width: 768px) {
-        max-width: 34px;
-        max-height: 34px;
+        max-width: 28px;
+        max-height: 28px;
     }
 `
 
 const Body = styled.div`
     width: 100%;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
+`
+
+/* Société et dates côte à côte : la carte reste basse et large */
+const Meta = styled.div`
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
 `
 
 const Role = styled.div`
@@ -134,7 +105,7 @@ const Role = styled.div`
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #e0f7ff;
+    color: #e8ffe5;
     @media only screen and (max-width: 768px) {
         font-size: 12px;
     }
@@ -144,7 +115,7 @@ const Company = styled.div`
     font-family: 'Courier New', monospace;
     font-size: 13px;
     font-weight: 500;
-    color: rgba(0, 212, 255, 0.75);
+    color: rgba(var(--accent-rgb), 0.75);
     &::before {
         content: '// ';
         opacity: 0.5;
@@ -157,11 +128,8 @@ const Company = styled.div`
 const Date = styled.div`
     font-family: 'Courier New', monospace;
     font-size: 11px;
-    color: rgba(0, 212, 255, 0.45);
+    color: rgba(var(--accent-rgb), 0.45);
     letter-spacing: 0.06em;
-    &::before {
-        content: '▸ ';
-    }
     @media only screen and (max-width: 768px) {
         font-size: 10px;
     }
@@ -173,8 +141,8 @@ const Desc = styled.div`
     width: 100%;
     font-size: 13px;
     font-weight: 400;
-    line-height: 1.6;
-    color: rgba(200, 230, 255, 0.75);
+    line-height: 1.5;
+    color: rgba(200, 230, 205, 0.75);
     @media only screen and (max-width: 768px) {
         font-size: 11px;
     }
@@ -184,7 +152,7 @@ const Span = styled.span`
     overflow: hidden;
     display: -webkit-box;
     max-width: 100%;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
 
@@ -200,8 +168,8 @@ const Skills = styled.div`
     width: 100%;
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    margin-top: 4px;
+    gap: 8px;
+    margin-top: 2px;
     flex-wrap: wrap;
 `
 
@@ -210,7 +178,7 @@ const SkillsLabel = styled.b`
     font-size: 10px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(0, 212, 255, 0.55);
+    color: rgba(var(--accent-rgb), 0.55);
     padding-top: 2px;
     flex-shrink: 0;
 `
@@ -225,11 +193,11 @@ const Skill = styled.div`
     font-family: 'Courier New', monospace;
     font-size: 10px;
     letter-spacing: 0.05em;
-    color: rgba(0, 212, 255, 0.8);
-    border: 1px solid rgba(0, 212, 255, 0.3);
+    color: rgba(var(--accent-rgb), 0.8);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
     border-radius: 2px;
     padding: 2px 8px;
-    background: rgba(0, 212, 255, 0.04);
+    background: rgba(var(--accent-rgb), 0.04);
     @media only screen and (max-width: 768px) {
         font-size: 9px;
     }
@@ -247,18 +215,39 @@ const Document = styled.img`
     }
 `
 
+/**
+ * Logo, liste de compétences et lien de document ne s'affichent que s'ils sont renseignés.
+ * @component
+ * @param {Object} props
+ * @param {Object} props.experience - Entrée normalisée par Experience : une formation
+ *   a déjà `degree` → `role` et `school` → `company`.
+ * @param {'work'|'education'} props.experience.kind - Choisit la teinte de la carte.
+ * @param {string} props.experience.role
+ * @param {string} props.experience.company
+ * @param {string} props.experience.date - Période affichée telle quelle.
+ * @param {string} props.experience.desc
+ * @param {string} [props.experience.img] - URL du logo.
+ * @param {string[]} [props.experience.skills]
+ * @param {string} [props.experience.doc] - URL d'un document joint.
+ * @returns {JSX.Element}
+ */
 const ExperienceCards = ({ experience }) => {
+  const isEducation = experience.kind === 'education';
+
   return (
-    <Card>
-      <CornerBL />
+    <Card $edu={isEducation}>
       <Top>
-        <ImageWrapper>
-          <Image src={experience.img} />
-        </ImageWrapper>
+        {experience.img && (
+          <ImageWrapper>
+            <Image src={experience.img} alt={experience.company} />
+          </ImageWrapper>
+        )}
         <Body>
           <Role>{experience.role}</Role>
-          <Company>{experience.company}</Company>
-          <Date>{experience.date}</Date>
+          <Meta>
+            <Company>{experience.company}</Company>
+            <Date>{experience.date}</Date>
+          </Meta>
         </Body>
       </Top>
       <Desc>
@@ -267,7 +256,7 @@ const ExperienceCards = ({ experience }) => {
           <>
             <br />
             <Skills>
-              <SkillsLabel>Skills:</SkillsLabel>
+              <SkillsLabel>Abilities:</SkillsLabel>
               <ItemWrapper>
                 {experience.skills.map((skill) => (
                   <Skill key={skill}>{skill}</Skill>

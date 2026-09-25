@@ -1,20 +1,15 @@
+/**
+ * @file src/components/HeroSection/index.js
+ * Section d'accueil #about (Secteur 5 / Carthage) : nom, titre, rôles, présentation,
+ * contact et photo, sur un fond de pluie de données hex (canvas) discrète.
+ * @component
+ */
 import React, { useRef, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components'; // keyframes kept for ringPulse
-import { Bio } from '../../data/contants.js';
-import TypeWriter from 'typewriter-effect';
+import styled from 'styled-components';
+import { Bio } from '../../data/content';
 import HeroImg from '../../img/hero-pp.jpg';
+import { CARTHAGE } from '../../utils/palette';
 
-/* ─── Secteur 5 / Carthage ──────────────────────────────────────── */
-const CARTHAGE = '#00d4ff';
-
-/* ── animations ─────────────────────────────────────────────────── */
-const ringPulse = keyframes`
-  0%   { transform: translate(-50%, -50%) scale(0.85); opacity: 0.18; }
-  50%  { transform: translate(-50%, -50%) scale(1.05); opacity: 0.06; }
-  100% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.18; }
-`;
-
-/* ── styled components ──────────────────────────────────────────── */
 const SectorTag = styled.div`
   font-family: 'Courier New', monospace;
   font-size: 10px;
@@ -47,10 +42,8 @@ const HeroContainer = styled.div`
   position: relative;
   padding: 80px 30px;
   z-index: 1;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 70% 95%, 0 100%);
   overflow: hidden;
 
-  /* fond Sector 5 : grille cartésienne + radial deep-blue */
   background:
     linear-gradient(rgba(0, 212, 255, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 212, 255, 0.025) 1px, transparent 1px),
@@ -63,24 +56,6 @@ const HeroContainer = styled.div`
   @media (max-width: 640px) { padding: 32px 16px; }
 `;
 
-/* anneaux concentriques pulsants (sphère Carthage) */
-const Ring = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 68%;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 212, 255, 0.12);
-  pointer-events: none;
-  z-index: 0;
-  animation: ${ringPulse} ${({ dur }) => dur || '4s'} ease-in-out infinite;
-  animation-delay: ${({ delay }) => delay || '0s'};
-  width: ${({ size }) => size || '300px'};
-  height: ${({ size }) => size || '300px'};
-
-  @media (max-width: 960px) { display: none; }
-`;
-
-/* canvas pour la pluie de données hex */
 const CanvasOverlay = styled.canvas`
   position: absolute;
   inset: 0;
@@ -88,23 +63,12 @@ const CanvasOverlay = styled.canvas`
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  opacity: 1;
-`;
-
-const HeroBg = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  width: 100%;
-  height: 100%;
-  max-width: 1360px;
-  overflow: hidden;
-  padding: 0 30px;
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0%, #000 55%);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0%, #000 55%);
 
   @media (max-width: 960px) {
-    justify-content: center;
-    padding: 0;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.25) 60%);
+    mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.25) 60%);
   }
 `;
 
@@ -154,54 +118,35 @@ const HeroRightContainer = styled.div`
   @media (max-width: 640px) { margin-bottom: 30px; }
 `;
 
-/* ─── textes ─────────────────────────────────────────────────────── */
-const Title = styled.div`
-  font-family: 'Orbitron', 'Courier New', monospace;
-  font-weight: 700;
-  font-size: 44px;
-  color: ${({ theme }) => theme.text_primary};
-  line-height: 1.3;
-
-  @media (max-width: 960px) { text-align: center; }
-  @media (max-width: 640px) {
-    font-size: 28px;
-    margin-bottom: 8px;
-  }
-`;
-
-const NameHighlight = styled.span`
-  display: block;
+const Name = styled.h1`
   font-family: 'Orbitron', 'Courier New', monospace;
   font-weight: 900;
   font-size: 48px;
-  background: linear-gradient(90deg, #00d4ff 0%, #6eb5ff 50%, #00d4ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.4));
-  letter-spacing: 0.04em;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: ${({ theme }) => theme.text_primary};
 
+  @media (max-width: 960px) { text-align: center; }
   @media (max-width: 640px) { font-size: 30px; }
 `;
 
-const TextLoop = styled.div`
+const Headline = styled.p`
+  margin-top: 10px;
+  font-size: 22px;
   font-weight: 600;
-  font-size: 28px;
-  display: flex;
-  gap: 12px;
-  color: ${({ theme }) => theme.text_primary};
-  line-height: 68px;
+  color: ${CARTHAGE};
+
   @media (max-width: 960px) { text-align: center; }
-  @media (max-width: 640px) {
-    font-size: 20px;
-    line-height: 48px;
-    margin-bottom: 16px;
-  }
+  @media (max-width: 640px) { font-size: 17px; }
 `;
 
-const Span = styled.span`
-  color: ${({ theme }) => theme.primary};
-  cursor: pointer;
+const Roles = styled.p`
+  margin: 10px 0 28px;
+  font-size: 15px;
+  color: ${({ theme }) => theme.text_secondary};
+
+  @media (max-width: 960px) { text-align: center; }
+  @media (max-width: 640px) { font-size: 14px; margin-bottom: 20px; }
 `;
 
 const SubTitle = styled.div`
@@ -228,75 +173,94 @@ const SubTitle = styled.div`
   }
 `;
 
-/* ─── bouton HUD ─────────────────────────────────────────────────── */
-const ResumeButton = styled.a`
-  display: inline-flex;
+const ContactBlock = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 95%;
-  max-width: 280px;
-  padding: 13px 0;
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #00d4ff;
-  background: rgba(0, 212, 255, 0.06);
-  border: 1px solid rgba(0, 212, 255, 0.5);
-  border-radius: 2px;
-  cursor: pointer;
-  position: relative;
-  transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -3px; left: -3px;
-    width: 12px; height: 12px;
-    border-top: 2px solid #00d4ff;
-    border-left: 2px solid #00d4ff;
-  }
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -3px; right: -3px;
-    width: 12px; height: 12px;
-    border-bottom: 2px solid #00d4ff;
-    border-right: 2px solid #00d4ff;
-  }
-  &:hover {
-    background: rgba(0, 212, 255, 0.14);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-    color: #fff;
-  }
-  @media (max-width: 640px) { font-size: 11px; padding: 11px 0; }
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
 `;
 
-/* ─── photo ──────────────────────────────────────────────────────── */
-const ImgFrame = styled.div`
-  position: relative;
-  display: inline-block;
+const ContactTitle = styled.p`
+  font-size: 14px;
+  color: ${({ theme }) => theme.text_secondary};
+  margin-bottom: 14px;
+`;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: -10px; left: -10px;
-    width: 28px; height: 28px;
-    border-top: 2px solid #00d4ff;
-    border-left: 2px solid #00d4ff;
-    z-index: 1;
+const CtaButton = styled.a`
+  display: block;
+  width: 100%;
+  padding: 18px 26px;
+  font-family: 'Orbitron', 'Courier New', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #001018;
+  background: ${CARTHAGE};
+  border-radius: 3px;
+  transition: background 0.2s ease;
+
+  &:hover { background: #6eb5ff; }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
   }
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -10px; right: -10px;
-    width: 28px; height: 28px;
-    border-bottom: 2px solid #00d4ff;
-    border-right: 2px solid #00d4ff;
-    z-index: 1;
+
+  @media (max-width: 640px) {
+    font-size: 13px;
+    padding: 16px 18px;
+  }
+`;
+
+const CtaHint = styled.a`
+  display: block;
+  margin-top: 10px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: rgba(0, 212, 255, 0.75);
+  transition: color 0.2s ease;
+
+  &:hover { color: #fff; }
+
+  @media (max-width: 640px) { font-size: 12px; }
+`;
+
+const SecondaryRow = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 18px;
+  margin-top: 18px;
+`;
+
+const SecondaryLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(242, 243, 244, 0.7);
+  border: 1px solid rgba(0, 212, 255, 0.28);
+  border-radius: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+
+
+  &:hover {
+    color: #fff;
+    border-color: ${CARTHAGE};
+    background: rgba(0, 212, 255, 0.1);
   }
 `;
 
@@ -308,9 +272,6 @@ const Img = styled.img`
   object-fit: cover;
   object-position: center top;
   border: 2px solid rgba(0, 212, 255, 0.6);
-  box-shadow:
-    0 0 24px rgba(0, 212, 255, 0.25),
-    0 0 60px rgba(0, 26, 255, 0.15);
 
   @media (max-width: 960px) { width: 340px; height: 340px; }
   @media (max-width: 640px) { width: 260px; height: 260px; }
@@ -319,6 +280,13 @@ const Img = styled.img`
 /* ─── DataRain — pluie de données hex ───────────────────────────── */
 const CHARS = '0123456789ABCDEF';
 
+/**
+ * Colonnes de caractères hex façon Matrix, dessinées sur un canvas à ~8 fps, atténuées
+ * côté texte. Figée (une seule image) avec prefers-reduced-motion. Le canvas se recalcule au resize ; la boucle et l'écouteur
+ * sont retirés au démontage. Ne fait rien si le contexte 2D est indisponible (jsdom).
+ * @component
+ * @returns {JSX.Element}
+ */
 const DataRain = () => {
   const ref = useRef(null);
 
@@ -326,6 +294,7 @@ const DataRain = () => {
     const canvas = ref.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
     const SIZE = 13;
     let W, H, cols, drops;
@@ -336,16 +305,8 @@ const DataRain = () => {
       cols  = Math.floor(W / SIZE);
       drops = Array.from({ length: cols }, () => -(Math.random() * 80 | 0));
     };
-    setup();
 
-    let raf, last = 0;
-
-    const draw = (ts) => {
-      raf = requestAnimationFrame(draw);
-      if (ts - last < 80) return; // ~12 fps → lent, données ambiantes
-      last = ts;
-
-      /* fondu vers le fond (trail) */
+    const step = () => {
       ctx.fillStyle = 'rgba(0, 8, 20, 0.1)';
       ctx.fillRect(0, 0, W, H);
 
@@ -356,11 +317,10 @@ const DataRain = () => {
         if (y < 0) { drops[i]++; continue; }
 
         const ch = CHARS[Math.random() * CHARS.length | 0];
-        /* tête de la colonne plus lumineuse */
         const isHead = drops[i] % 5 === 0;
         ctx.fillStyle = isHead
-          ? 'rgba(0, 212, 255, 0.75)'
-          : `rgba(0, 212, 255, ${(Math.random() * 0.2 + 0.05).toFixed(2)})`;
+          ? 'rgba(0, 212, 255, 0.5)'
+          : `rgba(0, 212, 255, ${(Math.random() * 0.12 + 0.05).toFixed(2)})`;
         ctx.fillText(ch, i * SIZE, y);
 
         drops[i]++;
@@ -370,9 +330,29 @@ const DataRain = () => {
       }
     };
 
-    raf = requestAnimationFrame(draw);
+    // Reduced motion: paint one frozen frame instead of animating.
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const paintStatic = () => {
+      for (let n = 0; n < 120; n++) step();
+    };
 
-    const onResize = () => { setup(); };
+    setup();
+    let raf, last = 0;
+
+    const draw = (ts) => {
+      raf = requestAnimationFrame(draw);
+      if (ts - last < 120) return; // ~8 fps
+      last = ts;
+      step();
+    };
+
+    if (reduced) paintStatic();
+    else raf = requestAnimationFrame(draw);
+
+    const onResize = () => {
+      setup();
+      if (reduced) paintStatic();
+    };
     window.addEventListener('resize', onResize);
 
     return () => {
@@ -384,53 +364,42 @@ const DataRain = () => {
   return <CanvasOverlay ref={ref} />;
 };
 
-/* ─── Hero ───────────────────────────────────────────────────────── */
+/**
+ * Tous les textes et liens viennent de `Bio` : name, roles, description, email,
+ * linkedin et location.
+ * @component
+ * @returns {JSX.Element}
+ */
 const Hero = () => (
   <div id="about">
     <HeroContainer>
-      <HeroBg />
       <DataRain />
-
-      {/* anneaux concentriques côté photo */}
-      <Ring size="260px" dur="5s"   delay="0s"   />
-      <Ring size="380px" dur="5s"   delay="0.8s" />
-      <Ring size="500px" dur="5s"   delay="1.6s" />
-      <Ring size="640px" dur="5s"   delay="2.4s" />
 
       <HeroInnerContainer>
         <HeroLeftContainer>
-          <SectorTag>◈ Secteur 5 — Carthage</SectorTag>
-          <Title>
-            Hi, I am
-            <NameHighlight>{Bio.name}</NameHighlight>
-          </Title>
-          <TextLoop>
-            I am a
-            <Span>
-              <TypeWriter
-                options={{
-                  strings: Bio.roles,
-                  autoStart: true,
-                  loop: true,
-                  delay: 100,
-                }}
-              />
-            </Span>
-          </TextLoop>
+          <SectorTag>Sector 5 — Carthage</SectorTag>
+          <Name>{Bio.name}</Name>
+          <Headline>{Bio.title} · {Bio.location}</Headline>
+          <Roles>{Bio.roles.join(' · ')}</Roles>
           <SubTitle>
             {Bio.description.map((sentence, index) => (
               <p key={index}>{sentence}</p>
             ))}
           </SubTitle>
-          <ResumeButton href={Bio.resume} target="_blank" rel="noreferrer">
-            ▸ Check Resume
-          </ResumeButton>
+          <ContactBlock>
+            <ContactTitle>Open to new missions, any sector.</ContactTitle>
+            <CtaButton href={`mailto:${Bio.email}`}>Transfer · Scanner · Virtualization</CtaButton>
+            <CtaHint href={`mailto:${Bio.email}`}>Channel open: {Bio.email}</CtaHint>
+            <SecondaryRow>
+              <SecondaryLink href={Bio.linkedin} target="_blank" rel="noreferrer">
+                LinkedIn
+              </SecondaryLink>
+            </SecondaryRow>
+          </ContactBlock>
         </HeroLeftContainer>
 
         <HeroRightContainer>
-          <ImgFrame>
-            <Img src={HeroImg} alt="hero-image" />
-          </ImgFrame>
+          <Img src={HeroImg} alt={Bio.name} />
         </HeroRightContainer>
       </HeroInnerContainer>
     </HeroContainer>

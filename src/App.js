@@ -1,3 +1,10 @@
+/**
+ * @file src/App.js
+ * Racine du portfolio : page unique en scroll, navigation par ancres (#about, #skills…).
+ * Enchaîne Hero, le bloc PRO (Skills, Experience, Projects) et le bloc PERSO
+ * (Photography), puis le footer DigitalSea. Seul `darkTheme` est appliqué.
+ * @module App
+ */
 import './App.css';
 import styled, { ThemeProvider } from 'styled-components';
 import { darkTheme } from './utils/Themes';
@@ -7,10 +14,8 @@ import Skills from './components/Skills';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Photography from './components/Photography';
-import Skidbladnir from './components/Skidbladnir';
 import DigitalSea from './components/DigitalSea';
 import LyokoMapOverlay from './components/LyokoMapOverlay';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 const Body = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -18,45 +23,26 @@ const Body = styled.div`
   overflow-x: hidden;
 `;
 
-const ProWrapper = styled.div`
-  background:
-    linear-gradient(
-      38.73deg,
-      rgba(204, 0, 187, 0.15) 0%,
-      rgba(201, 32, 184, 0) 50%
-    ),
-    linear-gradient(
-      141.27deg,
-      rgba(0, 70, 209, 0) 50%,
-      rgba(0, 70, 209, 0.15) 100%
-    );
-  width: 100%;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 98%, 0 100%);
-`;
-
-const PersonalWrapper = styled.div`
-  width: 100%;
-`;
-
+/**
+ * Composant racine : fournit le thème styled-components et monte les overlays
+ * fixes (Navbar, LyokoMapOverlay) hors de `Body` pour qu'ils passent au-dessus
+ * du `clip-path` du bloc PRO.
+ * @component
+ * @returns {JSX.Element}
+ */
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <Router>
-        <Navbar />
-        <LyokoMapOverlay />
-        <Body>
-          <Hero />
-          <ProWrapper>
-            <Skills />
-            <Experience />
-            <Projects />
-          </ProWrapper>
-          <PersonalWrapper>
-            <Photography />
-          </PersonalWrapper>
-          <DigitalSea />
-        </Body>
-      </Router>
+      <Navbar />
+      <LyokoMapOverlay />
+      <Body>
+        <Hero />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Photography />
+        <DigitalSea />
+      </Body>
     </ThemeProvider>
   );
 }

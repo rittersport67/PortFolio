@@ -1,9 +1,16 @@
+/**
+ * @file src/components/Photography/BeforeAfterCard.js
+ * Carte de comparaison avant/après avec un séparateur à glisser (souris et tactile),
+ * utilisée par la section Photography.
+ * @component
+ */
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
+import { DESERT } from '../../utils/palette';
 
 const Card = styled.div`
   position: relative;
-  border-radius: 12px;
+  border-radius: 4px;
   overflow: hidden;
   aspect-ratio: 3 / 4;
   background: #000;
@@ -11,6 +18,12 @@ const Card = styled.div`
   user-select: none;
   -webkit-user-select: none;
   touch-action: pan-y;
+  border: 1px solid rgba(232, 150, 10, 0.45);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  &:hover {
+    border-color: rgba(232, 150, 10, 0.8);
+    box-shadow: 0 0 20px rgba(232, 150, 10, 0.22);
+  }
 `;
 
 const Img = styled.img`
@@ -29,8 +42,7 @@ const Divider = styled.div`
   bottom: 0;
   width: 2px;
   margin-left: -1px;
-  background: #00d4ff;
-  box-shadow: 0 0 10px #00d4ff, 0 0 24px rgba(0, 212, 255, 0.35);
+  background: ${DESERT};
   z-index: 3;
   pointer-events: none;
 `;
@@ -42,14 +54,14 @@ const Handle = styled.div`
   transform: translate(-50%, -50%);
   width: 40px;
   height: 40px;
-  background: rgba(0, 6, 18, 0.92);
-  border: 2px solid #00d4ff;
+  background: rgba(18, 6, 0, 0.92);
+  border: 2px solid ${DESERT};
   border-radius: 50%;
-  box-shadow: 0 0 16px rgba(0, 212, 255, 0.55), 0 0 4px #00d4ff;
+  box-shadow: 0 0 16px rgba(232, 150, 10, 0.55), 0 0 4px ${DESERT};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #00d4ff;
+  color: ${DESERT};
   font-size: 11px;
   letter-spacing: -1px;
   cursor: ew-resize;
@@ -58,7 +70,7 @@ const Handle = styled.div`
   ${({ dragging }) =>
     dragging &&
     `
-    box-shadow: 0 0 28px rgba(0, 212, 255, 0.9), 0 0 8px #00d4ff;
+    box-shadow: 0 0 28px rgba(232, 150, 10, 0.9), 0 0 8px ${DESERT};
     transform: translate(-50%, -50%) scale(1.15);
   `}
 `;
@@ -71,9 +83,9 @@ const Label = styled.span`
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(0, 212, 255, 0.9);
-  background: rgba(0, 4, 14, 0.78);
-  border: 1px solid rgba(0, 212, 255, 0.3);
+  color: rgba(232, 150, 10, 0.9);
+  background: rgba(14, 4, 0, 0.78);
+  border: 1px solid rgba(232, 150, 10, 0.35);
   padding: 3px 8px;
   border-radius: 2px;
   z-index: 4;
@@ -101,6 +113,18 @@ const TitleText = styled.span`
   text-transform: uppercase;
 `;
 
+/**
+ * L'image « after » est rognée par `clip-path` selon `pos` (0–1, borné à 0.04–0.96).
+ * Le drag souris est suivi sur `window` pour continuer hors de la carte.
+ * À la première apparition (25 % visible), un balayage automatique montre le principe ;
+ * toute interaction l'interrompt.
+ * @component
+ * @param {Object} props
+ * @param {string} props.before - URL de l'image originale.
+ * @param {string} props.after - URL de l'image retouchée.
+ * @param {string} props.title - Titre affiché en bas de la carte.
+ * @returns {JSX.Element}
+ */
 const BeforeAfterCard = ({ before, after, title }) => {
   const [pos, setPos] = useState(0.5);
   const [dragging, setDragging] = useState(false);
@@ -121,7 +145,6 @@ const BeforeAfterCard = ({ before, after, title }) => {
     }
   }, []);
 
-  // ── Mouse drag ──────────────────────────────────────────────────
   const onMouseDown = useCallback(
     (e) => {
       e.preventDefault();
@@ -151,7 +174,6 @@ const BeforeAfterCard = ({ before, after, title }) => {
     };
   }, [getRelativePos]);
 
-  // ── Touch drag ──────────────────────────────────────────────────
   const onTouchStart = useCallback(
     (e) => {
       cancelAnim();
@@ -167,7 +189,7 @@ const BeforeAfterCard = ({ before, after, title }) => {
     [getRelativePos]
   );
 
-  // ── Auto-sweep on first viewport entry: 0.5 → 0.08 → 0.5 ───────
+  // Auto-sweep on first viewport entry: 0.5 → 0.08 → 0.5
   useEffect(() => {
     const card = cardRef.current;
     const obs = new IntersectionObserver(
@@ -217,19 +239,18 @@ const BeforeAfterCard = ({ before, after, title }) => {
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
     >
-      {/* Before — base layer */}
-      <Img src={before} alt="avant" draggable={false} />
 
-      {/* After — clipped to the left of the divider */}
+      <Img src={before} alt="before" draggable={false} />
+
       <Img
         src={after}
-        alt="après"
+        alt="after"
         draggable={false}
         style={{ clipPath: `inset(0 ${(1 - pos) * 100}% 0 0)` }}
       />
 
-      <Label style={{ left: 12, opacity: pos > 0.12 ? 1 : 0 }}>Après</Label>
-      <Label style={{ right: 12, opacity: pos < 0.88 ? 1 : 0 }}>Avant</Label>
+      <Label style={{ left: 12, opacity: pos > 0.12 ? 1 : 0 }}>Virtualized</Label>
+      <Label style={{ right: 12, opacity: pos < 0.88 ? 1 : 0 }}>Raw</Label>
 
       <Divider style={{ left: `${pos * 100}%` }}>
         <Handle dragging={dragging}>◄►</Handle>

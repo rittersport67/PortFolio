@@ -1,14 +1,21 @@
+/**
+ * @file src/components/Photography/index.js
+ * Section Photography (territoire Désert, bloc PERSO) : grille 3/2/1 colonnes
+ * alimentée par `photography[]` de content.js.
+ * @component
+ */
 import React from 'react';
 import styled from 'styled-components';
-import { photography } from '../../data/contants';
+import { photography } from '../../data/content';
 import BeforeAfterCard from './BeforeAfterCard';
+import { DESERT } from '../../utils/palette';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 60px 30px 80px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(232, 150, 10, 0.08) 0%, transparent 65%);
+  background: radial-gradient(ellipse at 50% 30%, rgba(232, 150, 10, 0.08) 0%, transparent 70%);
   @media (max-width: 960px) {
     padding: 40px 16px 60px;
   }
@@ -18,9 +25,6 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 1100px;
 `;
-
-/* ── Secteur 4 / Désert ──────────────────────────────────────────── */
-const DESERT = '#e8960a';
 
 const TerritoryTag = styled.div`
   font-family: 'Courier New', monospace;
@@ -60,7 +64,6 @@ const Title = styled.div`
     width: 36px;
     height: 2px;
     background: ${DESERT};
-    box-shadow: 0 0 8px ${DESERT};
     border-radius: 1px;
   }
 
@@ -94,15 +97,22 @@ const Grid = styled.div`
 
 const PhotoCard = styled.div`
   position: relative;
-  border-radius: 12px;
+  border-radius: 4px;
   overflow: hidden;
   aspect-ratio: 3 / 4;
   background: ${({ theme }) => theme.card};
   cursor: pointer;
+  border: 1px solid rgba(232, 150, 10, 0.35);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
+  &:hover {
+    border-color: rgba(232, 150, 10, 0.75);
+    box-shadow: 0 0 20px rgba(232, 150, 10, 0.22), inset 0 0 20px rgba(232, 150, 10, 0.04);
+  }
   &:hover img {
     transform: scale(1.05);
   }
-  &:hover div {
+  &:hover > div:last-child {
     opacity: 1;
   }
 `;
@@ -117,7 +127,7 @@ const Photo = styled.img`
 const Overlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(50, 20, 0, 0.78) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.3s ease;
   display: flex;
@@ -126,23 +136,29 @@ const Overlay = styled.div`
 `;
 
 const PhotoTitle = styled.span`
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(232, 150, 10, 0.9);
 `;
 
 const CategoryBadge = styled.span`
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: ${({ theme }) => theme.primary}cc;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1px;
+  top: 10px;
+  right: 10px;
+  background: rgba(20, 8, 0, 0.82);
+  color: rgba(232, 150, 10, 0.9);
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 20px;
+  padding: 3px 9px;
+  border: 1px solid rgba(232, 150, 10, 0.45);
+  border-radius: 2px;
+  z-index: 4;
 `;
 
 const Empty = styled.div`
@@ -152,14 +168,20 @@ const Empty = styled.div`
   padding: 60px 0;
 `;
 
+/**
+ * Une entrée avec `before` s'affiche en BeforeAfterCard, sinon en carte simple
+ * avec badge de catégorie et titre au survol. Affiche un message si la liste est vide.
+ * @component
+ * @returns {JSX.Element}
+ */
 const Photography = () => (
   <Container id="photography">
     <Wrapper>
-      <TerritoryTag>◈ Secteur 4 — Désert</TerritoryTag>
-      <Title>Photography</Title>
+      <TerritoryTag>Sector 4 — Desert</TerritoryTag>
+      <Title>Superscan</Title>
       <Desc>A selection of edits I am proud of.</Desc>
       {photography.length === 0 ? (
-        <Empty>Coming soon — photos will appear here.</Empty>
+        <Empty>No activated tower detected. Superscan in progress…</Empty>
       ) : (
         <Grid>
           {photography.map((photo) =>

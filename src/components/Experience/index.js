@@ -1,19 +1,21 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
+/**
+ * @file src/components/Experience/index.js
+ * Section Experience & Education (territoire Forêt) : expériences et formations
+ * sur une seule timeline MUI Lab (@mui/lab), du plus récent au plus ancien.
+ * @component
+ */
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineDot from '@mui/lab/TimelineDot';
-import { experiences } from '../../data/contants';
+import { experiences, education } from '../../data/content';
 import ExperienceCards from '../Cards/ExperienceCards';
-
-const pulse = keyframes`
-    0%   { box-shadow: 0 0 0 0 rgba(0,212,255,0.6), 0 0 6px rgba(0,212,255,0.4); }
-    70%  { box-shadow: 0 0 0 8px rgba(0,212,255,0), 0 0 6px rgba(0,212,255,0.4); }
-    100% { box-shadow: 0 0 0 0 rgba(0,212,255,0), 0 0 6px rgba(0,212,255,0.4); }
-`;
+import { FOREST, ICE } from '../../utils/palette';
 
 const Container = styled.div`
     display: flex;
@@ -43,9 +45,6 @@ const Wrapper = styled.div`
         flex-direction: column;
     }
 `;
-
-/* ── Secteur 2 / Forêt ───────────────────────────────────────────── */
-const FOREST = '#5abf4e';
 
 const TerritoryTag = styled.div`
     font-family: 'Courier New', monospace;
@@ -85,7 +84,6 @@ const Title = styled.div`
         width: 36px;
         height: 2px;
         background: ${FOREST};
-        box-shadow: 0 0 8px ${FOREST};
         border-radius: 1px;
     }
 
@@ -109,6 +107,10 @@ const Desc = styled.div`
 const TimelineSection = styled.div`
     width: 100%;
     max-width: 1000px;
+
+    @media (min-width: 960px) {
+        max-width: 1350px;
+    }
     margin-top: 10px;
     display: flex;
     flex-direction: column;
@@ -117,17 +119,15 @@ const TimelineSection = styled.div`
     gap: 12px;
 `;
 
-/* Point cible — cercle externe + point central */
 const DotOuter = styled.div`
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    border: 2px solid #00d4ff;
+    border: 2px solid ${FOREST};
     background: rgba(0, 8, 24, 0.95);
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: ${pulse} 2.5s ease-out infinite;
     flex-shrink: 0;
 `
 
@@ -135,50 +135,171 @@ const DotInner = styled.div`
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #00d4ff;
-    box-shadow: 0 0 6px #00d4ff;
+    background: ${FOREST};
 `
 
+/* Point carré pour les jalons de formation, afin de les distinguer sur le rail */
+const DotOuterEdu = styled(DotOuter)`
+    border-radius: 3px;
+    border-color: ${ICE};
+`
+
+const DotInnerEdu = styled(DotInner)`
+    border-radius: 1px;
+    background: ${ICE};
+`
+
+const Legend = styled.div`
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(177, 178, 179, 0.85);
+`
+
+const LegendItem = styled.span`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &::before {
+        content: '';
+        width: 9px;
+        height: 9px;
+        border-radius: ${({ square }) => (square ? '2px' : '50%')};
+        background: ${({ square }) => (square ? ICE : FOREST)};
+    }
+`
+
+/* La timeline est à deux colonnes (formation à gauche, expérience à droite) à
+   partir de 960px. En dessous, tout retombe dans une seule colonne à droite du
+   rail — MUI ne sait pas le faire en CSS seul, d'où le matchMedia. */
+/**
+ * Suit la media query `(min-width: 960px)` et se met à jour au redimensionnement.
+ * @returns {boolean} true si la fenêtre fait au moins 960px de large.
+ */
+const useTwoColumns = () => {
+  const [twoColumns, setTwoColumns] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia('(min-width: 960px)').matches
+  );
+
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 960px)');
+    const onChange = (event) => setTwoColumns(event.matches);
+    query.addEventListener('change', onChange);
+    setTwoColumns(query.matches);
+    return () => query.removeEventListener('change', onChange);
+  }, []);
+
+  return twoColumns;
+};
+
+/* Expériences et formations sur un seul rail, du plus récent au plus ancien */
+const timeline = [
+  ...experiences.map((item) => ({ ...item, kind: 'work' })),
+  ...education.map((item) => ({
+    ...item,
+    kind: 'education',
+    role: item.degree,
+    company: item.school
+  }))
+].sort((a, b) => b.start.localeCompare(a.start));
+
+/**
+ * Sur deux colonnes, la formation est à gauche du rail et l'expérience à droite ;
+ * sur une colonne, tout est à droite. Les jalons de formation ont un point carré bleu.
+ * @component
+ * @returns {JSX.Element}
+ */
 const Experience = () => {
+  const twoColumns = useTwoColumns();
+
   return (
     <Container id="experience">
       <Wrapper>
-        <TerritoryTag>◈ Secteur 2 — Forêt</TerritoryTag>
-        <Title>Experiences</Title>
-        <Desc>Here are an extract of my experiences.</Desc>
+        <TerritoryTag>Sector 2 — Forest</TerritoryTag>
+        <Title>Missions &amp; Kadic</Title>
+        <Desc>Every mission logged by the supercomputer.</Desc>
+        <Legend>
+          <LegendItem>Missions</LegendItem>
+          <LegendItem square>Kadic Academy</LegendItem>
+        </Legend>
         <TimelineSection>
-          <Timeline>
-            {experiences.map((experience, index) => (
-              <TimelineItem key={index}>
-                <TimelineSeparator>
-                  {/* Remplace TimelineDot MUI par notre cible HUD */}
-                  <TimelineDot
-                    sx={{
-                      padding: 0,
-                      margin: '8px 0',
-                      border: 'none',
-                      background: 'transparent',
-                      boxShadow: 'none',
-                    }}
-                  >
-                    <DotOuter>
-                      <DotInner />
-                    </DotOuter>
-                  </TimelineDot>
-                  {index !== experiences.length - 1 && (
-                    <TimelineConnector
+          {/* On neutralise le ::before de MUI : chaque ligne rend elle-même ses
+              deux colonnes, sinon le rail se décale d'une ligne à l'autre. */}
+          <Timeline
+            sx={{
+              /* sans cela le Timeline se rétracte à la largeur de son contenu */
+              width: '100%',
+              padding: 0,
+              '& .MuiTimelineItem-root::before': { display: 'none' },
+            }}
+          >
+            {timeline.map((entry, index) => {
+              const isEducation = entry.kind === 'education';
+              const card = <ExperienceCards experience={entry} />;
+
+              return (
+                <TimelineItem key={`${entry.kind}-${entry.id}`}>
+                  {/* Sur deux colonnes, la formation passe à gauche du rail.
+                      La colonne reste rendue même vide pour garder le rail droit. */}
+                  {twoColumns && (
+                    <TimelineOppositeContent
                       sx={{
-                        background: 'linear-gradient(to bottom, rgba(0,212,255,0.6), rgba(0,212,255,0.15))',
-                        width: '2px',
+                        flex: 1,
+                        py: '12px',
+                        px: 2,
+                        /* MUI aligne à droite par défaut : les deux colonnes
+                           doivent se lire de la même façon */
+                        textAlign: 'left',
+                        display: 'flex',
+                        justifyContent: 'flex-end',
                       }}
-                    />
+                    >
+                      {isEducation && card}
+                    </TimelineOppositeContent>
                   )}
-                </TimelineSeparator>
-                <TimelineContent sx={{ py: '12px', px: 2 }}>
-                  <ExperienceCards experience={experience} />
-                </TimelineContent>
-              </TimelineItem>
-            ))}
+                  <TimelineSeparator>
+                    <TimelineDot
+                      sx={{
+                        padding: 0,
+                        margin: '8px 0',
+                        border: 'none',
+                        background: 'transparent',
+                        boxShadow: 'none',
+                      }}
+                    >
+                      {isEducation ? (
+                        <DotOuterEdu>
+                          <DotInnerEdu />
+                        </DotOuterEdu>
+                      ) : (
+                        <DotOuter>
+                          <DotInner />
+                        </DotOuter>
+                      )}
+                    </TimelineDot>
+                    {index !== timeline.length - 1 && (
+                      <TimelineConnector
+                        sx={{
+                          background: 'linear-gradient(to bottom, rgba(90,191,78,0.6), rgba(90,191,78,0.15))',
+                          width: '2px',
+                        }}
+                      />
+                    )}
+                  </TimelineSeparator>
+                  <TimelineContent sx={{ flex: 1, py: '12px', px: 2 }}>
+                    {(!twoColumns || !isEducation) && card}
+                  </TimelineContent>
+                </TimelineItem>
+              );
+            })}
           </Timeline>
         </TimelineSection>
       </Wrapper>

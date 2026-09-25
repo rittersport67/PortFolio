@@ -1,28 +1,26 @@
+/**
+ * @file src/components/Navbar/index.js
+ * Barre de navigation sticky : logo, ancres vers les sections, liens GitHub / LinkedIn.
+ * Sous 1100px, un bouton hamburger ouvre un menu latéral.
+ * Porte aussi les easter eggs Ulrich / XANA au survol du logo.
+ * @component
+ */
 import React, { Suspense } from 'react';
-import styled, { keyframes, ThemeProvider } from 'styled-components';
-import { darkTheme } from '../../utils/Themes';
-import { Bio } from '../../data/contants';
-import lyokoSymbol from '../../../src/img/lyoko-symbol.png';
+import styled, { keyframes } from 'styled-components';
+import { Bio } from '../../data/content';
+import lyokoSymbol from '../../img/lyoko-symbol.png';
 import UlrichImg from '../../img/ulrich.png';
 import UlrichXanaImg from '../../img/ulrich-xana.png';
 import { FaBars, FaTimes, FaGithub, FaLinkedin } from 'react-icons/fa';
-import { Link as LinkR } from 'react-router-dom';
+import { CARTHAGE } from '../../utils/palette';
 
 const UlrichEasterEgg = React.lazy(() => import('./UlrichEasterEgg'));
 
-/* curseur clignotant style Word */
 const blink = keyframes`
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 `;
 
-/* barre de chargement qui défile sur la droite */
-const dataScroll = keyframes`
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(300%); }
-`;
-
-/* ─── barre principale ─────────────────────────────────────────── */
 const Nav = styled.div`
   height: 56px;
   display: flex;
@@ -35,7 +33,6 @@ const Nav = styled.div`
   /* nécessaire pour que MobileMenu position:absolute se cale dessus */
   isolation: isolate;
 
-  /* fond avec grille subtile style terminal */
   background:
     linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px),
@@ -44,7 +41,6 @@ const Nav = styled.div`
   backdrop-filter: blur(10px);
 
   border-bottom: 2px solid rgba(0, 212, 255, 0.45);
-  box-shadow: 0 2px 24px rgba(0, 212, 255, 0.12), 0 0 2px rgba(0, 212, 255, 0.2);
 
   @media screen and (max-width: 768px) {
     transition: 0.8s all ease;
@@ -69,7 +65,6 @@ const NavContainer = styled.div`
   }
 `;
 
-/* ─── logo ─────────────────────────────────────────────────────── */
 const LogoArea = styled.div`
   display: flex;
   align-items: center;
@@ -96,11 +91,12 @@ const LogoText = styled.span`
   white-space: nowrap;
 `;
 
-const Cursor = styled.span`
+// data-allow-motion: keeps blinking under prefers-reduced-motion (see App.css).
+const Cursor = styled.span.attrs({ 'data-allow-motion': true })`
   display: inline-block;
   width: 2px;
   height: 14px;
-  background: #00d4ff;
+  background: ${CARTHAGE};
   margin-left: 2px;
   vertical-align: middle;
   animation: ${blink} 1.1s step-end infinite;
@@ -116,7 +112,6 @@ const LyokoSymbol = styled.img`
   }
 `;
 
-/* ─── liens de navigation — style onglets HUD ──────────────────── */
 const NavItems = styled.ul`
   display: flex;
   align-items: stretch;
@@ -145,7 +140,6 @@ const NavLink = styled.a`
   border-right: 1px solid rgba(0, 212, 255, 0.15);
   transition: color 0.2s ease, background 0.2s ease;
 
-  /* trait actif en bas */
   &::after {
     content: '';
     position: absolute;
@@ -153,13 +147,12 @@ const NavLink = styled.a`
     left: 0;
     width: 0;
     height: 2px;
-    background: #00d4ff;
-    box-shadow: 0 0 8px #00d4ff;
+    background: ${CARTHAGE};
     transition: width 0.25s ease;
   }
 
   &:hover {
-    color: #00d4ff;
+    color: ${CARTHAGE};
     background: rgba(0, 212, 255, 0.07);
   }
   &:hover::after {
@@ -167,7 +160,6 @@ const NavLink = styled.a`
   }
 `;
 
-/* ─── bouton GitHub — chip HUD ─────────────────────────────────── */
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
@@ -177,34 +169,6 @@ const ButtonContainer = styled.div`
   flex-shrink: 0;
   @media screen and (max-width: 768px) {
     display: none;
-  }
-`;
-
-/* barre de statut animée (3 segments) */
-const StatusGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  overflow: hidden;
-`;
-
-const StatusSegment = styled.div`
-  position: relative;
-  width: 60px;
-  height: 3px;
-  background: rgba(0, 212, 255, 0.12);
-  border-radius: 1px;
-  overflow: hidden;
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 40%;
-    height: 100%;
-    background: #00d4ff;
-    opacity: ${({ opacity }) => opacity || 0.8};
-    animation: ${dataScroll} ${({ dur }) => dur || '3s'} linear infinite;
-    animation-delay: ${({ delay }) => delay || '0s'};
   }
 `;
 
@@ -218,7 +182,7 @@ const GitHubButton = styled.a`
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #00d4ff;
+  color: ${CARTHAGE};
   text-decoration: none;
   border: 1px solid rgba(0, 212, 255, 0.45);
   border-radius: 2px;
@@ -233,7 +197,6 @@ const GitHubButton = styled.a`
   }
 `;
 
-/* ─── mobile ────────────────────────────────────────────────────── */
 const MobileIcon = styled.div`
   display: none;
   @media screen and (max-width: 1100px) {
@@ -348,16 +311,19 @@ const MobileMenuLink = styled.a`
   border-bottom: 1px solid rgba(0, 212, 255, 0.1);
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
-  &::before {
-    content: '▸ ';
-    opacity: 0.45;
-  }
   &:hover {
     background: rgba(0, 212, 255, 0.07);
-    color: #00d4ff;
+    color: ${CARTHAGE};
   }
 `;
 
+/**
+ * Survoler le symbole Lyoko fait apparaître Ulrich-XANA (lueur rouge), survoler le
+ * pseudo fait apparaître Ulrich (lueur teal). Le menu mobile se ferme au clic sur un
+ * lien ou sur le fond, et automatiquement quand la fenêtre dépasse 1100px.
+ * @component
+ * @returns {JSX.Element}
+ */
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [ulrichVisible, setUlrichVisible] = React.useState(false);
@@ -374,70 +340,63 @@ const Navbar = () => {
   return (
     <Nav>
       <NavContainer>
-        <ThemeProvider theme={darkTheme}>
-          <LogoArea>
-            <LyokoSymbol
-              src={lyokoSymbol}
-              alt="Code Lyoko"
-              onMouseEnter={() => setXanaVisible(true)}
-              onMouseLeave={() => setXanaVisible(false)}
-            />
-            <LogoText
-              onMouseEnter={() => setUlrichVisible(true)}
-              onMouseLeave={() => setUlrichVisible(false)}
-            >{Bio.surname}<Cursor /></LogoText>
-          </LogoArea>
+        <LogoArea>
+          <LyokoSymbol
+            src={lyokoSymbol}
+            alt="Code Lyoko"
+            onMouseEnter={() => setXanaVisible(true)}
+            onMouseLeave={() => setXanaVisible(false)}
+          />
+          <LogoText
+            onMouseEnter={() => setUlrichVisible(true)}
+            onMouseLeave={() => setUlrichVisible(false)}
+          >{Bio.surname}<Cursor /></LogoText>
+        </LogoArea>
 
-          <NavItems>
-            <NavLink href="#about">About</NavLink>
-            <NavLink href="#skills">Skills</NavLink>
-            <NavLink href="#experience">Experience</NavLink>
-            <NavLink href="#projects">Projects</NavLink>
-            <NavLink href="#photography">Photography</NavLink>
-          </NavItems>
+        <NavItems>
+          <NavLink href="#about">Carthage</NavLink>
+          <NavLink href="#skills">Abilities</NavLink>
+          <NavLink href="#experience">Missions</NavLink>
+          <NavLink href="#projects">Programs</NavLink>
+          <NavLink href="#photography">Superscan</NavLink>
+        </NavItems>
 
-          <ButtonContainer>
-            <StatusGroup>
-              <StatusSegment dur="2.8s" delay="0s"   opacity={0.9} />
-              <StatusSegment dur="4.1s" delay="0.6s" opacity={0.6} />
-              <StatusSegment dur="3.4s" delay="1.2s" opacity={0.4} />
-            </StatusGroup>
-            <GitHubButton
-              href={Bio.github}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FaGithub style={{ marginRight: 6, fontSize: 13 }} />
-              Github
-            </GitHubButton>
-            <GitHubButton
-              href={Bio.linkedin}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <FaLinkedin style={{ marginRight: 6, fontSize: 13 }} />
-              LinkedIn
-            </GitHubButton>
-          </ButtonContainer>
+        <ButtonContainer>
+          <GitHubButton
+            href={Bio.github}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FaGithub style={{ marginRight: 6, fontSize: 13 }} />
+            Github
+          </GitHubButton>
+          <GitHubButton
+            href={Bio.linkedin}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FaLinkedin style={{ marginRight: 6, fontSize: 13 }} />
+            LinkedIn
+          </GitHubButton>
+        </ButtonContainer>
 
-          <MobileIcon onClick={() => setOpen(!open)}>
-            <FaBars />
-          </MobileIcon>
-        </ThemeProvider>
+        <MobileIcon onClick={() => setOpen(!open)}>
+          <FaBars />
+        </MobileIcon>
       </NavContainer>
 
       <DrawerOverlay open={open} onClick={() => setOpen(false)} />
       <MobileMenu open={open}>
         <DrawerHeader>
-          <DrawerTitle>Navigation</DrawerTitle>
+          <DrawerTitle>Supercomputer</DrawerTitle>
           <DrawerClose onClick={() => setOpen(false)}><FaTimes /></DrawerClose>
         </DrawerHeader>
         <MobileMenuItems>
-          <MobileMenuLink href="#about"       onClick={() => setOpen(false)}>About</MobileMenuLink>
-          <MobileMenuLink href="#skills"      onClick={() => setOpen(false)}>Skills</MobileMenuLink>
-          <MobileMenuLink href="#experience"  onClick={() => setOpen(false)}>Experience</MobileMenuLink>
-          <MobileMenuLink href="#projects"    onClick={() => setOpen(false)}>Projects</MobileMenuLink>
-          <MobileMenuLink href="#photography" onClick={() => setOpen(false)}>Photography</MobileMenuLink>
+          <MobileMenuLink href="#about"       onClick={() => setOpen(false)}>Carthage</MobileMenuLink>
+          <MobileMenuLink href="#skills"      onClick={() => setOpen(false)}>Abilities</MobileMenuLink>
+          <MobileMenuLink href="#experience"  onClick={() => setOpen(false)}>Missions</MobileMenuLink>
+          <MobileMenuLink href="#projects"    onClick={() => setOpen(false)}>Programs</MobileMenuLink>
+          <MobileMenuLink href="#photography" onClick={() => setOpen(false)}>Superscan</MobileMenuLink>
           <MobileMenuLink
             as="a"
             href={Bio.github}

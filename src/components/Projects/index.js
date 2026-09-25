@@ -1,9 +1,13 @@
+/**
+ * @file src/components/Projects/index.js
+ * Section Personal Project (territoire Montagne) : grille de cartes projet
+ * filtrables par catégorie, alimentée par `projects[]` de content.js.
+ * @component
+ */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { projects } from '../../data/contants';
-
-/* ── Secteur 3 / Montagne ────────────────────────────────────────── */
-const MOUNTAIN = '#9b70c8';
+import { projects } from '../../data/content';
+import { MOUNTAIN } from '../../utils/palette';
 
 const Container = styled.div`
   display: flex;
@@ -59,7 +63,6 @@ const Title = styled.div`
     width: 36px;
     height: 2px;
     background: ${MOUNTAIN};
-    box-shadow: 0 0 8px ${MOUNTAIN};
     border-radius: 1px;
   }
 
@@ -244,8 +247,15 @@ const LinkBtn = styled.a`
   }
 `;
 
+/* Filtres calculés une fois au chargement : 'all' puis chaque catégorie distincte */
 const CATEGORIES = ['all', ...Array.from(new Set(projects.map((p) => p.category)))];
 
+/**
+ * Affiche au plus 5 tags par carte, et les liens GitHub / Live seulement s'ils existent.
+ * `description` est rendue en HTML : elle ne doit venir que de content.js.
+ * @component
+ * @returns {JSX.Element}
+ */
 const Projects = () => {
   const [filter, setFilter] = useState('all');
   const visible = filter === 'all' ? projects : projects.filter((p) => p.category === filter);
@@ -253,13 +263,13 @@ const Projects = () => {
   return (
     <Container id="projects">
       <Wrapper>
-        <TerritoryTag>◈ Secteur 3 — Montagne</TerritoryTag>
-        <Title>Projects</Title>
-        <Desc>A selection of things I have built.</Desc>
+        <TerritoryTag>Sector 3 — Mountain</TerritoryTag>
+        <Title>Programs</Title>
+        <Desc>Programs coded from the lab.</Desc>
         <FilterRow>
           {CATEGORIES.map((cat) => (
             <FilterBtn key={cat} active={filter === cat} onClick={() => setFilter(cat)}>
-              {cat}
+              {cat === 'all' ? 'all sectors' : cat}
             </FilterBtn>
           ))}
         </FilterRow>
@@ -280,12 +290,12 @@ const Projects = () => {
               <LinkRow>
                 {project.github && (
                   <LinkBtn href={project.github} target="_blank" rel="noreferrer">
-                    ▸ GitHub
+                    GitHub
                   </LinkBtn>
                 )}
                 {project.webapp && (
                   <LinkBtn href={project.webapp} target="_blank" rel="noreferrer">
-                    ▸ Live
+                    Live
                   </LinkBtn>
                 )}
               </LinkRow>

@@ -1,6 +1,14 @@
+/**
+ * @file src/components/Skills/index.js
+ * Section Skills (territoire Banquise) : une carte par catégorie de `skills[]`,
+ * chaque compétence en tuile icône + libellé.
+ * @component
+ */
 import React from "react";
 import styled from "styled-components";
-import { Bio, skills } from "../../data/contants.js"
+import { ICE } from '../../utils/palette';
+import { CARTHAGE } from '../../utils/palette';
+import { Bio, skills } from "../../data/content"
 
 const Container = styled.div`
   display: flex;
@@ -9,7 +17,12 @@ const Container = styled.div`
   position: relative;
   z-index: 1;
   align-items: center;
+  padding-top: 72px;
   background: radial-gradient(ellipse at 50% 0%, rgba(75, 167, 209, 0.09) 0%, transparent 65%);
+
+  @media (max-width: 768px) {
+    padding-top: 48px;
+  }
 `
 
 const Wrapper = styled.div`
@@ -25,9 +38,6 @@ const Wrapper = styled.div`
     flex-direction: column;
   }
 `
-
-/* ── Secteur 1 / Banquise ────────────────────────────────────────── */
-const ICE = '#4BA7D1';
 
 const TerritoryTag = styled.div`
   font-family: 'Courier New', monospace;
@@ -53,7 +63,7 @@ const TerritoryTag = styled.div`
   }
 `;
 
-export const Title = styled.div`
+const Title = styled.div`
   font-size: 42px;
   text-align: center;
   font-weight: 600;
@@ -67,7 +77,6 @@ export const Title = styled.div`
     width: 36px;
     height: 2px;
     background: ${ICE};
-    box-shadow: 0 0 8px ${ICE};
     border-radius: 1px;
   }
 
@@ -77,7 +86,7 @@ export const Title = styled.div`
   }
 `;
 
-export const Desc = styled.div`
+const Desc = styled.div`
   font-size: 18px;
   text-align: center;
   max-width: 600px;
@@ -96,7 +105,6 @@ const SkillsContainer = styled.div`
   justify-content: center;
 `
 
-/* HUD panel — style panneau de l'ordi de Jérémie */
 const Skill = styled.div`
   position: relative;
   width: 100%;
@@ -105,31 +113,6 @@ const Skill = styled.div`
   border: 1px solid rgba(0, 212, 255, 0.35);
   border-radius: 4px;
   padding: 18px 28px 22px;
-  box-shadow: 0 0 18px rgba(0, 212, 255, 0.08), inset 0 0 30px rgba(0, 212, 255, 0.03);
-
-  /* coin supérieur gauche */
-  &::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    width: 18px;
-    height: 18px;
-    border-top: 2px solid #00d4ff;
-    border-left: 2px solid #00d4ff;
-  }
-
-  /* coin inférieur droit */
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    right: -2px;
-    width: 18px;
-    height: 18px;
-    border-bottom: 2px solid #00d4ff;
-    border-right: 2px solid #00d4ff;
-  }
 
   @media (max-width: 768px) {
     max-width: 400px;
@@ -147,17 +130,11 @@ const SkillTitle = styled.h2`
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #00d4ff;
+  color: ${CARTHAGE};
   margin-bottom: 18px;
   text-align: left;
   padding-bottom: 8px;
   border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-
-  /* petite puce devant le titre */
-  &::before {
-    content: '▸ ';
-    color: rgba(0, 212, 255, 0.5);
-  }
 `
 
 const SkillList = styled.div`
@@ -184,32 +161,6 @@ const SkillItem = styled.div`
   cursor: default;
   transition: box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 
-  /* coin supérieur gauche */
-  &::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    width: 12px;
-    height: 12px;
-    border-top: 2px solid #00d4ff;
-    border-left: 2px solid #00d4ff;
-    border-radius: 3px 0 0 0;
-  }
-
-  /* coin inférieur droit */
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    right: -2px;
-    width: 12px;
-    height: 12px;
-    border-bottom: 2px solid #00d4ff;
-    border-right: 2px solid #00d4ff;
-    border-radius: 0 0 3px 0;
-  }
-
   &:hover {
     background: rgba(0, 212, 255, 0.1);
     border-color: rgba(0, 212, 255, 0.85);
@@ -226,12 +177,6 @@ const SkillImage = styled.img`
   width: 38px;
   height: 38px;
   object-fit: contain;
-  filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.55));
-  transition: filter 0.25s ease;
-
-  ${SkillItem}:hover & {
-    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 1));
-  }
 
   @media (max-width: 768px) {
     width: 32px;
@@ -252,13 +197,19 @@ const SkillLabel = styled.span`
   word-break: break-word;
 `
 
+/**
+ * L'icône est optionnelle : sans `image`, seul le libellé s'affiche.
+ * La durée d'expérience vient de `Bio.exp`.
+ * @component
+ * @returns {JSX.Element}
+ */
 const Skills = () => {
   return <Container id="skills">
     <Wrapper>
-      <TerritoryTag>◈ Secteur 1 — Banquise</TerritoryTag>
-      <Title>Skills</Title>
+      <TerritoryTag>Sector 1 — Ice</TerritoryTag>
+      <Title>Abilities</Title>
       <Desc>
-        Here are some of my skills which I have been working on for the past {Bio.exp}.
+        Powers acquired over {Bio.exp} on Lyoko.
       </Desc>
       <SkillsContainer>
         {skills.map((item) => (
@@ -267,7 +218,9 @@ const Skills = () => {
             <SkillList>
               {item.skills.map((skill) => (
                 <SkillItem key={skill.name}>
-                  <SkillImage src={skill.image} />
+                  {skill.image && (
+                    <SkillImage src={skill.image} alt={skill.name} />
+                  )}
                   <SkillLabel>{skill.name}</SkillLabel>
                 </SkillItem>
               ))}

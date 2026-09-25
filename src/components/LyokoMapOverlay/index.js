@@ -1,7 +1,15 @@
+/**
+ * @file src/components/LyokoMapOverlay/index.js
+ * Carte de Lyoko fixée sur le bord droit : elle pivote pour pointer le territoire
+ * de la section en cours. Masquée sur le Hero et sous 960px.
+ * @component
+ */
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import lyokoMap from '../../img/code-lyoko-monde.png';
 
-const Wrapper = styled.div`
+// data-allow-motion: the rotation between territories survives prefers-reduced-motion (see App.css).
+const Wrapper = styled.div.attrs({ 'data-allow-motion': true })`
   position: fixed;
   right: -70px;
   top: 50%;
@@ -17,7 +25,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MapImg = styled.img`
+const MapImg = styled.img.attrs({ 'data-allow-motion': true })`
   width: 100%;
   height: 100%;
   mix-blend-mode: screen;
@@ -44,6 +52,13 @@ const SECTIONS = [
   { id: 'photography', rotation: 450, show: true  },
 ];
 
+/**
+ * Au scroll, retient la dernière section de `SECTIONS` dont le haut a passé le
+ * milieu de l'écran, puis applique sa rotation et sa visibilité.
+ * Les ids doivent correspondre à ceux des sections.
+ * @component
+ * @returns {JSX.Element}
+ */
 const LyokoMapOverlay = () => {
   const [rotation, setRotation] = useState(0);
   const [opacity,  setOpacity]  = useState(0);
@@ -76,7 +91,7 @@ const LyokoMapOverlay = () => {
   return (
     <Wrapper style={{ opacity }}>
       <MapImg
-        src="/img/code-lyoko-monde.png"
+        src={lyokoMap}
         alt=""
         style={{ transform: `rotate(${rotation}deg)` }}
       />
