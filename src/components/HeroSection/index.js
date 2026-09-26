@@ -4,10 +4,11 @@
  * and photo, over a subtle hex data-rain background (canvas).
  * @component
  */
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
+// import { useState } from 'react'; // photo ↔ card flip, disabled
 import styled from 'styled-components';
 import { Bio } from '../../data/content';
-import HeroImg from '../../img/hero-pp.jpg';
+// import HeroImg from '../../img/hero-pp.jpg'; // photo ↔ card flip, disabled
 import LyokoCardImg from '../../img/hero-lyokocard.png';
 import { CARTHAGE } from '../../utils/palette';
 
@@ -265,8 +266,21 @@ const SecondaryLink = styled.a`
   }
 `;
 
+/* Static Lyoko character card, keeps the PNG's 347×555 ratio. */
+const LyokoCard = styled.img`
+  height: 380px;
+  width: auto;
+  aspect-ratio: 347 / 555;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.35));
+
+  @media (max-width: 960px) { height: 340px; }
+  @media (max-width: 640px) { height: 260px; }
+`;
+
+/* Photo ↔ card flip, disabled — kept for a possible comeback.
 /* Real photo on the front, Lyoko card on the back: "virtualization" on hover,
-   on keyboard focus, or on tap for touch screens. */
+   on keyboard focus, or on tap for touch screens. *\/
 const FlipCard = styled.button`
   width: 380px;
   height: 380px;
@@ -326,6 +340,7 @@ const CardImg = styled.img`
   transform: rotateY(180deg);
   backface-visibility: hidden;
 `;
+*/
 
 /* ─── DataRain — hex data rain ───────────────────────────────────── */
 const CHARS = '0123456789ABCDEF';
@@ -422,7 +437,7 @@ const DataRain = () => {
  * @returns {JSX.Element}
  */
 const Hero = () => {
-  const [flipped, setFlipped] = useState(false);
+  // const [flipped, setFlipped] = useState(false); // photo ↔ card flip, disabled
 
   return (
     <div id="about">
@@ -442,7 +457,7 @@ const Hero = () => {
             </SubTitle>
             <ContactBlock>
               <ContactTitle>Open to new missions, any sector.</ContactTitle>
-              <CtaButton href={`mailto:${Bio.email}`}>Transfer · Scanner · Virtualization</CtaButton>
+              <CtaButton href={`mailto:${Bio.email}`}>Get in touch</CtaButton>
               <CtaHint href={`mailto:${Bio.email}`}>Channel open: {Bio.email}</CtaHint>
               <SecondaryRow>
                 <SecondaryLink href={Bio.linkedin} target="_blank" rel="noreferrer">
@@ -453,6 +468,8 @@ const Hero = () => {
           </HeroLeftContainer>
 
           <HeroRightContainer>
+            <LyokoCard src={LyokoCardImg} alt={`${Bio.name} as a Code Lyoko character card`} />
+            {/* Photo ↔ card flip, disabled:
             <FlipCard
               type="button"
               aria-label="Show my Lyoko card"
@@ -463,6 +480,7 @@ const Hero = () => {
                 <CardImg src={LyokoCardImg} alt={`${Bio.name} as a Code Lyoko character card`} />
               </FlipInner>
             </FlipCard>
+            */}
           </HeroRightContainer>
         </HeroInnerContainer>
       </HeroContainer>

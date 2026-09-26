@@ -16,6 +16,7 @@ import Projects from './components/Projects';
 import Photography from './components/Photography';
 import DigitalSea from './components/DigitalSea';
 import LyokoMapOverlay from './components/LyokoMapOverlay';
+import VirtualizationIntro from './components/VirtualizationIntro';
 
 const Body = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -33,6 +34,7 @@ const Body = styled.div`
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
+      <VirtualizationIntro />
       <Navbar />
       <LyokoMapOverlay />
       <Body>
