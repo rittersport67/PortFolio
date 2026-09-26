@@ -1,27 +1,22 @@
 {
   "files": {
-    "main.css": "/PortFolio/static/css/main.b1abb29f.css",
-    "main.js": "/PortFolio/static/js/main.5cb15b95.js",
-    "static/js/542.ae3a9914.chunk.js": "/PortFolio/static/js/542.ae3a9914.chunk.js",
+    "main.css": "/PortFolio/static/css/main.906c5246.css",
+    "main.js": "/PortFolio/static/js/main.65f95b55.js",
     "static/js/453.9415623e.chunk.js": "/PortFolio/static/js/453.9415623e.chunk.js",
     "static/media/kyoto_after.png": "/PortFolio/static/media/kyoto_after.763b64b3bddfb8250c15.png",
     "static/media/tokyo_after.png": "/PortFolio/static/media/tokyo_after.b963300d4c05019ea301.png",
     "static/media/tokyo_before.jpg": "/PortFolio/static/media/tokyo_before.d9f2497f11b5330a27f2.jpg",
     "static/media/kyoto_before.jpg": "/PortFolio/static/media/kyoto_before.d6b46310de55458ed217.jpg",
-    "static/media/code-lyoko-monde.png": "/PortFolio/static/media/code-lyoko-monde.be8d758b1fb2829b0356.png",
-    "static/media/ulrich-xana.png": "/PortFolio/static/media/ulrich-xana.7f160c6e9633904ccc05.png",
-    "static/media/ulrich.png": "/PortFolio/static/media/ulrich.2ff7fd56d1ae43b5af08.png",
+    "static/media/code-lyoko-inspired-world.png": "/PortFolio/static/media/code-lyoko-inspired-world.be8d758b1fb2829b0356.png",
     "static/media/hero-lyokocard.png": "/PortFolio/static/media/hero-lyokocard.c289b84aac6f607ab5ea.png",
-    "static/media/lyoko-symbol.png": "/PortFolio/static/media/lyoko-symbol.86c39ae01a61cc16649d.png",
     "static/media/bruker.png": "/PortFolio/static/media/bruker.edc05d62fd5ccd1bd5c5.png",
     "index.html": "/PortFolio/index.html",
-    "main.b1abb29f.css.map": "/PortFolio/static/css/main.b1abb29f.css.map",
-    "main.5cb15b95.js.map": "/PortFolio/static/js/main.5cb15b95.js.map",
-    "542.ae3a9914.chunk.js.map": "/PortFolio/static/js/542.ae3a9914.chunk.js.map",
+    "main.906c5246.css.map": "/PortFolio/static/css/main.906c5246.css.map",
+    "main.65f95b55.js.map": "/PortFolio/static/js/main.65f95b55.js.map",
     "453.9415623e.chunk.js.map": "/PortFolio/static/js/453.9415623e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b1abb29f.css",
-    "static/js/main.5cb15b95.js"
+    "static/css/main.906c5246.css",
+    "static/js/main.65f95b55.js"
   ]
 }
