@@ -1,34 +1,31 @@
 /**
  * @file src/data/content.js
- * Single source of truth for the portfolio content: edit this file to change the site.
- * `experiences` and `education` share the `start` field (YYYY-MM), used to sort them
- * together on the timeline.
+ * Structure of the portfolio content: dates, links, logos, tech names. Translatable
+ * texts (bio, roles, descriptions, degrees, category labels…) live in
+ * `src/locales/<lang>/content.json`, under the `key` of each entry.
+ * `experiences` and `education` share the `start` / `end` fields (YYYY-MM): `start`
+ * sorts them together on the timeline, and both give the displayed period and duration.
  * @module content
  */
 
-/** Identity and contact: name, roles, Hero paragraphs, links. */
+/**
+ * Identity and contact: name, links, years of experience. Title, roles and Hero
+ * paragraphs are under `bio` in content.json.
+ */
 export const Bio = {
-  exp: '7 years',
+  expYears: 7,
   name: 'Sébastien RITTER',
   surname: 'seb-rtr.jpeg',
-  title: '.NET & AI Software Engineer',
-  roles: ['Embedded systems', 'AI & MCP tooling', 'Photographer', 'DJ'],
-  description: [
-    'Software engineer with 7+ years across embedded systems for the automotive and industrial sectors, and .NET back-ends for conversational AI.',
-    'Off the clock I build MCP servers and LLM tooling, shoot street photography and play electronic music.'
-  ],
   email: 'sebastienritter67580@gmail.com',
   github: 'https://github.com/rittersport67',
-  resume:
-    'https://drive.google.com/file/d/1ffZrcMcn8UatXGIaautbbqpV7ADNaETA/view?usp=sharing',
   linkedin: 'https://www.linkedin.com/in/sebastien-r-3b2160154/',
   location: 'Strasbourg, France'
 };
 
-/** Skill categories: `{ title, skills: [{ name, image? }] }`. */
+/** Skill categories: `{ key, skills: [{ name, image? }] }`; the label is `skillCategories.<key>`. */
 export const skills = [
   {
-    title: 'Frontend',
+    key: 'frontend',
     skills: [
       {
         name: 'WPF',
@@ -65,7 +62,7 @@ export const skills = [
     ]
   },
   {
-    title: 'Backend',
+    key: 'backend',
     skills: [
       {
         name: 'C#',
@@ -89,7 +86,7 @@ export const skills = [
     ]
   },
   {
-    title: 'Embedded System',
+    key: 'embedded',
     skills: [
       {
         name: 'C',
@@ -127,12 +124,13 @@ export const skills = [
       },
       {
         name: 'HIL / SIL',
-        image: 'https://api.iconify.design/mdi/flask-outline.svg?color=%237B4EA8'
+        image:
+          'https://api.iconify.design/mdi/flask-outline.svg?color=%237B4EA8'
       }
     ]
   },
   {
-    title: 'AI & Automation',
+    key: 'ai',
     skills: [
       {
         name: 'MCP',
@@ -162,17 +160,14 @@ export const skills = [
           'https://raw.githubusercontent.com/devicons/devicon/master/icons/postman/postman-original.svg'
       },
       {
-        name: 'GitHub Copilot',
-        image: 'https://cdn.simpleicons.org/githubcopilot/00D4FF'
-      },
-      {
         name: 'RAG / NLP',
-        image: 'https://api.iconify.design/mdi/text-box-search-outline.svg?color=%2300D4FF'
+        image:
+          'https://api.iconify.design/mdi/text-box-search-outline.svg?color=%2300D4FF'
       }
     ]
   },
   {
-    title: 'Cloud Computing',
+    key: 'cloud',
     skills: [
       {
         name: 'Kubernetes',
@@ -185,7 +180,7 @@ export const skills = [
     ]
   },
   {
-    title: 'IDE',
+    key: 'ide',
     skills: [
       {
         name: 'VS Code',
@@ -209,7 +204,7 @@ export const skills = [
     ]
   },
   {
-    title: 'Others',
+    key: 'others',
     skills: [
       {
         name: 'Git',
@@ -257,92 +252,68 @@ export const skills = [
   }
 ];
 
-/** Jobs: `{ id, img?, role, company, date, start, desc, skills?, doc? }`. */
+
+/**
+ * Jobs: `{ id, key, img?, company, via?, start, end }`. Role, description and
+ * abilities are under `experiences.<key>` in content.json.
+ * `via` names the consulting firm for contracted work; `end: null` means ongoing.
+ */
 export const experiences = [
   {
     id: 0,
+    key: 'ibm',
     img: 'https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg',
-    role: '.NET Software Developer',
     company: 'IBM',
-    date: 'Jul 2025 - Present',
     start: '2025-07',
-    desc: 'Cognitive project for a French bank (Euro Information): back-end development in .NET on a proprietary framework for chatbots and IVRs, integrating NLP and AI components. V-cycle process with Agile ceremonies, GitLab for source control, and close collaboration with technical and business teams.',
-    skills: ['C#', '.NET', 'NLP', 'Conversational AI', 'GitLab', 'Agile']
+    end: null
   },
   {
     id: 1,
+    key: 'bdr',
     img: 'https://img.batiweb.com/repo-images/article/37452/BDR.jpg',
-    role: 'Software Engineer',
-    company: 'BDR THERMEA GROUP - contracted by CAPGEMINI',
-    date: 'Aug 2023 - Jun 2025',
+    company: 'BDR Thermea Group',
+    via: 'Capgemini',
     start: '2023-08',
-    desc: 'Designed and implemented software to optimise the performance, management and maintenance of heat pump systems. Worked with industrial communication protocols (Modbus, CANopen) and thermal control standards, alongside the lab test and deployment teams. Led the refactoring of the algorithm managing the additional producer on the main software board.',
-    skills: [
-      'C',
-      'Embedded C',
-      'Modbus',
-      'CANopen',
-      'Refactoring',
-      'Design patterns'
-    ]
+    end: '2025-06'
   },
   {
     id: 2,
+    key: 'bosch',
     img: 'https://images.seeklogo.com/logo-png/2/1/bosch-logo-png_seeklogo-21517.png?v=1958567578828505240',
-    role: 'Embedded Software Developer',
-    company: 'BOSCH - contracted by CAPGEMINI ENGINEERING',
-    date: 'Mar 2022 - Jul 2023',
+    company: 'Bosch',
+    via: 'Capgemini Engineering',
     start: '2022-03',
-    desc: 'Embedded software for driver assistance and autonomous driving computers, on customer projects for an integrated brake control system. Developed BSW functionalities (diagnostic system, system control) and planned and ran validation campaigns on Hardware-in-the-Loop and Software-in-the-Loop benches.',
-    skills: [
-      'Embedded C',
-      'AUTOSAR BSW',
-      'Diagnostics',
-      'HIL / SIL',
-      'Automotive'
-    ]
+    end: '2023-07'
   },
   {
     id: 3,
+    key: 'liebherr',
     img: 'https://media.licdn.com/dms/image/v2/C560BAQG3lyTi3B8qQQ/company-logo_200_200/company-logo_200_200/0/1630647286440/liebherr_logo?e=2147483647&v=beta&t=9G8_gWxS09bZ9fihd5M2k_6feTkmLafmKSwUbRwK7j0',
-    role: 'Engineering Apprentice → Validation Engineer',
     company: 'Liebherr Mining Equipment',
-    date: 'Sep 2018 - Feb 2022',
     start: '2018-09',
-    desc: 'Three and a half years on the production test benches for mining excavator cabins — first as an engineering apprentice alongside my degree, then hired as a validation engineer. Excavators ship as sub-assemblies, each validated individually on a dedicated bench. I handled the software and hardware monitoring of those benches, carried out a full overhaul of a legacy LabVIEW cabin bench, and integrated the previous-generation cabin tests into a new bench for the production launch of the R9600 excavator.',
-    skills: [
-      'LabVIEW',
-      'TestStand',
-      'Test benches',
-      'Hardware validation',
-      'Industrial IT'
-    ]
+    end: '2022-02'
   },
   {
     id: 4,
+    key: 'fsg',
     img: require('../img/logo-company/fsg.jpeg'),
-    role: 'Intern',
     company: 'FSG Fernsteuergeraete',
-    date: 'Aug 2021',
     start: '2021-08',
-    desc: 'FSG assembles and wires slip rings for crane alternators. Continuity testing of the electrical assemblies was previously done by hand with an ohmmeter and needed two people. I designed the software side of an automated test instrument and wrote its voltage measurement routines.',
-    skills: ['Test automation', 'Electrical measurement', 'Instrumentation']
+    end: '2021-08'
   },
   {
     id: 5,
+    key: 'bruker',
     img: require('../img/logo-company/bruker.png'),
-    role: 'Intern',
     company: 'Bruker BioSpin',
-    date: 'Apr 2018 - Jun 2018',
     start: '2018-04',
-    desc: 'Studied an electronic test bench and migrated its test cases to a TestStand environment, for the validation of RF electronic boards.',
-    skills: ['NI TestStand', 'RF electronics', 'Test migration']
+    end: '2018-06'
   }
 ];
 
 /**
  * Photos: `{ id, title, category }` plus either `before` + `after` (before/after card)
- * or `image` (plain card).
+ * or `image` (plain card). The category label is `photoCategories.<category>`.
  */
 export const photography = [
   {
@@ -361,39 +332,41 @@ export const photography = [
   }
 ];
 
-/** Degrees: `{ id, img?, school, date, start, degree, desc }`. */
+/**
+ * Degrees: `{ id, key, img?, school, start, end }` — displayed as years only.
+ * Degree and description are under `education.<key>` in content.json.
+ */
 export const education = [
   {
     id: 0,
+    key: 'tps',
     img: 'https://www.telecom-physique.fr/fileadmin/templates/projects/telecom-physique/images/logo.png',
     school: 'Télécom Physique Strasbourg',
-    date: '2018 - 2021',
     start: '2018-09',
-    degree:
-      'Ingénieur (apprenticeship) — Electrical, Electronic and Industrial Computer Engineering',
-    desc: 'Three-year engineering degree completed as an apprentice, alternating between the school and Liebherr Mining Equipment.'
+    end: '2021-08'
   },
   {
     id: 1,
+    key: 'iut',
     school: 'IUT de Haguenau',
-    date: '2016 - 2018',
     start: '2016-09',
-    degree: 'DUT Génie Électrique et Informatique Industrielle (GEII)',
-    desc: 'Two-year technical degree in electrical engineering, electronics and industrial computing.'
+    end: '2018-06'
   }
 ];
 
 /**
- * Personal projects: `{ id, title, date, description, image, tags, category, github?, webapp? }`.
- * `description` is injected as raw HTML (dangerouslySetInnerHTML).
+ * Personal projects: `{ id, key, title, start, end, image, tags, category, github?, webapp? }`.
+ * `start` / `end` are months (YYYY-MM, `end: null` = ongoing), as for `experiences`.
+ * The description is `projects.<key>.description` in content.json, injected as raw
+ * HTML (dangerouslySetInnerHTML); the category label is `projectCategories.<category>`.
  */
 export const projects = [
   {
     id: 0,
+    key: 'spotifySorter',
     title: 'Spotify Playlist Sorter',
-    date: 'Mar 2026 - Aug 2026',
-    description:
-      "Automated pipeline that files my Spotify liked tracks into genre playlists, running hourly on GitHub Actions with zero manual intervention. Tracks are tagged from the Last.fm API (with remix and feat. detection so the remixer's genre wins), matched against keyword rules, and anything ambiguous is classified by an LLM on Groq. Each run is incremental \u2014 a committed state.json checkpoint means only new likes are processed.",
+    start: '2026-03',
+    end: '2026-08',
     image:
       'https://opengraph.githubassets.com/1/rittersport67/Spotify-playlist-sorter',
     tags: [
@@ -408,10 +381,10 @@ export const projects = [
   },
   {
     id: 1,
+    key: 'riotDashboard',
     title: 'Riot Dashboard',
-    date: 'Feb 2026 - Jun 2026',
-    description:
-      'A League of Legends behaviour analysis dashboard: search a player, then read their rank, champion mastery and recent games, with dedicated rendering for Classic 5v5 and Arena matches. A built-in AI chat answers questions about the player in natural language \u2014 a LangGraph agent drives an in-app MCP server that wraps the Riot Games API, and the UI shows the graph trace behind each answer. Built on Next.js 16 and React 19 in TypeScript, on a DDD layered architecture (domain / infrastructure / services / components) with Vitest unit tests and GitHub Actions CI. Not affiliated with or endorsed by Riot Games.',
+    start: '2026-02',
+    end: '2026-06',
     image: 'https://opengraph.githubassets.com/1/rittersport67/riot-dashboard',
     tags: [
       'TypeScript',
@@ -422,29 +395,29 @@ export const projects = [
       'Riot Games API',
       'Tailwind CSS'
     ],
-    category: 'web app',
+    category: 'webApp',
     github: 'https://github.com/rittersport67/riot-dashboard'
   },
   {
     id: 2,
+    key: 'mcpInspector',
     title: 'MCP Inspector',
-    date: 'May 2026',
-    description:
-      'A desktop GUI for exploring and debugging Model Context Protocol servers. Connect to any MCP server, browse its tools and resources, and invoke them through forms generated automatically from their JSON schemas. Built as an Electron app on React 19 and TypeScript, packaged for macOS, Windows and Linux.',
+    start: '2026-05',
+    end: '2026-05',
     image: 'https://opengraph.githubassets.com/1/rittersport67/mcp-inspector',
     tags: ['TypeScript', 'React', 'Electron', 'MCP SDK', 'Tailwind CSS'],
-    category: 'developer tooling',
+    category: 'devTooling',
     github: 'https://github.com/rittersport67/mcp-inspector'
   },
   {
     id: 3,
+    key: 'mcpLolEsports',
     title: 'MCP LoL Esports',
-    date: 'Mar 2026 - May 2026',
-    description:
-      'An MCP server that plugs LLMs into the Riot Games API, so an AI assistant can answer natural-language questions about League of Legends: player summaries, ranked stats, champion mastery, recent match history and live esports data. Not affiliated with or endorsed by Riot Games.',
+    start: '2026-03',
+    end: '2026-05',
     image: 'https://opengraph.githubassets.com/1/rittersport67/mcp-lolesport',
     tags: ['Python', 'MCP', 'Riot Games API', 'LLM tooling'],
-    category: 'developer tooling',
+    category: 'devTooling',
     github: 'https://github.com/rittersport67/mcp-lolesport'
   }
 ];

@@ -1,67 +1,56 @@
 /**
  * @file src/components/Cards/ExperienceCards.js
- * Card for one Experience timeline entry: a job or a degree.
- * The tint comes from the transient `$edu` prop (Forest for a job, Ice for a degree).
+ * Card for one Experience timeline entry, a job or a degree, drawn as a Lyoko
+ * window: description and abilities on a single panel, no click needed.
+ * The tint comes from the entry kind (Forest for a job, Ice for a degree).
  * @component
  */
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import LyokoWindow from './LyokoWindow';
 import { FOREST, ICE } from '../../utils/palette';
+import {
+  alpha,
+  BLACK,
+  WINDOW_TEXT,
+  WINDOW_TEXT_SOFT,
+  WINDOW_TEXT_FAINT,
+  WINDOW_HEADING,
+} from '../../utils/colors';
+import { FONT_MONO, FONT_WINDOW } from '../../utils/fonts';
 
-/* Degree cards share the same structure; only the tint changes */
-const accent = ({ $edu }) => ($edu ? ICE : FOREST);
-const accentRgb = ({ $edu }) => ($edu ? '75, 167, 209' : '90, 191, 78');
-
-const Card = styled.div`
-    position: relative;
-    --accent: ${accent};
-    --accent-rgb: ${accentRgb};
-    width: 100%;
+const Window = styled(LyokoWindow)`
     max-width: 650px;
-    background: rgba(0, 8, 24, 0.88);
-    border: 1px solid rgba(var(--accent-rgb), 0.35);
-    border-radius: 4px;
-    padding: 12px 18px;
+`
+
+const Body = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-    overflow: hidden;
-
-    &:hover {
-        border-color: rgba(var(--accent-rgb), 0.7);
-        box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.2), inset 0 0 20px rgba(var(--accent-rgb), 0.03);
-    }
-
-    &:hover ${/* sc-selector trick — utilise le data-attr */ 'span[data-clamp]'} {
-        overflow: visible;
-        -webkit-line-clamp: unset;
-    }
-
+    gap: 14px;
+    font-family: ${FONT_MONO};
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: ${WINDOW_TEXT};
     @media only screen and (max-width: 768px) {
-        padding: 10px 14px;
-        gap: 6px;
+        font-size: 12.5px;
+        gap: 12px;
     }
 `
 
-const Top = styled.div`
-    position: relative;
-    z-index: 1;
-    width: 100%;
+const Identity = styled.div`
     display: flex;
-    gap: 12px;
-    align-items: center;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
+    gap: 14px;
+    align-items: flex-start;
 `
 
-const ImageWrapper = styled.div`
+const LogoWrapper = styled.div`
     flex-shrink: 0;
-    width: 42px;
-    height: 42px;
-    border: 1px solid rgba(var(--accent-rgb), 0.4);
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.6);
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(var(--accent-rgb), 0.45);
+    border-radius: 3px;
+    background: ${alpha(BLACK, 0.35)};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,11 +60,9 @@ const ImageWrapper = styled.div`
     }
 `
 
-const Image = styled.img`
+const Logo = styled.img`
     max-width: 34px;
     max-height: 34px;
-    width: auto;
-    height: auto;
     object-fit: contain;
     @media only screen and (max-width: 768px) {
         max-width: 28px;
@@ -83,195 +70,124 @@ const Image = styled.img`
     }
 `
 
-const Body = styled.div`
-    width: 100%;
+const Heading = styled.div`
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 6px;
 `
 
-/* Company and dates side by side: keeps the card short and wide */
-const Meta = styled.div`
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    flex-wrap: wrap;
-`
-
-const Role = styled.div`
-    font-family: 'Courier New', monospace;
+const Role = styled.h4`
+    font-family: ${FONT_WINDOW};
     font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #e8ffe5;
+    text-wrap: balance;
+    color: ${WINDOW_HEADING};
     @media only screen and (max-width: 768px) {
         font-size: 12px;
     }
 `
 
 const Company = styled.div`
-    font-family: 'Courier New', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(var(--accent-rgb), 0.75);
+    color: ${WINDOW_TEXT_SOFT};
+`
+
+const Via = styled.span`
+    color: ${WINDOW_TEXT_FAINT};
+`
+
+const Abilities = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+`
+
+const AbilityList = styled.ul`
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 18px;
+`
+
+const Ability = styled.li`
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+
     &::before {
-        content: '// ';
-        opacity: 0.5;
-    }
-    @media only screen and (max-width: 768px) {
-        font-size: 11px;
-    }
-`
-
-const Date = styled.div`
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    color: rgba(var(--accent-rgb), 0.45);
-    letter-spacing: 0.06em;
-    @media only screen and (max-width: 768px) {
-        font-size: 10px;
-    }
-`
-
-const Desc = styled.div`
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: rgba(200, 230, 205, 0.75);
-    @media only screen and (max-width: 768px) {
-        font-size: 11px;
-    }
-`
-
-const Span = styled.span`
-    overflow: hidden;
-    display: -webkit-box;
-    max-width: 100%;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-
-    ${Card}:hover & {
-        overflow: visible;
-        -webkit-line-clamp: unset;
-    }
-`
-
-const Skills = styled.div`
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    margin-top: 2px;
-    flex-wrap: wrap;
-`
-
-const SkillsLabel = styled.b`
-    font-family: 'Courier New', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(var(--accent-rgb), 0.55);
-    padding-top: 2px;
-    flex-shrink: 0;
-`
-
-const ItemWrapper = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-`
-
-const Skill = styled.div`
-    font-family: 'Courier New', monospace;
-    font-size: 10px;
-    letter-spacing: 0.05em;
-    color: rgba(var(--accent-rgb), 0.8);
-    border: 1px solid rgba(var(--accent-rgb), 0.3);
-    border-radius: 2px;
-    padding: 2px 8px;
-    background: rgba(var(--accent-rgb), 0.04);
-    @media only screen and (max-width: 768px) {
-        font-size: 9px;
-    }
-`
-
-const Document = styled.img`
-    display: none;
-    height: 70px;
-    width: fit-content;
-    background-color: #000;
-    border-radius: 10px;
-    &:hover {
-        cursor: pointer;
-        opacity: 0.8;
+        content: '';
+        flex-shrink: 0;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgb(var(--accent-rgb));
+        transform: translateY(-2px);
     }
 `
 
 /**
- * The logo, skill list and document link render only when provided.
+ * The logo, `via` and abilities render only when provided.
  * @component
  * @param {Object} props
- * @param {Object} props.experience - Entry normalized by Experience: a degree already
+ * @param {Object} props.experience - Entry localized by Experience: a degree already
  *   has `degree` → `role` and `school` → `company`.
- * @param {'work'|'education'} props.experience.kind - Picks the card tint.
+ * @param {'work'|'education'} props.experience.kind - Picks the title and tint.
  * @param {string} props.experience.role
  * @param {string} props.experience.company
- * @param {string} props.experience.date - Period, displayed as is.
+ * @param {string} [props.experience.via] - Consulting firm for contracted work.
+ * @param {string} props.experience.period - Formatted period, e.g. `'Aug 2023 – Jun 2025'`.
+ * @param {string} props.experience.duration - Formatted duration, e.g. `'1 yr 11 mo'`.
+ * @param {number} props.experience.gauge - Duration relative to the longest entry (0–1).
  * @param {string} props.experience.desc
  * @param {string} [props.experience.img] - Logo URL.
  * @param {string[]} [props.experience.skills]
- * @param {string} [props.experience.doc] - URL of an attached document.
  * @returns {JSX.Element}
  */
 const ExperienceCards = ({ experience }) => {
+  const { t } = useTranslation();
   const isEducation = experience.kind === 'education';
-
   return (
-    <Card $edu={isEducation}>
-      <Top>
-        {experience.img && (
-          <ImageWrapper>
-            <Image src={experience.img} alt={experience.company} />
-          </ImageWrapper>
+    <Window
+      title={t(isEducation ? 'experience.educationWindow' : 'experience.missionWindow')}
+      accent={isEducation ? ICE : FOREST}
+      leftLabel={experience.period}
+      rightLabel={experience.duration}
+      rightTitle={t('experience.duration')}
+      gauge={experience.gauge}
+    >
+      <Body>
+        <Identity>
+          {experience.img && (
+            <LogoWrapper>
+              <Logo src={experience.img} alt={experience.company} />
+            </LogoWrapper>
+          )}
+          <Heading>
+            <Role>{experience.role}</Role>
+            <Company>
+              {experience.company}
+              {experience.via && (
+                <Via> {t('experience.via', { firm: experience.via })}</Via>
+              )}
+            </Company>
+          </Heading>
+        </Identity>
+        <p>{experience.desc}</p>
+        {experience.skills && (
+          <Abilities>
+            <span>{t('experience.abilities')}</span>
+            <AbilityList>
+              {experience.skills.map((skill) => (
+                <Ability key={skill}>{skill}</Ability>
+              ))}
+            </AbilityList>
+          </Abilities>
         )}
-        <Body>
-          <Role>{experience.role}</Role>
-          <Meta>
-            <Company>{experience.company}</Company>
-            <Date>{experience.date}</Date>
-          </Meta>
-        </Body>
-      </Top>
-      <Desc>
-        <Span>{experience.desc}</Span>
-        {experience?.skills && (
-          <>
-            <br />
-            <Skills>
-              <SkillsLabel>Abilities:</SkillsLabel>
-              <ItemWrapper>
-                {experience.skills.map((skill) => (
-                  <Skill key={skill}>{skill}</Skill>
-                ))}
-              </ItemWrapper>
-            </Skills>
-          </>
-        )}
-      </Desc>
-      {experience.doc && (
-        <a href={experience.doc} target='new'>
-          <Document />
-        </a>
-      )}
-    </Card>
+      </Body>
+    </Window>
   );
 };
 

@@ -12,7 +12,38 @@ import styled, { css, keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 import { Bio } from '../../data/content';
 import LyokoCardImg from '../../img/hero-lyokocard.png';
-import LyokoWorldImg from '../../img/code-lyoko-monde.png';
+import LyokoWorldImg from '../../img/code-lyoko-inspired-world.png';
+import {
+  alpha,
+  CONSOLE_BLUE,
+  CONSOLE_BLUE_DARK,
+  CONSOLE_FRAME,
+  BLACK,
+  CONSOLE_PANEL,
+  CONSOLE_TEXT,
+  CONSOLE_HIGHLIGHT,
+  TAB_BG,
+  TAB_BORDER,
+  TAB_BG_ACTIVE,
+  CONSOLE_LIGHT,
+  TAB_BG_SPACER,
+  CONSOLE_LIGHT_PALE,
+  HISTOGRAM_BAR,
+  HISTOGRAM_BAR_LIGHT,
+  EQ_BAR,
+  EQ_BAR_LIGHT,
+  VIEWPORT_BORDER,
+  VIEWPORT_BG_CENTER,
+  VIEWPORT_BG_EDGE,
+  HOLO,
+  HOLO_DIFFUSE,
+  HOLO_DETAIL_DIFFUSE,
+  HOLO_SPECULAR,
+  HOLO_RING,
+  HOLO_SCANLINE,
+  WHITE,
+} from '../../utils/introColors';
+import { FONT_MONO } from '../../utils/introFonts';
 
 /* SVG coordinate space of the hologram body. */
 const BODY_W = 900;
@@ -125,11 +156,6 @@ const BODY_SHAPES = (
   </>
 );
 
-const FRAME = '#5cc4e6';
-const PANEL = '#0a2233';
-const HOLO = '#5dff9a';
-const HOLO_RGB = '93, 255, 154';
-
 const firstName = Bio.name.split(' ')[0];
 
 const MODULES = ['CODE', 'DNA', 'SCAN', 'SECTOR', 'TRANSFER', 'MEMORY', 'LINK', 'CORE'];
@@ -240,16 +266,16 @@ const MainPanel = styled.div`
   flex-direction: column;
   gap: 6px;
   padding: 6px;
-  background: linear-gradient(to bottom, #1d6f95, #0e4566);
-  border: 2px solid ${FRAME};
+  background: linear-gradient(to bottom, ${CONSOLE_BLUE}, ${CONSOLE_BLUE_DARK});
+  border: 2px solid ${CONSOLE_FRAME};
   border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 30px ${alpha(BLACK, 0.6)}, inset 0 0 20px ${alpha(BLACK, 0.3)};
 `;
 
 const Panel = styled.div`
   position: relative;
-  background: ${PANEL};
-  border: 1px solid rgba(92, 196, 230, 0.45);
+  background: ${CONSOLE_PANEL};
+  border: 1px solid ${alpha(CONSOLE_FRAME, 0.45)};
   border-radius: 3px;
   overflow: hidden;
 `;
@@ -259,11 +285,11 @@ const TitleBar = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 6px;
-  font-family: 'Courier New', monospace;
+  font-family: ${FONT_MONO};
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.3em;
-  color: #d8f6ff;
+  color: ${CONSOLE_TEXT};
 `;
 
 /* ─── Module row ─────────────────────────────────────────────────── */
@@ -291,17 +317,17 @@ const ModuleLight = styled.div`
   width: 6px;
   height: 18px;
   border-radius: 1px;
-  background: ${({ $lit }) => ($lit ? '#7ff0ff' : 'rgba(92, 196, 230, 0.2)')};
-  box-shadow: ${({ $lit }) => ($lit ? '0 0 8px #7ff0ff' : 'none')};
+  background: ${({ $lit }) => ($lit ? CONSOLE_LIGHT : alpha(CONSOLE_FRAME, 0.2))};
+  box-shadow: ${({ $lit }) => ($lit ? `0 0 8px ${CONSOLE_LIGHT}` : 'none')};
   transition: background 0.4s, box-shadow 0.4s;
   transition-delay: ${({ $delay }) => $delay}s;
 `;
 
 const ModuleLabel = styled.div`
-  font-family: 'Courier New', monospace;
+  font-family: ${FONT_MONO};
   font-size: 8px;
   letter-spacing: 0.08em;
-  color: rgba(216, 246, 255, 0.7);
+  color: ${alpha(CONSOLE_TEXT, 0.7)};
 `;
 
 /* ─── Tabs ───────────────────────────────────────────────────────── */
@@ -313,28 +339,28 @@ const TabRow = styled.div`
 
 const Tab = styled.div`
   padding: 3px 12px;
-  font-family: 'Courier New', monospace;
+  font-family: ${FONT_MONO};
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #e8fbff;
-  background: #2b86b0;
-  border: 1px solid rgba(160, 230, 250, 0.5);
+  color: ${CONSOLE_HIGHLIGHT};
+  background: ${TAB_BG};
+  border: 1px solid ${alpha(TAB_BORDER, 0.5)};
   transition: background 0.4s, box-shadow 0.4s;
 
   ${({ $active }) =>
     $active &&
     css`
-      background: #3fb4e0;
-      box-shadow: 0 0 10px rgba(127, 240, 255, 0.7);
+      background: ${TAB_BG_ACTIVE};
+      box-shadow: 0 0 10px ${alpha(CONSOLE_LIGHT, 0.7)};
     `}
 
   ${({ $spacer }) =>
     $spacer &&
     css`
       flex: 1;
-      background: #1f6f95;
+      background: ${TAB_BG_SPACER};
       @media (max-width: 768px) {
         display: none;
       }
@@ -392,8 +418,8 @@ const Gauge = styled(Panel)`
 
 const GaugeFill = styled(motion.div)`
   width: 100%;
-  background: linear-gradient(to top, #7ff0ff, #c8f8ff);
-  box-shadow: 0 0 8px rgba(127, 240, 255, 0.7);
+  background: linear-gradient(to top, ${CONSOLE_LIGHT}, ${CONSOLE_LIGHT_PALE});
+  box-shadow: 0 0 8px ${alpha(CONSOLE_LIGHT, 0.7)};
 `;
 
 const WorldPanel = styled(Panel)`
@@ -425,7 +451,7 @@ const MiniBars = styled(Panel)`
 const MiniBar = styled.span`
   width: 9px;
   height: 100%;
-  background: linear-gradient(to top, #c07ae0, #f0d8ff);
+  background: linear-gradient(to top, ${HISTOGRAM_BAR}, ${HISTOGRAM_BAR_LIGHT});
   transform-origin: bottom;
   animation: ${equalize} ${({ $speed }) => $speed}s ease-in-out infinite;
 `;
@@ -451,7 +477,7 @@ const FrameModule = styled(Panel)`
     content: '';
     width: 70%;
     height: 70%;
-    border: 2px solid rgba(92, 196, 230, 0.5);
+    border: 2px solid ${alpha(CONSOLE_FRAME, 0.5)};
   }
 `;
 
@@ -466,8 +492,8 @@ const BlobModule = styled(Panel)`
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #e8fbff, #5cc4e6);
-    box-shadow: 0 0 10px rgba(127, 240, 255, 0.6);
+    background: radial-gradient(circle at 35% 35%, ${CONSOLE_HIGHLIGHT}, ${CONSOLE_FRAME});
+    box-shadow: 0 0 10px ${alpha(CONSOLE_LIGHT, 0.6)};
     animation: ${pulse} 2s ease-in-out infinite;
   }
   span:nth-child(2) { animation-delay: 1s; }
@@ -498,7 +524,7 @@ const EqModule = styled(Panel)`
   span {
     width: 7px;
     height: 100%;
-    background: linear-gradient(to top, #8b5cc4, #d6b8ff);
+    background: linear-gradient(to top, ${EQ_BAR}, ${EQ_BAR_LIGHT});
     transform-origin: bottom;
     animation: ${equalize} 1.4s ease-in-out infinite;
   }
@@ -509,8 +535,8 @@ const EqModule = styled(Panel)`
 const Viewport = styled.div`
   position: relative;
   aspect-ratio: 1.15;
-  border: 2px solid #eefaff;
-  background: radial-gradient(ellipse at 50% 40%, #0f3d4d 0%, #051620 75%);
+  border: 2px solid ${VIEWPORT_BORDER};
+  background: radial-gradient(ellipse at 50% 40%, ${VIEWPORT_BG_CENTER} 0%, ${VIEWPORT_BG_EDGE} 75%);
   overflow: hidden;
 
   @media (max-width: 768px) {
@@ -527,8 +553,8 @@ const Floor = styled(motion.div)`
   bottom: -10%;
   height: 45%;
   background-image:
-    linear-gradient(rgba(${HOLO_RGB}, 0.35) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(${HOLO_RGB}, 0.35) 1px, transparent 1px);
+    linear-gradient(${alpha(HOLO, 0.35)} 1px, transparent 1px),
+    linear-gradient(90deg, ${alpha(HOLO, 0.35)} 1px, transparent 1px);
   background-size: 28px 28px;
   transform: perspective(300px) rotateX(62deg);
   transform-origin: bottom;
@@ -556,11 +582,11 @@ const ViewportLabel = styled.div`
   right: 8px;
   display: flex;
   justify-content: space-between;
-  font-family: 'Courier New', monospace;
+  font-family: ${FONT_MONO};
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.14em;
-  color: rgba(${HOLO_RGB}, 0.85);
+  color: ${alpha(HOLO, 0.85)};
 `;
 
 /* ─── Bottom row under the viewport ──────────────────────────────── */
@@ -588,10 +614,10 @@ const BottomCell = styled(Panel)`
 `;
 
 const DataText = styled.div`
-  font-family: 'Courier New', monospace;
+  font-family: ${FONT_MONO};
   font-size: 9px;
   line-height: 1.5;
-  color: rgba(216, 246, 255, 0.8);
+  color: ${alpha(CONSOLE_TEXT, 0.8)};
 `;
 
 /* ─── Card scan panel ────────────────────────────────────────────── */
@@ -602,10 +628,10 @@ const CardPanel = styled.div`
   display: flex;
   gap: 6px;
   padding: 10px 8px;
-  background: linear-gradient(to bottom, #1d6f95, #0e4566);
-  border: 2px solid ${FRAME};
+  background: linear-gradient(to bottom, ${CONSOLE_BLUE}, ${CONSOLE_BLUE_DARK});
+  border: 2px solid ${CONSOLE_FRAME};
   border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 30px ${alpha(BLACK, 0.6)};
 
   @media (max-width: 768px) {
     width: auto;
@@ -617,11 +643,11 @@ const CardPanel = styled.div`
 const CardLabel = styled.div`
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-family: 'Courier New', monospace;
+  font-family: ${FONT_MONO};
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.3em;
-  color: #d8f6ff;
+  color: ${CONSOLE_TEXT};
   text-align: center;
 `;
 
@@ -630,8 +656,8 @@ const CardFrame = styled.div`
   position: relative;
   flex: 1;
   aspect-ratio: 347 / 555;
-  background: ${PANEL};
-  border: 1px solid rgba(92, 196, 230, 0.45);
+  background: ${CONSOLE_PANEL};
+  border: 1px solid ${alpha(CONSOLE_FRAME, 0.45)};
 
   @media (max-width: 768px) {
     flex: none;
@@ -652,8 +678,8 @@ const CardRing = styled(motion.div)`
   left: -6%;
   right: -6%;
   height: 2px;
-  background: #7ff0ff;
-  box-shadow: 0 0 12px 3px rgba(127, 240, 255, 0.7);
+  background: ${CONSOLE_LIGHT};
+  box-shadow: 0 0 12px 3px ${alpha(CONSOLE_LIGHT, 0.7)};
   border-radius: 50%;
   pointer-events: none;
 `;
@@ -670,14 +696,14 @@ const CardRing = styled(motion.div)`
  */
 const Dial = ({ phase, offset }) => (
   <svg viewBox="0 0 60 60" aria-hidden="true">
-    <circle cx="30" cy="30" r="26" fill="none" stroke="rgba(92,196,230,0.6)" strokeWidth="2" />
-    <circle cx="30" cy="30" r="3" fill="#d8f6ff" />
+    <circle cx="30" cy="30" r="26" fill="none" stroke={alpha(CONSOLE_FRAME, 0.6)} strokeWidth="2" />
+    <circle cx="30" cy="30" r="3" fill={CONSOLE_TEXT} />
     <motion.line
       x1="30"
       y1="30"
       x2="30"
       y2="10"
-      stroke="#d8f6ff"
+      stroke={CONSOLE_TEXT}
       strokeWidth="2"
       style={{ originX: '30px', originY: '30px' }}
       animate={{ rotate: -110 + phase * 60 + offset }}
@@ -705,7 +731,7 @@ const Hologram = ({ phase, durations }) => (
       viewBox={`0 0 ${BODY_W} ${BODY_H}`}
       aria-hidden="true"
       style={{
-        filter: phase >= 2 ? `drop-shadow(0 0 12px rgba(${HOLO_RGB}, 0.55))` : 'none',
+        filter: phase >= 2 ? `drop-shadow(0 0 12px ${alpha(HOLO, 0.55)})` : 'none',
         transition: 'filter 1s',
       }}
     >
@@ -757,7 +783,7 @@ const Hologram = ({ phase, durations }) => (
             in="volume"
             surfaceScale="9"
             diffuseConstant="1.2"
-            lightingColor="#28d870"
+            lightingColor={HOLO_DIFFUSE}
             result="diffuse"
           >
             <feDistantLight azimuth="235" elevation="40" />
@@ -767,7 +793,7 @@ const Hologram = ({ phase, durations }) => (
             surfaceScale="9"
             specularConstant="1.1"
             specularExponent="26"
-            lightingColor="#f0fff4"
+            lightingColor={HOLO_SPECULAR}
             result="specular"
           >
             <feDistantLight azimuth="235" elevation="48" />
@@ -808,7 +834,7 @@ const Hologram = ({ phase, durations }) => (
             in="volume"
             surfaceScale="6"
             diffuseConstant="1.2"
-            lightingColor="#3ee88a"
+            lightingColor={HOLO_DETAIL_DIFFUSE}
             result="diffuse"
           >
             <feDistantLight azimuth="235" elevation="40" />
@@ -818,7 +844,7 @@ const Hologram = ({ phase, durations }) => (
             surfaceScale="6"
             specularConstant="1.1"
             specularExponent="26"
-            lightingColor="#f0fff4"
+            lightingColor={HOLO_SPECULAR}
             result="specular"
           >
             <feDistantLight azimuth="235" elevation="48" />
@@ -837,15 +863,15 @@ const Hologram = ({ phase, durations }) => (
         </filter>
         {/* Keeps the scan lines on the body. */}
         <mask id="vi-body-mask">
-          <g fill="#fff">{BODY_SHAPES}</g>
+          <g fill={WHITE}>{BODY_SHAPES}</g>
         </mask>
         <pattern id="vi-lines" width="4" height="6" patternUnits="userSpaceOnUse">
-          <rect width="4" height="1.5" fill="rgba(210, 255, 225, 0.18)" />
+          <rect width="4" height="1.5" fill={alpha(HOLO_SCANLINE, 0.18)} />
         </pattern>
         <linearGradient id="vi-band" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor={HOLO} stopOpacity="0" />
           <stop offset="85%" stopColor={HOLO} stopOpacity="0.35" />
-          <stop offset="100%" stopColor="#eaffef" stopOpacity="1" />
+          <stop offset="100%" stopColor={HOLO_RING} stopOpacity="1" />
         </linearGradient>
         <clipPath id="vi-outline-clip">
           <motion.rect
@@ -871,7 +897,7 @@ const Hologram = ({ phase, durations }) => (
 
       <g clipPath="url(#vi-outline-clip)">
         <motion.g
-          fill="#fff"
+          fill={WHITE}
           filter="url(#vi-outline)"
           animate={{ opacity: phase >= 2 ? 0.35 : 1 }}
           transition={{ duration: 1 }}
@@ -886,13 +912,13 @@ const Hologram = ({ phase, durations }) => (
         animate={{ opacity: phase >= 2 ? [0.7, 1, 0.85, 1] : 0.7 }}
         transition={{ duration: 1.2 }}
       >
-        <g fill="#fff" filter="url(#vi-holo)">
+        <g fill={WHITE} filter="url(#vi-holo)">
           {BODY_SHAPES}
         </g>
-        <g fill="#fff" filter="url(#vi-holo-detail)" opacity="0.5" transform={HEAD_TRANSFORM}>
+        <g fill={WHITE} filter="url(#vi-holo-detail)" opacity="0.5" transform={HEAD_TRANSFORM}>
           {HAIR}
         </g>
-        <g fill="#fff" filter="url(#vi-holo-detail)" opacity="0.55">
+        <g fill={WHITE} filter="url(#vi-holo-detail)" opacity="0.55">
           {SHOE_DETAIL}
         </g>
         <rect width={BODY_W} height={BODY_H} fill="url(#vi-lines)" mask="url(#vi-body-mask)" />
@@ -919,7 +945,7 @@ const Hologram = ({ phase, durations }) => (
             rx={BODY_W * 0.3}
             ry="22"
             fill="none"
-            stroke="#eaffef"
+            stroke={HOLO_RING}
             strokeWidth="3"
             initial={{ cy: BODY_H, opacity: 0 }}
             animate={{ cy: 0, opacity: [0, 1, 1, 0] }}
@@ -1006,10 +1032,10 @@ const ScanWindow = ({ phase, durations, total }) => {
                     y={38 - height}
                     width="5"
                     height={height}
-                    fill="rgba(216, 246, 255, 0.75)"
+                    fill={alpha(CONSOLE_TEXT, 0.75)}
                   />
                 ))}
-                <line x1="8" y1="38.5" x2="96" y2="38.5" stroke="rgba(92,196,230,0.6)" />
+                <line x1="8" y1="38.5" x2="96" y2="38.5" stroke={alpha(CONSOLE_FRAME, 0.6)} />
               </svg>
             </Histogram>
           </SideColumn>
@@ -1041,8 +1067,8 @@ const ScanWindow = ({ phase, durations, total }) => {
               </BottomCell>
               <BottomCell>
                 <svg viewBox="0 0 60 30" aria-hidden="true">
-                  <ellipse cx="30" cy="18" rx="22" ry="7" fill={`rgba(${HOLO_RGB}, 0.35)`} />
-                  <ellipse cx="30" cy="15" rx="12" ry="7" fill={`rgba(${HOLO_RGB}, 0.8)`} />
+                  <ellipse cx="30" cy="18" rx="22" ry="7" fill={alpha(HOLO, 0.35)} />
+                  <ellipse cx="30" cy="15" rx="12" ry="7" fill={alpha(HOLO, 0.8)} />
                 </svg>
               </BottomCell>
             </BottomRow>

@@ -6,12 +6,24 @@
  */
 import React from 'react';
 import styled from 'styled-components';
+import { Trans, useTranslation } from 'react-i18next';
 import { CARTHAGE } from '../../utils/palette';
+import {
+  alpha,
+  SEA_BG,
+  SEA_BLUE,
+  SEA_WAVE,
+  SEA_FOAM,
+  SEA_TEXT,
+  WHITE,
+  SEA_TEXT_MUTED,
+} from '../../utils/colors';
+import { FONT_MONO } from '../../utils/fonts';
 
 const Sea = styled.footer`
   width: 100%;
   min-height: 260px;
-  background-color: #020810;
+  background-color: ${SEA_BG};
   position: relative;
   overflow: hidden;
   display: flex;
@@ -28,17 +40,17 @@ const Waves = styled.div`
     repeating-linear-gradient(
       -12deg,
       transparent 0px, transparent 18px,
-      rgba(10, 74, 255, 0.18) 18px, rgba(10, 74, 255, 0.18) 20px
+      ${alpha(SEA_BLUE, 0.18)} 18px, ${alpha(SEA_BLUE, 0.18)} 20px
     ),
     repeating-linear-gradient(
       -8deg,
       transparent 0px, transparent 28px,
-      rgba(0, 150, 255, 0.10) 28px, rgba(0, 150, 255, 0.10) 30px
+      ${alpha(SEA_WAVE, 0.10)} 28px, ${alpha(SEA_WAVE, 0.10)} 30px
     ),
     repeating-linear-gradient(
       -4deg,
       transparent 0px, transparent 40px,
-      rgba(0, 200, 255, 0.06) 40px, rgba(0, 200, 255, 0.06) 42px
+      ${alpha(SEA_FOAM, 0.06)} 40px, ${alpha(SEA_FOAM, 0.06)} 42px
     );
 `;
 
@@ -47,8 +59,8 @@ const HexGrid = styled.div`
   inset: 0;
   opacity: 0.06;
   background-image:
-    linear-gradient(rgba(10, 74, 255, 1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(10, 74, 255, 1) 1px, transparent 1px);
+    linear-gradient(${SEA_BLUE} 1px, transparent 1px),
+    linear-gradient(90deg, ${SEA_BLUE} 1px, transparent 1px);
   background-size: 36px 36px;
 `;
 
@@ -61,7 +73,7 @@ const DepthGlow = styled.div`
   height: 160px;
   background: radial-gradient(
     ellipse 70% 100% at 50% 100%,
-    rgba(10, 74, 255, 0.22) 0%,
+    ${alpha(SEA_BLUE, 0.22)} 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -81,33 +93,33 @@ const SeaTitle = styled.p`
   font-weight: 700;
   letter-spacing: 5px;
   text-transform: uppercase;
-  color: rgba(100, 160, 255, 0.6);
+  color: ${alpha(SEA_TEXT, 0.6)};
   margin: 0;
 `;
 
 const BackToTop = styled.a`
-  font-family: 'Courier New', monospace;
+  font-family: ${FONT_MONO};
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
-  color: rgba(0, 212, 255, 0.75);
-  border: 1px solid rgba(0, 212, 255, 0.35);
+  color: ${alpha(CARTHAGE, 0.75)};
+  border: 1px solid ${alpha(CARTHAGE, 0.35)};
   border-radius: 2px;
   padding: 8px 18px;
   transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
 
   &:hover {
-    color: #fff;
-    border-color: rgba(0, 212, 255, 0.8);
-    box-shadow: 0 0 14px rgba(0, 212, 255, 0.35);
+    color: ${WHITE};
+    border-color: ${alpha(CARTHAGE, 0.8)};
+    box-shadow: 0 0 14px ${alpha(CARTHAGE, 0.35)};
   }
 `;
 
 const Copyright = styled.p`
   font-size: 12px;
-  color: rgba(150, 190, 255, 0.7);
+  color: ${alpha(SEA_TEXT_MUTED, 0.7)};
   margin: 0;
   letter-spacing: 1px;
 
@@ -123,7 +135,7 @@ const Disclaimer = styled.p`
   text-align: center;
   font-size: 12px;
   line-height: 1.6;
-  color: rgba(150, 190, 255, 0.7);
+  color: ${alpha(SEA_TEXT_MUTED, 0.7)};
   margin: 0;
   letter-spacing: 0.5px;
 
@@ -139,21 +151,24 @@ const Disclaimer = styled.p`
  * @component
  * @returns {JSX.Element}
  */
-const DigitalSea = () => (
-  <Sea>
-    <Waves />
-    <HexGrid />
-    <DepthGlow />
-    <Content>
-      <SeaTitle>Digital Sea</SeaTitle>
-      <BackToTop href="#about">▴ Return to the past</BackToTop>
-      <Copyright>© {new Date().getFullYear()} <strong>Sébastien RITTER</strong></Copyright>
-      <Disclaimer>
-        Fan-made tribute to <em>Code Lyoko</em>. Not affiliated with or endorsed by its rights
-        holders. Characters and artwork © their respective owners.
-      </Disclaimer>
-    </Content>
-  </Sea>
-);
+const DigitalSea = () => {
+  const { t } = useTranslation();
+
+  return (
+    <Sea>
+      <Waves />
+      <HexGrid />
+      <DepthGlow />
+      <Content>
+        <SeaTitle>{t('footer.title')}</SeaTitle>
+        <BackToTop href="#about">{t('footer.backToTop')}</BackToTop>
+        <Copyright>© {new Date().getFullYear()} <strong>Sébastien RITTER</strong></Copyright>
+        <Disclaimer>
+          <Trans i18nKey="footer.disclaimer" components={{ em: <em /> }} />
+        </Disclaimer>
+      </Content>
+    </Sea>
+  );
+};
 
 export default DigitalSea;

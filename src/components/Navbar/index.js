@@ -1,94 +1,86 @@
 /**
  * @file src/components/Navbar/index.js
- * Sticky navigation bar: logo, section anchors, GitHub / LinkedIn links.
- * Below 1100px a hamburger button opens a side drawer.
- * Also hosts the Ulrich / XANA easter eggs shown when hovering the logo.
+ * Sticky navigation bar drawn as a Lyoko window title bar: handle pill, section
+ * tabs (the tab of the section in view is lit), GitHub / LinkedIn pills.
+ * Below 1100px a pill button opens the menu in a "Supercomputer" Lyoko window.
+ * The EN | FR language switch sits beside the links, or at the bottom of the drawer.
  * @component
  */
-import React, { Suspense } from 'react';
+import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { Bio } from '../../data/content';
-import lyokoSymbol from '../../img/lyoko-symbol.png';
-import UlrichImg from '../../img/ulrich.png';
-import UlrichXanaImg from '../../img/ulrich-xana.png';
 import { FaBars, FaTimes, FaGithub, FaLinkedin } from 'react-icons/fa';
+import LyokoWindow, { WindowPill } from '../Cards/LyokoWindow';
+import LanguageSwitch from '../LanguageSwitch';
 import { CARTHAGE } from '../../utils/palette';
+import {
+  alpha,
+  BLACK,
+  WHITE,
+  WINDOW_BAR,
+  WINDOW_BAR_LIGHT,
+  WINDOW_BAR_DARK,
+  WINDOW_PILL,
+  WINDOW_PILL_TEXT,
+  WINDOW_PANEL_BORDER,
+  WINDOW_TEXT
+} from '../../utils/colors';
+import { FONT_MONO } from '../../utils/fonts';
+import useCurrentSection from '../../utils/useCurrentSection';
 
-const UlrichEasterEgg = React.lazy(() => import('./UlrichEasterEgg'));
+/* Section anchors, in page order; labels are `nav.sections.<id>` in ui.json. */
+const SECTION_IDS = ['about', 'skills', 'experience', 'projects', 'photography'];
 
 const blink = keyframes`
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 `;
 
-const Nav = styled.div`
-  height: 56px;
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  font-size: 1rem;
+const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 100;
-  /* required so the absolutely positioned MobileMenu anchors to it */
-  isolation: isolate;
-
-  background:
-    linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px),
-    rgba(0, 8, 24, 0.97);
-  background-size: 24px 24px, 24px 24px, 100% 100%;
-  backdrop-filter: blur(10px);
-
-  border-bottom: 2px solid rgba(0, 212, 255, 0.45);
-
-  @media screen and (max-width: 768px) {
-    transition: 0.8s all ease;
-  }
+  background: ${WINDOW_BAR};
+  border-top: 1px solid ${WINDOW_BAR_LIGHT};
+  border-bottom: 3px solid ${WINDOW_PILL};
 `;
 
+/* Three columns so the tabs stay centered whatever the side widths */
 const NavContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  height: 100%;
-  z-index: 1;
-  width: 100%;
-  padding: 0 0 0 12px;
-  max-width: 1200px;
-
-  @media screen and (max-width: 768px) {
-    display: grid;
-    grid-template-columns: 56px 1fr 56px;
-    align-items: center;
-    padding: 0;
-  }
-`;
-
-const LogoArea = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  padding: 0 16px 0 4px;
-  border-right: 1px solid rgba(0, 212, 255, 0.2);
-  flex-shrink: 0;
+  gap: 16px;
+  height: 52px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
 
-  @media screen and (max-width: 768px) {
-    grid-column: 2;
-    justify-content: center;
-    border-right: none;
-    padding: 0;
+  @media screen and (max-width: 1100px) {
+    grid-template-columns: 44px 1fr 44px;
   }
 `;
 
-const LogoText = styled.span`
-  font-family: 'Courier New', monospace;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: rgba(0, 212, 255, 0.85);
-  white-space: nowrap;
+const Handle = styled(WindowPill)`
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 12px;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  color: ${WINDOW_TEXT};
+  border-radius: 8px;
+
+  @media screen and (max-width: 1100px) {
+    grid-column: 2;
+    justify-self: center;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    padding: 3px 10px;
+  }
 `;
 
 // data-allow-motion: keeps blinking under prefers-reduced-motion (see App.css).
@@ -97,237 +89,180 @@ const Cursor = styled.span.attrs({ 'data-allow-motion': true })`
   width: 2px;
   height: 14px;
   background: ${CARTHAGE};
-  margin-left: 2px;
-  vertical-align: middle;
   animation: ${blink} 1.1s step-end infinite;
 `;
 
-const LyokoSymbol = styled.img`
-  height: 32px;
-  width: auto;
-  cursor: pointer;
-  transition: filter 0.3s ease;
-  &:hover {
-    filter: invert(15%) sepia(90%) saturate(700%) hue-rotate(340deg) brightness(1.2);
-  }
-`;
-
-const NavItems = styled.ul`
+const Tabs = styled(WindowPill).attrs({ as: 'ul' })`
   display: flex;
-  align-items: stretch;
-  padding: 0;
+  gap: 3px;
+  padding: 3px;
   margin: 0;
   list-style: none;
+  border-radius: 8px;
 
   @media screen and (max-width: 1100px) {
     display: none;
   }
 `;
 
-const NavLink = styled.a`
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  font-family: 'Courier New', monospace;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(0, 212, 255, 0.65);
-  text-decoration: none;
-  cursor: pointer;
-  border-right: 1px solid rgba(0, 212, 255, 0.15);
-  transition: color 0.2s ease, background 0.2s ease;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: ${CARTHAGE};
-    transition: width 0.25s ease;
-  }
-
-  &:hover {
-    color: ${CARTHAGE};
-    background: rgba(0, 212, 255, 0.07);
-  }
-  &:hover::after {
-    width: 100%;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  border-left: 1px solid rgba(0, 212, 255, 0.2);
-  gap: 12px;
-  flex-shrink: 0;
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const GitHubButton = styled.a`
-  display: flex;
-  align-items: center;
-  height: 28px;
-  padding: 0 14px;
-  font-family: 'Courier New', monospace;
-  font-size: 10px;
+const Tab = styled.a`
+  display: block;
+  padding: 4px 14px;
+  font-family: ${FONT_MONO};
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: ${CARTHAGE};
   text-decoration: none;
-  border: 1px solid rgba(0, 212, 255, 0.45);
-  border-radius: 2px;
-  background: rgba(0, 212, 255, 0.05);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  color: ${WINDOW_PILL_TEXT};
+  border-radius: 6px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+
   &:hover {
-    background: rgba(0, 212, 255, 0.15);
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.35);
-    color: #fff;
+    color: ${WHITE};
+    background: ${alpha(WINDOW_BAR, 0.35)};
+  }
+
+  &[aria-current='true'] {
+    color: ${WHITE};
+    background: ${WINDOW_BAR_DARK};
   }
 `;
 
-const MobileIcon = styled.div`
-  display: none;
+const Links = styled.div`
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
   @media screen and (max-width: 1100px) {
+    display: none;
+  }
+`;
+
+const LinkPill = styled(WindowPill).attrs({ as: 'a' })`
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    color: ${WHITE};
+    border-color: ${CARTHAGE};
+    box-shadow: 0 0 10px ${alpha(CARTHAGE, 0.3)};
+  }
+`;
+
+const MenuButton = styled(WindowPill).attrs({ as: 'button', type: 'button' })`
+  display: none;
+
+  @media screen and (max-width: 1100px) {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    padding: 0 16px;
-    font-size: 1.3rem;
+    padding: 6px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
-    color: rgba(0, 212, 255, 0.8);
-    border-left: 1px solid rgba(0, 212, 255, 0.2);
-    z-index: 200;
-  }
-  @media screen and (max-width: 768px) {
-    grid-column: 3;
   }
 `;
 
 const DrawerOverlay = styled.div`
-  display: none;
-  @media screen and (max-width: 1100px) {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(2px);
-    z-index: 98;
-    opacity: ${({ open }) => (open ? 1 : 0)};
-    pointer-events: ${({ open }) => (open ? 'all' : 'none')};
-    transition: opacity 0.3s ease;
-  }
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+  background: ${alpha(BLACK, 0.55)};
+  opacity: ${({ $open }) => ($open ? 1 : 0)};
+  pointer-events: ${({ $open }) => ($open ? 'all' : 'none')};
+  transition: opacity 0.3s ease;
 `;
 
-const MobileMenu = styled.div`
-  display: none;
-  @media screen and (max-width: 1100px) {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 75vw;
-    max-width: 300px;
-    background:
-      linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px),
-      rgba(0, 4, 16, 0.99);
-    background-size: 24px 24px, 24px 24px, 100% 100%;
-    border-left: 2px solid rgba(0, 212, 255, 0.4);
-    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.6);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: ${({ open }) => (open ? 'translateX(0)' : 'translateX(100%)')};
-    pointer-events: ${({ open }) => (open ? 'all' : 'none')};
-    z-index: 99;
-  }
+const Drawer = styled.div`
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 99;
+  width: min(300px, calc(100vw - 20px));
+  transform: ${({ $open }) =>
+    $open ? 'none' : 'translateX(calc(100% + 20px))'};
+  visibility: ${({ $open }) => ($open ? 'visible' : 'hidden')};
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.35s;
 `;
 
-const DrawerHeader = styled.div`
+const CloseButton = styled(WindowPill).attrs({ as: 'button', type: 'button' })`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  height: 56px;
-  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-  flex-shrink: 0;
-`;
-
-const DrawerTitle = styled.span`
-  font-family: 'Courier New', monospace;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(0, 212, 255, 0.5);
-`;
-
-const DrawerClose = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
+  padding: 3px 8px;
   border: none;
   cursor: pointer;
-  color: rgba(0, 212, 255, 0.8);
-  font-size: 1.1rem;
-  padding: 4px;
-  transition: color 0.2s ease;
-  &:hover { color: #fff; }
+  &:hover {
+    color: ${WHITE};
+  }
 `;
 
-const MobileMenuItems = styled.ul`
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-`;
-
-const MobileMenuLink = styled.a`
+const DrawerLink = styled.a`
   display: block;
-  width: 100%;
-  padding: 14px 24px;
-  font-family: 'Courier New', monospace;
-  font-size: 11px;
+  padding: 12px 18px;
+  font-family: ${FONT_MONO};
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(0, 212, 255, 0.7);
   text-decoration: none;
-  border-bottom: 1px solid rgba(0, 212, 255, 0.1);
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-  &:hover {
-    background: rgba(0, 212, 255, 0.07);
-    color: ${CARTHAGE};
+  color: ${WINDOW_TEXT};
+  border-bottom: 1px solid ${alpha(WINDOW_PANEL_BORDER, 0.25)};
+  transition: background 0.2s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+  &:hover,
+  &[aria-current='true'] {
+    background: ${alpha(BLACK, 0.15)};
+  }
+`;
+
+const DrawerLanguage = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 14px 18px;
+`;
+
+/* Cancels the window panel padding (see LyokoWindow Content) so links span its full width */
+const DrawerLinks = styled.div`
+  margin: -18px -18px -20px;
+  @media only screen and (max-width: 768px) {
+    margin: -14px -12px -16px;
   }
 `;
 
 /**
- * Hovering the Lyoko symbol shows Ulrich-XANA (red glow); hovering the handle shows
- * Ulrich (teal glow). The mobile drawer closes on a link or backdrop click, and
- * automatically once the window grows past 1100px.
+ * The drawer closes on a link, close button or backdrop click, and automatically once
+ * the window grows past 1100px.
  * @component
  * @returns {JSX.Element}
  */
 const Navbar = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
-  const [ulrichVisible, setUlrichVisible] = React.useState(false);
-  const [xanaVisible, setXanaVisible] = React.useState(false);
+  const current = useCurrentSection(SECTION_IDS);
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -337,90 +272,84 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const close = () => setOpen(false);
+
   return (
-    <Nav>
+    <Nav aria-label={t('nav.ariaLabel')}>
       <NavContainer>
-        <LogoArea>
-          <LyokoSymbol
-            src={lyokoSymbol}
-            alt="Code Lyoko"
-            onMouseEnter={() => setXanaVisible(true)}
-            onMouseLeave={() => setXanaVisible(false)}
-          />
-          <LogoText
-            onMouseEnter={() => setUlrichVisible(true)}
-            onMouseLeave={() => setUlrichVisible(false)}
-          >{Bio.surname}<Cursor /></LogoText>
-        </LogoArea>
+        <Handle>
+          {Bio.surname}
+          <Cursor />
+        </Handle>
 
-        <NavItems>
-          <NavLink href="#about">Carthage</NavLink>
-          <NavLink href="#skills">Abilities</NavLink>
-          <NavLink href="#experience">Missions</NavLink>
-          <NavLink href="#projects">Programs</NavLink>
-          <NavLink href="#photography">Superscan</NavLink>
-        </NavItems>
+        <Tabs>
+          {SECTION_IDS.map((id) => (
+            <li key={id}>
+              <Tab
+                href={`#${id}`}
+                aria-current={current === id ? 'true' : undefined}
+              >
+                {t(`nav.sections.${id}`)}
+              </Tab>
+            </li>
+          ))}
+        </Tabs>
 
-        <ButtonContainer>
-          <GitHubButton
-            href={Bio.github}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <FaGithub style={{ marginRight: 6, fontSize: 13 }} />
+        <Links>
+          <LanguageSwitch />
+          <LinkPill href={Bio.github} target="_blank" rel="noreferrer">
+            <FaGithub aria-hidden="true" />
             Github
-          </GitHubButton>
-          <GitHubButton
-            href={Bio.linkedin}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <FaLinkedin style={{ marginRight: 6, fontSize: 13 }} />
+          </LinkPill>
+          <LinkPill href={Bio.linkedin} target="_blank" rel="noreferrer">
+            <FaLinkedin aria-hidden="true" />
             LinkedIn
-          </GitHubButton>
-        </ButtonContainer>
+          </LinkPill>
+        </Links>
 
-        <MobileIcon onClick={() => setOpen(!open)}>
+        <MenuButton
+          onClick={() => setOpen(true)}
+          aria-label={t('nav.openMenu')}
+          aria-expanded={open}
+        >
           <FaBars />
-        </MobileIcon>
+        </MenuButton>
       </NavContainer>
 
-      <DrawerOverlay open={open} onClick={() => setOpen(false)} />
-      <MobileMenu open={open}>
-        <DrawerHeader>
-          <DrawerTitle>Supercomputer</DrawerTitle>
-          <DrawerClose onClick={() => setOpen(false)}><FaTimes /></DrawerClose>
-        </DrawerHeader>
-        <MobileMenuItems>
-          <MobileMenuLink href="#about"       onClick={() => setOpen(false)}>Carthage</MobileMenuLink>
-          <MobileMenuLink href="#skills"      onClick={() => setOpen(false)}>Abilities</MobileMenuLink>
-          <MobileMenuLink href="#experience"  onClick={() => setOpen(false)}>Missions</MobileMenuLink>
-          <MobileMenuLink href="#projects"    onClick={() => setOpen(false)}>Programs</MobileMenuLink>
-          <MobileMenuLink href="#photography" onClick={() => setOpen(false)}>Superscan</MobileMenuLink>
-          <MobileMenuLink
-            as="a"
-            href={Bio.github}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Github
-          </MobileMenuLink>
-          <MobileMenuLink
-            as="a"
-            href={Bio.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            style={{ borderBottom: 'none' }}
-          >
-            LinkedIn
-          </MobileMenuLink>
-        </MobileMenuItems>
-      </MobileMenu>
-
-      <Suspense fallback={null}>
-        <UlrichEasterEgg visible={ulrichVisible} src={UlrichImg} glowColor="#0DB6A4" />
-        <UlrichEasterEgg visible={xanaVisible} src={UlrichXanaImg} glowColor="#cc1111" />
-      </Suspense>
+      <DrawerOverlay $open={open} onClick={close} />
+      <Drawer $open={open}>
+        <LyokoWindow
+          title={t('nav.drawerTitle')}
+          accent={CARTHAGE}
+          rightSlot={
+            <CloseButton onClick={close} aria-label={t('nav.closeMenu')}>
+              <FaTimes />
+            </CloseButton>
+          }
+        >
+          <DrawerLinks>
+            {SECTION_IDS.map((id) => (
+              <DrawerLink
+                key={id}
+                href={`#${id}`}
+                onClick={close}
+                aria-current={current === id ? 'true' : undefined}
+              >
+                {t(`nav.sections.${id}`)}
+              </DrawerLink>
+            ))}
+            <DrawerLink href={Bio.github} target="_blank" rel="noreferrer">
+              Github
+            </DrawerLink>
+            <DrawerLink href={Bio.linkedin} target="_blank" rel="noreferrer">
+              LinkedIn
+            </DrawerLink>
+            <DrawerLanguage>
+              <LanguageSwitch />
+            </DrawerLanguage>
+          </DrawerLinks>
+        </LyokoWindow>
+      </Drawer>
     </Nav>
   );
 };

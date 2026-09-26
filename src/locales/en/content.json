@@ -1,0 +1,83 @@
+{
+  "bio": {
+    "title": ".NET & AI Software Engineer",
+    "roles": ["Embedded systems", "AI & MCP tooling", "Photographer", "DJ"],
+    "description": [
+      "Software engineer with 7+ years across embedded systems for the automotive and industrial sectors, and .NET back-ends for conversational AI.",
+      "Off the clock I build MCP servers and LLM tooling, shoot street photography and play electronic music."
+    ]
+  },
+  "skillCategories": {
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "embedded": "Embedded System",
+    "ai": "AI & Automation",
+    "cloud": "Cloud Computing",
+    "ide": "IDE",
+    "others": "Others"
+  },
+  "experiences": {
+    "ibm": {
+      "role": ".NET Software Developer",
+      "desc": "Cognitive project for a French bank (Euro Information): back-end development in .NET on a proprietary framework for chatbots and IVRs, integrating NLP and AI components. V-cycle process with Agile ceremonies, GitLab for source control, and close collaboration with technical and business teams.",
+      "skills": ["C#", ".NET", "NLP", "Conversational AI", "GitLab", "Agile"]
+    },
+    "bdr": {
+      "role": "Software Engineer",
+      "desc": "Designed and implemented software to optimise the performance, management and maintenance of heat pump systems. Worked with industrial communication protocols (Modbus, CANopen) and thermal control standards, alongside the lab test and deployment teams. Led the refactoring of the algorithm managing the additional producer on the main software board.",
+      "skills": ["C", "Embedded C", "Modbus", "CANopen", "Refactoring", "Design patterns"]
+    },
+    "bosch": {
+      "role": "Embedded Software Developer",
+      "desc": "Embedded software for driver assistance and autonomous driving computers, on customer projects for an integrated brake control system. Developed BSW functionalities (diagnostic system, system control) and planned and ran validation campaigns on Hardware-in-the-Loop and Software-in-the-Loop benches.",
+      "skills": ["Embedded C", "AUTOSAR BSW", "Diagnostics", "HIL / SIL", "Automotive"]
+    },
+    "liebherr": {
+      "role": "Engineering Apprentice → Validation Engineer",
+      "desc": "Three and a half years on the production test benches for mining excavator cabins — first as an engineering apprentice alongside my degree, then hired as a validation engineer. Excavators ship as sub-assemblies, each validated individually on a dedicated bench. I handled the software and hardware monitoring of those benches, carried out a full overhaul of a legacy LabVIEW cabin bench, and integrated the previous-generation cabin tests into a new bench for the production launch of the R9600 excavator.",
+      "skills": ["LabVIEW", "TestStand", "Test benches", "Hardware validation", "Industrial IT"]
+    },
+    "fsg": {
+      "role": "Intern",
+      "desc": "FSG assembles and wires slip rings for crane alternators. Continuity testing of the electrical assemblies was previously done by hand with an ohmmeter and needed two people. I designed the software side of an automated test instrument and wrote its voltage measurement routines.",
+      "skills": ["Test automation", "Electrical measurement", "Instrumentation"]
+    },
+    "bruker": {
+      "role": "Intern",
+      "desc": "Studied an electronic test bench and migrated its test cases to a TestStand environment, for the validation of RF electronic boards.",
+      "skills": ["NI TestStand", "RF electronics", "Test migration"]
+    }
+  },
+  "education": {
+    "tps": {
+      "degree": "Ingénieur (apprenticeship) — Electrical, Electronic and Industrial Computer Engineering",
+      "desc": "Three-year engineering degree completed as an apprentice, alternating between the school and Liebherr Mining Equipment."
+    },
+    "iut": {
+      "degree": "DUT Génie Électrique et Informatique Industrielle (GEII)",
+      "desc": "Two-year technical degree in electrical engineering, electronics and industrial computing."
+    }
+  },
+  "projects": {
+    "spotifySorter": {
+      "description": "Automated pipeline that files my Spotify liked tracks into genre playlists, running hourly on GitHub Actions with zero manual intervention. Tracks are tagged from the Last.fm API (with remix and feat. detection so the remixer's genre wins), matched against keyword rules, and anything ambiguous is classified by an LLM on Groq. Each run is incremental — a committed state.json checkpoint means only new likes are processed."
+    },
+    "riotDashboard": {
+      "description": "A League of Legends behaviour analysis dashboard: search a player, then read their rank, champion mastery and recent games, with dedicated rendering for Classic 5v5 and Arena matches. A built-in AI chat answers questions about the player in natural language — a LangGraph agent drives an in-app MCP server that wraps the Riot Games API, and the UI shows the graph trace behind each answer. Built on Next.js 16 and React 19 in TypeScript, on a DDD layered architecture (domain / infrastructure / services / components) with Vitest unit tests and GitHub Actions CI. Not affiliated with or endorsed by Riot Games."
+    },
+    "mcpInspector": {
+      "description": "A desktop GUI for exploring and debugging Model Context Protocol servers. Connect to any MCP server, browse its tools and resources, and invoke them through forms generated automatically from their JSON schemas. Built as an Electron app on React 19 and TypeScript, packaged for macOS, Windows and Linux."
+    },
+    "mcpLolEsports": {
+      "description": "An MCP server that plugs LLMs into the Riot Games API, so an AI assistant can answer natural-language questions about League of Legends: player summaries, ranked stats, champion mastery, recent match history and live esports data. Not affiliated with or endorsed by Riot Games."
+    }
+  },
+  "projectCategories": {
+    "automation": "automation",
+    "webApp": "web app",
+    "devTooling": "developer tooling"
+  },
+  "photoCategories": {
+    "street": "street"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "ariaLabel": "Sections",
+    "sections": {
+      "about": "Profile",
+      "skills": "Abilities",
+      "experience": "Missions",
+      "projects": "Programs",
+      "photography": "Photography"
+    },
+    "drawerTitle": "Supercomputer",
+    "openMenu": "Open the menu",
+    "closeMenu": "Close the menu",
+    "language": "Language"
+  },
+  "hero": {
+    "sector": "Sector 5 — Carthage",
+    "title": "Profile",
+    "description": "Scanned, virtualized, ready for the next mission.",
+    "identityWindow": "Identity",
+    "experience_one": "{{count}} year exp",
+    "experience_other": "{{count}} years exp",
+    "roles": "Roles",
+    "contactLead": "Open to new missions, open to relocate.",
+    "cta": "Get in touch",
+    "channel": "Channel open : {{email}}",
+    "cardWindow": "Card scan",
+    "cardCaption": "Virtualize me",
+    "cardAlt": "{{name}} as a Code Lyoko character card — replay the virtualization"
+  },
+  "skills": {
+    "sector": "Sector 1 — Ice",
+    "title": "Abilities",
+    "description_one": "Powers acquired over {{count}} year.",
+    "description_other": "Powers acquired over {{count}} years.",
+    "count_one": "{{count}} skill",
+    "count_other": "{{count}} skills"
+  },
+  "experience": {
+    "sector": "Sector 2 — Forest",
+    "title": "Missions & Education",
+    "description": "Every mission logged by the supercomputer.",
+    "legendMissions": "Missions",
+    "legendEducation": "Education",
+    "missionWindow": "Mission",
+    "educationWindow": "Education",
+    "duration": "Duration",
+    "abilities": "Abilities :",
+    "via": "via {{firm}}"
+  },
+  "projects": {
+    "sector": "Sector 3 — Mountain",
+    "title": "Programs",
+    "description": "Programs coded from the lab.",
+    "allSectors": "all sectors",
+    "window": "Program",
+    "duration": "Duration",
+    "stack": "Stack :",
+    "github": "GitHub",
+    "live": "Live"
+  },
+  "photography": {
+    "sector": "Sector 4 — Desert",
+    "title": "Photography Superscan",
+    "description": "A selection of edits I am proud of.",
+    "empty": "No activated tower detected. Superscan in progress…",
+    "before": "Before",
+    "after": "After",
+    "edited": "Virtualized",
+    "raw": "Raw"
+  },
+  "footer": {
+    "title": "Digital Sea",
+    "backToTop": "▴ Return to the past",
+    "disclaimer": "Fan-made tribute to <em>Code Lyoko</em>. Not affiliated with or endorsed by its rights holders. Characters and artwork © their respective owners."
+  },
+  "period": {
+    "now": "Now",
+    "years_one": "{{count}} yr",
+    "years_other": "{{count}} yr",
+    "months_one": "{{count}} mo",
+    "months_other": "{{count}} mo"
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "bio": {
+    "title": "Ingénieur logiciel .NET & IA",
+    "roles": ["Systèmes embarqués", "Outillage IA & MCP", "Photographe", "DJ"],
+    "description": [
+      "Ingénieur logiciel avec plus de 7 ans d'expérience, des systèmes embarqués pour l'automobile et l'industrie aux back-ends .NET pour l'IA conversationnelle.",
+      "En dehors du travail, je développe des serveurs MCP et des outils autour des LLM, je fais de la photographie et je mixe de la musique électronique."
+    ]
+  },
+  "skillCategories": {
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "embedded": "Systèmes embarqués",
+    "ai": "IA & automatisation",
+    "cloud": "Cloud computing",
+    "ide": "IDE",
+    "others": "Autres"
+  },
+  "experiences": {
+    "ibm": {
+      "role": "Développeur logiciel .NET",
+      "desc": "Projet cognitif pour une banque française (Euro Information) : développement back-end en .NET sur un framework propriétaire de chatbots et de serveurs vocaux interactifs, avec intégration de briques NLP et IA. Cycle en V ponctué de cérémonies Agile, GitLab pour la gestion de version, et collaboration étroite avec les équipes techniques et métier.",
+      "skills": ["C#", ".NET", "NLP", "IA conversationnelle", "GitLab", "Agile"]
+    },
+    "bdr": {
+      "role": "Ingénieur logiciel",
+      "desc": "Conception et développement de logiciels pour optimiser la performance, le pilotage et la maintenance de systèmes de pompes à chaleur. Travail sur les protocoles de communication industriels (Modbus, CANopen) et les normes de régulation thermique, aux côtés des équipes d'essais en laboratoire et de déploiement. Pilotage de la refonte de l'algorithme de gestion de l'appoint sur la carte logicielle principale.",
+      "skills": ["C", "C embarqué", "Modbus", "CANopen", "Refactoring", "Design patterns"]
+    },
+    "bosch": {
+      "role": "Développeur logiciel embarqué",
+      "desc": "Logiciel embarqué pour les calculateurs d'aide à la conduite et de conduite autonome, sur des projets clients autour d'un système de freinage intégré. Développement de fonctionnalités BSW (système de diagnostic, contrôle système), puis planification et exécution des campagnes de validation sur bancs Hardware-in-the-Loop et Software-in-the-Loop.",
+      "skills": ["C embarqué", "AUTOSAR BSW", "Diagnostic", "HIL / SIL", "Automobile"]
+    },
+    "liebherr": {
+      "role": "Apprenti ingénieur → Ingénieur validation",
+      "desc": "Trois ans et demi sur les bancs de test de production des cabines de pelles minières — d'abord comme apprenti ingénieur en parallèle de mon diplôme, puis embauché comme ingénieur validation. Les pelles sont livrées en sous-ensembles, chacun validé individuellement sur un banc dédié. J'ai assuré le suivi logiciel et matériel de ces bancs, mené la refonte complète d'un ancien banc cabine sous LabVIEW, et intégré les tests de la cabine de génération précédente dans un nouveau banc pour le lancement en production de la pelle R9600.",
+      "skills": ["LabVIEW", "TestStand", "Bancs de test", "Validation matérielle", "Informatique industrielle"]
+    },
+    "fsg": {
+      "role": "Stagiaire",
+      "desc": "FSG assemble et câble des collecteurs tournants pour alternateurs de grues. Le test de continuité des ensembles électriques se faisait jusque-là à la main, à l'ohmmètre, et mobilisait deux personnes. J'ai conçu la partie logicielle d'un instrument de test automatisé et écrit ses routines de mesure de tension.",
+      "skills": ["Automatisation de tests", "Mesure électrique", "Instrumentation"]
+    },
+    "bruker": {
+      "role": "Stagiaire",
+      "desc": "Étude d'un banc de test électronique et migration de ses cas de test vers un environnement TestStand, pour la validation de cartes électroniques RF.",
+      "skills": ["NI TestStand", "Électronique RF", "Migration de tests"]
+    }
+  },
+  "education": {
+    "tps": {
+      "degree": "Diplôme d'ingénieur (apprentissage) — Génie électrique, électronique et informatique industrielle",
+      "desc": "Cursus ingénieur de trois ans en apprentissage, en alternance entre l'école et Liebherr Mining Equipment."
+    },
+    "iut": {
+      "degree": "DUT Génie Électrique et Informatique Industrielle (GEII)",
+      "desc": "Diplôme technique en deux ans : génie électrique, électronique et informatique industrielle."
+    }
+  },
+  "projects": {
+    "spotifySorter": {
+      "description": "Pipeline automatisé qui range mes titres likés sur Spotify dans des playlists par genre, exécuté toutes les heures sur GitHub Actions sans aucune intervention manuelle. Les titres sont tagués via l'API Last.fm (avec détection des remix et des feat. pour que le genre du remixeur l'emporte), confrontés à des règles par mots-clés, et les cas ambigus sont classés par un LLM sur Groq. Chaque exécution est incrémentale — un point de reprise state.json versionné garantit que seuls les nouveaux likes sont traités."
+    },
+    "riotDashboard": {
+      "description": "Un tableau de bord d'analyse du comportement des joueurs de League of Legends : recherchez un joueur, puis consultez son rang, sa maîtrise des champions et ses parties récentes, avec un rendu dédié aux parties Classique 5v5 et Arène. Un chat IA intégré répond en langage naturel aux questions sur le joueur — un agent LangGraph pilote un serveur MCP embarqué qui encapsule l'API Riot Games, et l'interface affiche la trace du graphe derrière chaque réponse. Développé avec Next.js 16 et React 19 en TypeScript, sur une architecture DDD en couches (domaine / infrastructure / services / composants), avec des tests unitaires Vitest et une CI GitHub Actions. Ni affilié à Riot Games, ni approuvé par Riot Games."
+    },
+    "mcpInspector": {
+      "description": "Une interface de bureau pour explorer et déboguer des serveurs Model Context Protocol. Connectez-vous à n'importe quel serveur MCP, parcourez ses outils et ses ressources, et appelez-les via des formulaires générés automatiquement à partir de leurs schémas JSON. Application Electron sous React 19 et TypeScript, packagée pour macOS, Windows et Linux."
+    },
+    "mcpLolEsports": {
+      "description": "Un serveur MCP qui branche les LLM sur l'API Riot Games, pour qu'un assistant IA réponde en langage naturel aux questions sur League of Legends : profils de joueurs, statistiques classées, maîtrise des champions, historique des parties récentes et données esport en direct. Ni affilié à Riot Games, ni approuvé par Riot Games."
+    }
+  },
+  "projectCategories": {
+    "automation": "automatisation",
+    "webApp": "application web",
+    "devTooling": "outils de développement"
+  },
+  "photoCategories": {
+    "street": "rue"
+  }
+}

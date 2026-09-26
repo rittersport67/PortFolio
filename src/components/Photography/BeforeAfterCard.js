@@ -6,23 +6,26 @@
  */
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { DESERT } from '../../utils/palette';
+import { alpha, BLACK, DESERT_HANDLE, DESERT_BADGE, WHITE } from '../../utils/colors';
+import { FONT_MONO } from '../../utils/fonts';
 
 const Card = styled.div`
   position: relative;
   border-radius: 4px;
   overflow: hidden;
   aspect-ratio: 3 / 4;
-  background: #000;
+  background: ${BLACK};
   cursor: ${({ dragging }) => (dragging ? 'grabbing' : 'default')};
   user-select: none;
   -webkit-user-select: none;
   touch-action: pan-y;
-  border: 1px solid rgba(232, 150, 10, 0.45);
+  border: 1px solid ${alpha(DESERT, 0.45)};
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
   &:hover {
-    border-color: rgba(232, 150, 10, 0.8);
-    box-shadow: 0 0 20px rgba(232, 150, 10, 0.22);
+    border-color: ${alpha(DESERT, 0.8)};
+    box-shadow: 0 0 20px ${alpha(DESERT, 0.22)};
   }
 `;
 
@@ -54,10 +57,10 @@ const Handle = styled.div`
   transform: translate(-50%, -50%);
   width: 40px;
   height: 40px;
-  background: rgba(18, 6, 0, 0.92);
+  background: ${alpha(DESERT_HANDLE, 0.92)};
   border: 2px solid ${DESERT};
   border-radius: 50%;
-  box-shadow: 0 0 16px rgba(232, 150, 10, 0.55), 0 0 4px ${DESERT};
+  box-shadow: 0 0 16px ${alpha(DESERT, 0.55)}, 0 0 4px ${DESERT};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,7 +73,7 @@ const Handle = styled.div`
   ${({ dragging }) =>
     dragging &&
     `
-    box-shadow: 0 0 28px rgba(232, 150, 10, 0.9), 0 0 8px ${DESERT};
+    box-shadow: 0 0 28px ${alpha(DESERT, 0.9)}, 0 0 8px ${DESERT};
     transform: translate(-50%, -50%) scale(1.15);
   `}
 `;
@@ -78,14 +81,14 @@ const Handle = styled.div`
 const Label = styled.span`
   position: absolute;
   top: 12px;
-  font-family: 'Courier New', monospace;
+  font-family: ${FONT_MONO};
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(232, 150, 10, 0.9);
-  background: rgba(14, 4, 0, 0.78);
-  border: 1px solid rgba(232, 150, 10, 0.35);
+  color: ${alpha(DESERT, 0.9)};
+  background: ${alpha(DESERT_BADGE, 0.78)};
+  border: 1px solid ${alpha(DESERT, 0.35)};
   padding: 3px 8px;
   border-radius: 2px;
   z-index: 4;
@@ -99,17 +102,17 @@ const TitleBar = styled.div`
   left: 0;
   right: 0;
   padding: 14px 16px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+  background: linear-gradient(to top, ${alpha(BLACK, 0.75)} 0%, transparent 100%);
   z-index: 4;
   pointer-events: none;
 `;
 
 const TitleText = styled.span`
-  font-family: 'Courier New', monospace;
+  font-family: ${FONT_MONO};
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.85);
+  color: ${alpha(WHITE, 0.85)};
   text-transform: uppercase;
 `;
 
@@ -126,6 +129,7 @@ const TitleText = styled.span`
  * @returns {JSX.Element}
  */
 const BeforeAfterCard = ({ before, after, title }) => {
+  const { t } = useTranslation();
   const [pos, setPos] = useState(0.5);
   const [dragging, setDragging] = useState(false);
   const cardRef = useRef(null);
@@ -240,17 +244,17 @@ const BeforeAfterCard = ({ before, after, title }) => {
       onTouchMove={onTouchMove}
     >
 
-      <Img src={before} alt="before" draggable={false} />
+      <Img src={before} alt={`${title} — ${t('photography.before')}`} draggable={false} />
 
       <Img
         src={after}
-        alt="after"
+        alt={`${title} — ${t('photography.after')}`}
         draggable={false}
         style={{ clipPath: `inset(0 ${(1 - pos) * 100}% 0 0)` }}
       />
 
-      <Label style={{ left: 12, opacity: pos > 0.12 ? 1 : 0 }}>Virtualized</Label>
-      <Label style={{ right: 12, opacity: pos < 0.88 ? 1 : 0 }}>Raw</Label>
+      <Label style={{ left: 12, opacity: pos > 0.12 ? 1 : 0 }}>{t('photography.edited')}</Label>
+      <Label style={{ right: 12, opacity: pos < 0.88 ? 1 : 0 }}>{t('photography.raw')}</Label>
 
       <Divider style={{ left: `${pos * 100}%` }}>
         <Handle dragging={dragging}>◄►</Handle>

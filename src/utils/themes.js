@@ -1,23 +1,36 @@
 /**
- * @file src/utils/Themes.js
+ * @file src/utils/themes.js
  * styled-components themes, read via `${({ theme }) => theme.<key>}`.
  * Only `darkTheme` is wired in App.js; `lightTheme` lacks the `card_light`,
  * `white` and `black` keys.
- * @module Themes
+ * Dark theme values come from `colors.js`, so each color is defined once.
+ * @module themes
  */
+import {
+  BG,
+  BG_LIGHT,
+  TEAL,
+  TEXT_PRIMARY,
+  TEXT_SECONDARY,
+  CARD,
+  CARD_LIGHT,
+  VIOLET,
+  WHITE,
+  BLACK,
+} from './colors';
 
-/** Active site theme (#1C1C27 background, #0DB6A4 teal accent). */
+/** Active site theme (dark navy background, teal accent). */
 export const darkTheme = {
-  bg:"#1C1C27",
-  bgLight: "#1C1E27",
-  primary:"#0DB6A4",
-  text_primary:"#F2F3F4",
-  text_secondary:"#b1b2b3",
-  card:"#171721",
-  card_light: '#121212',
-  button:"#854CE6",
-  white:"#FFFFFF",
-  black:"#000000",
+  bg: BG,
+  bgLight: BG_LIGHT,
+  primary: TEAL,
+  text_primary: TEXT_PRIMARY,
+  text_secondary: TEXT_SECONDARY,
+  card: CARD,
+  card_light: CARD_LIGHT,
+  button: VIOLET,
+  white: WHITE,
+  black: BLACK,
 }
 
 /** Light theme, currently unused. */

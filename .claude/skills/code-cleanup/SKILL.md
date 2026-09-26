@@ -28,14 +28,14 @@ Before touching anything, run `CI=true npm run build` and note any existing warn
 
 ## 3. What to report only (never apply automatically)
 
-- **Orphan files** — components/images under `src/` that nothing imports (check with `grep -r` on the basename). Exception: `Skidbladnir` is intentionally imported but not rendered — leave it alone.
+- **Orphan files** — components/images under `src/` that nothing imports (check with `grep -r` on the basename).
 - **Unused dependencies** — packages in `package.json` `dependencies` never imported in `src/` (ignore `react-scripts`, `web-vitals`, testing libs, and peer deps like `@emotion/*` needed by MUI).
 - **Unused theme keys** in `src/utils/Themes.js` and unused entries in `src/data/content.js`.
 - Anything that would change rendering, props contracts, or the data shape.
 
 ## 4. Protected — do not modify
 
-- Images in `src/img/` (`logo.png`, `lyoko-symbol.png`, `ulrich.png`, `skidbladnir.png`, photography assets).
+- Images in `src/img/` (`hero-lyokocard.png`, `code-lyoko-inspired-world.png`, photography assets).
 - `lightTheme` in `Themes.js` (unused but kept on purpose).
 - Formatting/style of lines you don't otherwise change — no mass reformatting, no renaming, no reordering of styled-components.
 

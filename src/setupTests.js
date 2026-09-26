@@ -10,6 +10,9 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 
+// Components read their texts through react-i18next: initialize it as src/index.js does.
+import './i18n';
+
 // jsdom lacks these browser APIs used by the hero canvas, the timeline and the photo cards.
 window.matchMedia = window.matchMedia || ((query) => ({
   matches: false,

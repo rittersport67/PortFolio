@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "ariaLabel": "Sections",
+    "sections": {
+      "about": "Profil",
+      "skills": "Compétences",
+      "experience": "Missions",
+      "projects": "Programmes",
+      "photography": "Photographie"
+    },
+    "drawerTitle": "Supercalculateur",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "language": "Langue"
+  },
+  "hero": {
+    "sector": "Secteur 5 — Carthage",
+    "title": "Profil",
+    "description": "Scanné, virtualisé, prêt pour la prochaine mission.",
+    "identityWindow": "Identité",
+    "experience_one": "{{count}} an d'exp.",
+    "experience_other": "{{count}} ans d'exp.",
+    "roles": "Rôles",
+    "contactLead": "Ouvert à de nouvelles missions et à la mobilité.",
+    "cta": "Me contacter",
+    "channel": "Canal ouvert : {{email}}",
+    "cardWindow": "Scan de carte",
+    "cardCaption": "Virtualise-moi",
+    "cardAlt": "{{name}} en carte de personnage Code Lyoko — rejouer la virtualisation"
+  },
+  "skills": {
+    "sector": "Secteur 1 — Banquise",
+    "title": "Compétences",
+    "description_one": "Des pouvoirs acquis en {{count}} an.",
+    "description_other": "Des pouvoirs acquis en {{count}} ans.",
+    "count_one": "{{count}} compétence",
+    "count_other": "{{count}} compétences"
+  },
+  "experience": {
+    "sector": "Secteur 2 — Forêt",
+    "title": "Missions & Cursus scolaire",
+    "description": "Chaque mission enregistrée par le supercalculateur.",
+    "legendMissions": "Missions",
+    "legendEducation": "Cursus scolaire",
+    "missionWindow": "Mission",
+    "educationWindow": "Cursus scolaire",
+    "duration": "Durée",
+    "abilities": "Compétences :",
+    "via": "via {{firm}}"
+  },
+  "projects": {
+    "sector": "Secteur 3 — Montagne",
+    "title": "Programmes",
+    "description": "Des programmes codés depuis le labo.",
+    "allSectors": "tous les secteurs",
+    "window": "Programme",
+    "duration": "Durée",
+    "stack": "Stack :",
+    "github": "GitHub",
+    "live": "Démo"
+  },
+  "photography": {
+    "sector": "Secteur 4 — Désert",
+    "title": "Superscan - Photographie",
+    "description": "Une sélection de retouches dont je suis fier.",
+    "empty": "Aucune tour activée détectée. Superscan en cours…",
+    "before": "Avant",
+    "after": "Après",
+    "edited": "Virtualisé",
+    "raw": "Brut"
+  },
+  "footer": {
+    "title": "Mer numérique",
+    "backToTop": "▴ Retour vers le passé",
+    "disclaimer": "Hommage de fan à <em>Code Lyoko</em>. Ni affilié à ses ayants droit, ni approuvé par eux. Personnages et visuels © leurs propriétaires respectifs."
+  },
+  "period": {
+    "now": "Aujourd'hui",
+    "years_one": "{{count}} an",
+    "years_other": "{{count}} ans",
+    "months_one": "{{count}} mois",
+    "months_other": "{{count}} mois"
+  }
+}

@@ -7,7 +7,7 @@
  */
 import './App.css';
 import styled, { ThemeProvider } from 'styled-components';
-import { darkTheme } from './utils/Themes';
+import { darkTheme } from './utils/themes';
 import Navbar from './components/Navbar';
 import Hero from './components/HeroSection';
 import Skills from './components/Skills';
@@ -15,7 +15,6 @@ import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Photography from './components/Photography';
 import DigitalSea from './components/DigitalSea';
-import LyokoMapOverlay from './components/LyokoMapOverlay';
 import VirtualizationIntro from './components/VirtualizationIntro';
 
 const Body = styled.div`
@@ -25,9 +24,8 @@ const Body = styled.div`
 `;
 
 /**
- * Root component: provides the styled-components theme and mounts Navbar and
- * LyokoMapOverlay outside `Body`, whose `overflow-x: hidden` would break the
- * Navbar's `position: sticky`.
+ * Root component: provides the styled-components theme and mounts Navbar outside
+ * `Body`, whose `overflow-x: hidden` would break the Navbar's `position: sticky`.
  * @component
  * @returns {JSX.Element}
  */
@@ -36,7 +34,6 @@ function App() {
     <ThemeProvider theme={darkTheme}>
       <VirtualizationIntro />
       <Navbar />
-      <LyokoMapOverlay />
       <Body>
         <Hero />
         <Skills />

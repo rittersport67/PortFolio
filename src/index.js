@@ -1,9 +1,11 @@
 /**
  * @file src/index.js
- * CRA entry point: mounts <App /> into #root in StrictMode (React 18 createRoot).
+ * CRA entry point: initializes i18n, then mounts <App /> into #root in StrictMode
+ * (React 18 createRoot).
  */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './i18n';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

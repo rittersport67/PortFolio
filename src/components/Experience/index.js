@@ -6,6 +6,8 @@
  */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import SectionHeader from '../SectionHeader';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -16,6 +18,9 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import { experiences, education } from '../../data/content';
 import ExperienceCards from '../Cards/ExperienceCards';
 import { FOREST, ICE } from '../../utils/palette';
+import { alpha, TEXT_SECONDARY, NAVY_PANEL } from '../../utils/colors';
+import { FONT_MONO } from '../../utils/fonts';
+import { monthsBetween, formatDuration, formatPeriod } from '../../utils/period';
 
 const Container = styled.div`
     display: flex;
@@ -25,7 +30,7 @@ const Container = styled.div`
     z-index: 1;
     align-items: center;
     padding: 40px 0px 80px 0px;
-    background: radial-gradient(ellipse at 50% 0%, rgba(90, 191, 78, 0.08) 0%, transparent 65%);
+    background: radial-gradient(ellipse at 50% 0%, ${alpha(FOREST, 0.08)} 0%, transparent 65%);
     @media (max-width: 960px) {
         padding: 0px;
     }
@@ -43,64 +48,6 @@ const Wrapper = styled.div`
     gap: 12px;
     @media (max-width: 960px) {
         flex-direction: column;
-    }
-`;
-
-const TerritoryTag = styled.div`
-    font-family: 'Courier New', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    color: ${FOREST};
-    opacity: 0.7;
-    margin-bottom: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-
-    &::before,
-    &::after {
-        content: '';
-        height: 1px;
-        width: 36px;
-        background: ${FOREST};
-        opacity: 0.5;
-    }
-`;
-
-const Title = styled.div`
-    font-size: 42px;
-    text-align: center;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text_primary};
-    position: relative;
-
-    &::after {
-        content: '';
-        display: block;
-        margin: 6px auto 0;
-        width: 36px;
-        height: 2px;
-        background: ${FOREST};
-        border-radius: 1px;
-    }
-
-    @media (max-width: 768px) {
-        margin-top: 12px;
-        font-size: 32px;
-    }
-`;
-
-const Desc = styled.div`
-    font-size: 18px;
-    text-align: center;
-    max-width: 600px;
-    color: rgba(177, 178, 179, 0.85);
-    @media (max-width: 768px) {
-        margin-top: 12px;
-        font-size: 16px;
     }
 `;
 
@@ -124,7 +71,7 @@ const DotOuter = styled.div`
     height: 18px;
     border-radius: 50%;
     border: 2px solid ${FOREST};
-    background: rgba(0, 8, 24, 0.95);
+    background: ${alpha(NAVY_PANEL, 0.95)};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -154,11 +101,11 @@ const Legend = styled.div`
     gap: 24px;
     justify-content: center;
     flex-wrap: wrap;
-    font-family: 'Courier New', monospace;
+    font-family: ${FONT_MONO};
     font-size: 11px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(177, 178, 179, 0.85);
+    color: ${alpha(TEXT_SECONDARY, 0.85)};
 `
 
 const LegendItem = styled.span`
@@ -200,16 +147,39 @@ const useTwoColumns = () => {
   return twoColumns;
 };
 
-/* Jobs and degrees on a single rail, newest first */
-const timeline = [
+/* Jobs and degrees on a single rail, newest first. `gauge` scales each card's
+   duration gauge against the longest entry. Texts, period and duration depend on the
+   language, so they are added at render time. */
+const entries = [
   ...experiences.map((item) => ({ ...item, kind: 'work' })),
-  ...education.map((item) => ({
-    ...item,
-    kind: 'education',
-    role: item.degree,
-    company: item.school
-  }))
-].sort((a, b) => b.start.localeCompare(a.start));
+  ...education.map((item) => ({ ...item, kind: 'education', company: item.school }))
+].map((item) => ({ ...item, months: monthsBetween(item.start, item.end) }));
+
+const longest = Math.max(...entries.map((item) => item.months));
+
+const timeline = entries
+  .map((item) => ({ ...item, gauge: item.months / longest }))
+  .sort((a, b) => b.start.localeCompare(a.start));
+
+/**
+ * Adds the translated texts, period and duration to a timeline entry, in the shape
+ * ExperienceCards expects (a degree's `degree` becomes `role`).
+ * @param {Object} entry - Item of `timeline`.
+ * @param {import('i18next').TFunction} t
+ * @returns {Object}
+ */
+const localize = (entry, t) => {
+  const isEducation = entry.kind === 'education';
+  const base = `content:${isEducation ? 'education' : 'experiences'}.${entry.key}`;
+  return {
+    ...entry,
+    role: t(`${base}.${isEducation ? 'degree' : 'role'}`),
+    desc: t(`${base}.desc`),
+    skills: isEducation ? undefined : t(`${base}.skills`, { returnObjects: true }),
+    period: formatPeriod(entry.start, entry.end, isEducation),
+    duration: formatDuration(entry.months)
+  };
+};
 
 /**
  * On two columns, degrees sit left of the rail and jobs on the right; on one column
@@ -218,17 +188,22 @@ const timeline = [
  * @returns {JSX.Element}
  */
 const Experience = () => {
+  const { t } = useTranslation();
   const twoColumns = useTwoColumns();
 
   return (
     <Container id="experience">
       <Wrapper>
-        <TerritoryTag>Sector 2 — Forest</TerritoryTag>
-        <Title>Missions &amp; Kadic</Title>
-        <Desc>Every mission logged by the supercomputer.</Desc>
+        <SectionHeader
+          sector={t('experience.sector')}
+          title={t('experience.title')}
+          accent={FOREST}
+        >
+          {t('experience.description')}
+        </SectionHeader>
         <Legend>
-          <LegendItem>Missions</LegendItem>
-          <LegendItem square>Kadic Academy</LegendItem>
+          <LegendItem>{t('experience.legendMissions')}</LegendItem>
+          <LegendItem square>{t('experience.legendEducation')}</LegendItem>
         </Legend>
         <TimelineSection>
           {/* Disable MUI's ::before: each row renders its own two columns,
@@ -243,7 +218,7 @@ const Experience = () => {
           >
             {timeline.map((entry, index) => {
               const isEducation = entry.kind === 'education';
-              const card = <ExperienceCards experience={entry} />;
+              const card = <ExperienceCards experience={localize(entry, t)} />;
 
               return (
                 <TimelineItem key={`${entry.kind}-${entry.id}`}>
@@ -288,7 +263,7 @@ const Experience = () => {
                     {index !== timeline.length - 1 && (
                       <TimelineConnector
                         sx={{
-                          background: 'linear-gradient(to bottom, rgba(90,191,78,0.6), rgba(90,191,78,0.15))',
+                          background: `linear-gradient(to bottom, ${alpha(FOREST, 0.6)}, ${alpha(FOREST, 0.15)})`,
                           width: '2px',
                         }}
                       />

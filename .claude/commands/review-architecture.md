@@ -14,6 +14,4 @@ Check the following:
 
 6. **Assets** — Check that all images imported in components actually exist in `src/img/`. Flag broken imports.
 
-7. **Special components** — Confirm `Skidbladnir` is rendered outside `<Body>` in App.js (so it overlays everything). Confirm `UlrichEasterEgg` is lazy-loaded inside a `<Suspense fallback={null}>` in the Navbar.
-
 Report findings grouped by category. For each issue, give the file path and line number.
